@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Invoice Decisioning</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/static/css/app.css">
+</head>
+<body class="bg-zinc-50 text-zinc-900 antialiased">
+  <header class="border-b border-zinc-200 bg-white">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+      <div class="flex items-center gap-3">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-indigo-600" aria-hidden="true">
+          <path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/><path d="M10 13h6M10 17h4"/>
+        </svg>
+        <span class="font-semibold tracking-tight">Invoice Decisioning</span>
+      </div>
+      <span id="llm-badge" class="mono rounded-md border border-zinc-200 px-2 py-1 text-xs text-zinc-500">LLM: …</span>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-6 py-10">
+    <div id="error" class="hidden mb-6 rounded-xl border border-rose-200 bg-rose-50 px-6 py-4 text-sm text-rose-700" role="alert"></div>
+
+    <section class="rounded-xl border border-zinc-200 bg-white p-6">
+      <h1 class="text-lg font-semibold">System status</h1>
+      <p id="summary" class="mt-2 text-zinc-600">Reading the database…</p>
+      <dl id="counts" class="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-5"></dl>
+    </section>
+  </main>
+
+  <script type="module">
+    import { api } from "/static/js/api.js";
+
+    const LABELS = {
+      vendors: "Vendors", purchase_orders: "Purchase orders", goods_receipts: "Goods receipts",
+      invoice_history: "Invoice history", runs: "Runs",
+    };
+
+    function tile(label, value) {
+      const el = document.createElement("div");
+      el.className = "rounded-lg border border-zinc-200 px-4 py-3";
+      el.innerHTML = `<dt class="text-xs text-zinc-500"></dt><dd class="mono mt-1 text-xl tabular-nums"></dd>`;
+      el.querySelector("dt").textContent = label;
+      el.querySelector("dd").textContent = value;
+      return el;
+    }
+
+    try {
+      const h = await api.health();
+      const c = h.counts;
+      document.getElementById("summary").textContent =
+        `The database has ${c.vendors} vendors and ${c.purchase_orders} purchase orders. ` +
+        `Tesseract is ${h.tesseract ? `installed (v${h.tesseract_version})` : "not installed — scans will run vision-only"}.`;
+      const dl = document.getElementById("counts");
+      for (const [key, label] of Object.entries(LABELS)) dl.appendChild(tile(label, c[key]));
+      document.getElementById("llm-badge").textContent = `LLM: ${h.llm}`;
+    } catch (err) {
+      const box = document.getElementById("error");
+      box.textContent = `Could not reach the API: ${err.message}`;
+      box.classList.remove("hidden");
+      document.getElementById("summary").textContent = "Status unavailable.";
+    }
+  </script>
+</body>
+</html>

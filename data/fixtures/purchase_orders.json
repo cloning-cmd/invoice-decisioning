@@ -1,0 +1,119 @@
+[
+  {
+    "id": "PO2041", "po_number": "PO-2041", "vendor_id": "V001", "currency": "INR",
+    "po_total": "600000.00", "status": "open", "allow_partial_invoicing": 1,
+    "issue_date": "2026-08-18", "expiry_date": "2027-03-31",
+    "_note": "split-invoice case: two prior invoices consume 4,50,000",
+    "lines": [
+      {"sku": "BRG-12", "description": "Deep groove ball bearing 6204-2RS", "qty": 400, "uom": "NOS", "unit_price": "750.00"},
+      {"sku": "SHF-20", "description": "Precision ground shaft 20mm x 300mm", "qty": 100, "uom": "NOS", "unit_price": "1500.00"},
+      {"sku": "SEAL-8", "description": "Nitrile oil seal 35x52x8", "qty": 1000, "uom": "NOS", "unit_price": "50.00"}
+    ]
+  },
+  {
+    "id": "PO2042", "po_number": "PO-2042", "vendor_id": "V002", "currency": "INR",
+    "po_total": "184000.00", "status": "open", "allow_partial_invoicing": 0,
+    "issue_date": "2026-10-05", "expiry_date": "2027-01-31",
+    "lines": [
+      {"sku": "WLD-ROD", "description": "Welding electrode E6013 3.15mm (5 kg pack)", "qty": 80, "uom": "PKT", "unit_price": "1200.00"},
+      {"sku": "GRD-DSC", "description": "Grinding disc 100mm x 6mm", "qty": 500, "uom": "NOS", "unit_price": "116.00"}
+    ]
+  },
+  {
+    "id": "PO2043", "po_number": "PO-2043", "vendor_id": "V003", "currency": "INR",
+    "po_total": "22500.00", "status": "open", "allow_partial_invoicing": 1,
+    "issue_date": "2026-10-12", "expiry_date": "2027-01-31",
+    "_note": "Edge 1 target (phone photo)",
+    "lines": [
+      {"sku": "CTN-5PLY", "description": "5-ply corrugated carton 400x300x300", "qty": 300, "uom": "NOS", "unit_price": "50.00"},
+      {"sku": "TAPE-48", "description": "BOPP packing tape 48mm x 65m", "qty": 120, "uom": "ROL", "unit_price": "25.00"}
+    ]
+  },
+  {
+    "id": "PO2044", "po_number": "PO-2044", "vendor_id": "V004", "currency": "INR",
+    "po_total": "310000.00", "status": "open", "allow_partial_invoicing": 1,
+    "issue_date": "2026-09-22", "expiry_date": "2027-03-31",
+    "_note": "Edge 4 target (bank redirection fraud)",
+    "lines": [
+      {"sku": "WH-PLT", "description": "Pallet storage, per pallet-month", "qty": 700, "uom": "PLT", "unit_price": "220.00"},
+      {"sku": "HDL-IN", "description": "Inbound handling, per pallet", "qty": 1000, "uom": "PLT", "unit_price": "45.00"},
+      {"sku": "HDL-OUT", "description": "Outbound dispatch, per pallet", "qty": 1000, "uom": "PLT", "unit_price": "45.00"}
+    ]
+  },
+  {
+    "id": "PO2045", "po_number": "PO-2045", "vendor_id": "V001", "currency": "INR",
+    "po_total": "48000.00", "status": "closed", "allow_partial_invoicing": 0,
+    "issue_date": "2026-06-10", "expiry_date": "2026-12-31",
+    "_note": "closed PO, quoted by the wrong vendor in Edge 6",
+    "lines": [
+      {"sku": "BRG-08", "description": "Miniature ball bearing 608ZZ", "qty": 1000, "uom": "NOS", "unit_price": "34.00"},
+      {"sku": "GRS-1K", "description": "Lithium complex grease, 1 kg tin", "qty": 20, "uom": "TIN", "unit_price": "300.00"}
+    ]
+  },
+  {
+    "id": "PO2046", "po_number": "PO-2046", "vendor_id": "V006", "currency": "EUR",
+    "po_total": "7400.00", "status": "open", "allow_partial_invoicing": 1,
+    "issue_date": "2026-09-01", "expiry_date": "2027-02-28",
+    "_note": "EUR PO for the currency case",
+    "lines": [
+      {"sku": "TL-EM10", "description": "Solid carbide end mill 10mm, 4 flute", "qty": 40, "uom": "STK", "unit_price": "95.00"},
+      {"sku": "TL-HSK63", "description": "HSK-63A shrink-fit tool holder", "qty": 6, "uom": "STK", "unit_price": "520.00"}
+    ]
+  },
+  {
+    "id": "PO2047", "po_number": "PO-2047", "vendor_id": "V007", "currency": "INR",
+    "po_total": "200000.00", "status": "open", "allow_partial_invoicing": 0,
+    "issue_date": "2026-10-01", "expiry_date": "2027-03-31",
+    "_note": "tolerance edge: GRN covers only 80 of 100 units",
+    "lines": [
+      {"sku": "DB-8W", "description": "8-way TPN distribution board, IP43", "qty": 100, "uom": "NOS", "unit_price": "1650.00"}
+    ]
+  },
+  {
+    "id": "PO2048", "po_number": "PO-2048", "vendor_id": "V002", "currency": "INR",
+    "po_total": "95000.00", "status": "open", "allow_partial_invoicing": 0,
+    "issue_date": "2026-06-01", "expiry_date": "2026-09-30",
+    "_note": "expired but never closed in the ERP",
+    "lines": [
+      {"sku": "PPE-GLV5", "description": "Cut-resistant gloves, level 5", "qty": 400, "uom": "PAIR", "unit_price": "160.00"},
+      {"sku": "PPE-GOG", "description": "Anti-fog safety goggles", "qty": 200, "uom": "NOS", "unit_price": "70.00"}
+    ]
+  },
+  {
+    "id": "PO2049", "po_number": "PO-2049", "vendor_id": "V003", "currency": "INR",
+    "po_total": "75000.00", "status": "partially_invoiced", "allow_partial_invoicing": 1,
+    "issue_date": "2026-09-15", "expiry_date": "2027-03-31",
+    "lines": [
+      {"sku": "STR-23", "description": "Stretch wrap film 23 micron, 500mm", "qty": 150, "uom": "ROL", "unit_price": "280.00"},
+      {"sku": "PLT-WD", "description": "Wooden pallet 1200x1000, 4-way entry", "qty": 60, "uom": "NOS", "unit_price": "300.00"}
+    ]
+  },
+  {
+    "id": "PO2050", "po_number": "PO-2050", "vendor_id": "V004", "currency": "INR",
+    "po_total": "120000.00", "status": "partially_invoiced", "allow_partial_invoicing": 1,
+    "issue_date": "2026-10-01", "expiry_date": "2027-03-31",
+    "_note": "services PO with no GRN recorded",
+    "lines": [
+      {"sku": "FTL-BLR-PNQ", "description": "FTL Bengaluru-Pune, 32ft MXL container", "qty": 8, "uom": "TRIP", "unit_price": "12000.00"}
+    ]
+  },
+  {
+    "id": "PO2051", "po_number": "PO-2051", "vendor_id": "V007", "currency": "INR",
+    "po_total": "340000.00", "status": "partially_invoiced", "allow_partial_invoicing": 1,
+    "issue_date": "2026-09-10", "expiry_date": "2027-03-31",
+    "lines": [
+      {"sku": "CBL-4C16", "description": "4-core 16 sq.mm armoured Cu cable", "qty": 1000, "uom": "MTR", "unit_price": "210.00"},
+      {"sku": "MCB-32C", "description": "32A MCB, C-curve, 10kA", "qty": 300, "uom": "NOS", "unit_price": "255.00"}
+    ]
+  },
+  {
+    "id": "PO2052", "po_number": "PO-2052", "vendor_id": "V002", "currency": "INR",
+    "po_total": "145000.00", "status": "partially_invoiced", "allow_partial_invoicing": 1,
+    "issue_date": "2026-10-10", "expiry_date": "2027-03-31",
+    "_note": "Edge 3 target: INV-SH-7781 already paid against it",
+    "lines": [
+      {"sku": "WLD-ROD", "description": "Welding electrode E6013 3.15mm (5 kg pack)", "qty": 75, "uom": "PKT", "unit_price": "1200.00"},
+      {"sku": "GRD-DSC", "description": "Grinding disc 100mm x 6mm", "qty": 250, "uom": "NOS", "unit_price": "120.00"}
+    ]
+  }
+]

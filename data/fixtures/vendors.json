@@ -1,0 +1,100 @@
+[
+  {
+    "id": "V001",
+    "legal_name": "Nordic Components Pvt Ltd",
+    "aliases": ["Nordic Components", "NORDIC COMPONENTS PVT LTD", "Nordic Comp. Pvt. Ltd."],
+    "status": "approved",
+    "tax_id": "29AABCN4471K1Z3",
+    "bank_account_last4": "4471",
+    "bank_ifsc": "HDFC0000523",
+    "payment_terms_days": 30,
+    "default_currency": "INR",
+    "created_at": "2023-04-03T09:00:00Z"
+  },
+  {
+    "id": "V002",
+    "legal_name": "Shreeji Industrial Supplies",
+    "aliases": ["Shreeji Industrial", "SHREEJI IND. SUPPLIES"],
+    "status": "approved",
+    "tax_id": "24AAKFS8820M1Z9",
+    "bank_account_last4": "8820",
+    "bank_ifsc": "ICIC0001846",
+    "payment_terms_days": 45,
+    "default_currency": "INR",
+    "created_at": "2023-06-19T09:00:00Z"
+  },
+  {
+    "id": "V003",
+    "legal_name": "Meridian Packaging LLP",
+    "aliases": ["Meridian Packaging"],
+    "status": "approved",
+    "tax_id": "27AASFM1109P1Z4",
+    "bank_account_last4": "1109",
+    "bank_ifsc": "UTIB0000247",
+    "payment_terms_days": 30,
+    "default_currency": "INR",
+    "created_at": "2023-09-11T09:00:00Z"
+  },
+  {
+    "id": "V004",
+    "legal_name": "Kaveri Logistics Pvt Ltd",
+    "aliases": ["Kaveri Logistics"],
+    "status": "approved",
+    "tax_id": "33AADCK6652Q1Z7",
+    "bank_account_last4": "6652",
+    "bank_ifsc": "SBIN0000881",
+    "payment_terms_days": 15,
+    "default_currency": "INR",
+    "created_at": "2024-01-08T09:00:00Z"
+  },
+  {
+    "id": "V005",
+    "legal_name": "Trident Fasteners",
+    "aliases": ["Trident Fasteners Co"],
+    "status": "on_hold",
+    "status_reason": "Quality dispute on lot TF-0926 (rejected at incoming inspection)",
+    "tax_id": "27AAHFT2290R1Z1",
+    "bank_account_last4": "2290",
+    "bank_ifsc": "YESB0000032",
+    "payment_terms_days": 30,
+    "default_currency": "INR",
+    "created_at": "2024-03-22T09:00:00Z"
+  },
+  {
+    "id": "V006",
+    "legal_name": "Apex Tooling GmbH",
+    "aliases": ["Apex Tooling"],
+    "status": "approved",
+    "tax_id": "DE298765431",
+    "bank_account_last4": "3000",
+    "bank_ifsc": "COBADEFFXXX",
+    "payment_terms_days": 60,
+    "default_currency": "EUR",
+    "created_at": "2024-05-14T09:00:00Z"
+  },
+  {
+    "id": "V007",
+    "legal_name": "Orbit Electricals",
+    "aliases": ["Orbit Electrical", "ORBIT ELECTRICALS & CONTROLS"],
+    "status": "approved",
+    "tax_id": "07AAGFO3317H1Z6",
+    "bank_account_last4": "3317",
+    "bank_ifsc": "KKBK0000172",
+    "payment_terms_days": 30,
+    "default_currency": "INR",
+    "created_at": "2024-07-02T09:00:00Z"
+  },
+  {
+    "id": "V008",
+    "legal_name": "Vista Chemicals Pvt Ltd",
+    "aliases": ["Vista Chemicals"],
+    "status": "blocked",
+    "status_reason": "Compliance: GST registration cancelled, pending re-verification",
+    "tax_id": "24AACCV5521D1Z8",
+    "bank_account_last4": "5521",
+    "bank_ifsc": "PUNB0244200",
+    "payment_terms_days": 30,
+    "default_currency": "INR",
+    "created_at": "2024-02-27T09:00:00Z"
+  }
+]
