@@ -65,6 +65,95 @@ flagged for review.
    to look at the quoted PO even though it was not matched. For the same
    reason R05 and R05b are not_applicable when a PO was quoted and found:
    R05c owns that failure.
+6. **[confirm] The happy path is ₹95,250, not ₹1,48,500.** Matrix branch 3
+   sends anything above the ₹1,00,000 auto-approve ceiling to
+   APPROVE_PENDING_SIGNOFF, yet the brief expects AUTO_APPROVE for ₹1,48,500.
+   I kept the ceiling (a delegation-of-authority policy) and lowered the
+   invoice (fixture data). ₹95,250 still sits inside PO-2041's ₹1,50,000
+   remaining. To keep ₹1,48,500 instead, raise `AUTO_APPROVE_CEILING_MINOR`.
+7. **`TEXT_COVERAGE_MIN` is 3.0 chars/sq.in, not 40.** Measured: the clean
+   digital happy-path invoice scores 14.5 (an A4 page is 96.7 sq.in), so 40
+   classed it as a scan. An image-only page scores 0. 3.0 separates them with
+   margin on both sides.
+
+## Extraction (S04)
+
+- **claude-sonnet-4-5 at temperature 0, as specified.** The API retires this
+  model on 2026-11-30; after that, live extraction fails with a clear stage
+  error while cached fixtures keep replaying. `LLM_MODEL` in config is the
+  one line to change.
+- **anthropic SDK pinned to 1.17.0.** The 2.x SDK sends API version
+  2026-10-21, which rejects `temperature` on every model. The 1.x SDK sends
+  2023-06-01, where Sonnet 4.5 still honours it. 1.x dropped `temperature` as
+  a keyword argument, so it is passed via `extra_body`.
+- **Forced `tool_choice` + jsonschema validation + one retry** carrying the
+  validator's own error messages, as specified. Any API error becomes a
+  failed stage with a readable message, not a stack trace.
+- **The bank account number is masked before anything is stored.**
+  `raw_llm_json` and the cache keep the model's output verbatim *except*
+  `payment.account_number`, reduced to its last four (`••••••••••4471`). This
+  is the one deviation from "verbatim", made because "never persist the full
+  account number" is the stronger requirement. The reading artefact masks
+  any 9+ digit run for the same reason.
+- **Cache entries carry a `PROMPT_VERSION`.** In `cached` mode, an entry
+  recorded under a different prompt or schema is re-read live rather than
+  replayed against a contract it was not produced for.
+- **Digital PDFs are rasterised at 150 DPI for the model** (A4 → 1754px,
+  just above the 1568px target). 300 DPI is reserved for OCR.
+
+## Normalise / self-check / match
+
+- **The self-check formula includes shipping:** subtotal + tax − discount +
+  shipping = grand total. Freight is printed outside the taxable value on
+  most Indian invoices.
+- **An unresolved DD/MM vs MM/DD date fails R09 (soft) as `DATE_AMBIGUOUS`.**
+  The day-first reading is kept as the working value, but a human confirms
+  it before the payment date is scheduled.
+- **Vendor resolution runs twice:** once in S05 (only to choose the date
+  locale) and once in S07 (the real match). Both are the same pure function.
+- **Runs do not post to the ERP ledger.** Cumulative PO consumption reads
+  `invoice_history` only. An approved run is not added to it, so Edge 2
+  stays ₹42,000 over whatever ran before it.
+- **"Same file already processed" (R04) means already *approved*:** present
+  in `invoice_history`, or a prior run that was auto-approved, signed off or
+  override-approved. Re-submitting a file that was rejected or held is a
+  correction attempt, not a double payment. Running the happy path twice
+  therefore BLOCKs the second run, which is correct, and a reason to start
+  the demo from a fresh database.
+
+## Rules and decision
+
+- **The brief's table has 20 rules** (R01–R14 plus b/c/d variants).
+- **A rule that crashes fails closed:** status `fail`, reason `RULE_ERROR`,
+  at the rule's own severity, with the traceback in its evidence. Every
+  other rule still runs.
+- **R05b: a non-INR invoice with no PO always fails.** The ₹25,000 ceiling is
+  an INR policy, and we hold no FX rates.
+- **Non-INR invoices never auto-approve.** With no FX rate there is no way to
+  compare them with the ₹1,00,000 limit, so a clean EUR invoice goes to
+  APPROVE_PENDING_SIGNOFF (`FOREIGN_CURRENCY_APPROVER`).
+- **R07b uses the tolerance band:** an invoice within tolerance of the full
+  PO amount counts as a full invoice, not a partial.
+- **R12 passes when no bank details are printed;** payment then goes to the
+  master record, so there is nothing to redirect.
+- **R14 needs both an unreadable region and a missing or low-confidence
+  required field.** A region alone is a `warn`.
+- **The reason codes for a hard verdict are the hard failures only** (see
+  item 4). The explanation joins those rules' messages, ordered by
+  `REASON_WEIGHTS`.
+
+## Operations
+
+- **`python -m app.cli run --replay <id>` is a dry run.** It re-decides with
+  the current `config.py` and prints stored → replayed, but never rewrites
+  the stored decision: history is evidence. Supplying a missing field
+  (Phase 5) is the path that updates a run.
+- **`INVOICE_AS_OF_DATE=YYYY-MM-DD` pins "today"** for the date rules, so a
+  recorded demo gives the same verdict next quarter. Tests pin 2026-11-16.
+- **Run IDs and timestamps are UTC.**
+- **S10 writes a reading artefact** (`data/uploads/<sha>/reading.json`: text
+  layer, word boxes, legibility) so a replay can start at S05 without
+  re-reading the file.
 
 ## Fixture choices that make the edge cases emerge from data
 

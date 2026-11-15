@@ -5,6 +5,7 @@ used only at the boundary, when text becomes a number. Floats never touch money.
 """
 from __future__ import annotations
 
+import re
 from decimal import ROUND_HALF_UP, Decimal, InvalidOperation
 
 from app import config
@@ -12,6 +13,66 @@ from app import config
 MINOR_PER_MAJOR = 100  # INR and EUR both have 100 minor units; JPY-style currencies are out of scope
 
 CURRENCY_SYMBOLS = {"INR": "₹", "EUR": "€", "USD": "$", "GBP": "£"}
+
+# Symbols first, then ISO codes / abbreviations, matching normalise's detection order.
+_SYMBOL_TO_ISO = {"₹": "INR", "€": "EUR", "$": "USD", "£": "GBP"}
+_CODE_RE = re.compile(r"\b(INR|EUR|USD|GBP|RS\.?|RUPEES?)\b", re.IGNORECASE)
+_CODE_TO_ISO = {"INR": "INR", "EUR": "EUR", "USD": "USD", "GBP": "GBP",
+                "RS": "INR", "RS.": "INR", "RUPEE": "INR", "RUPEES": "INR"}
+
+
+def detect_currency(text: str | None) -> tuple[str | None, str | None]:
+    """Return (ISO code, how it was found: "symbol" | "iso_code") or (None, None)."""
+    if not text:
+        return None, None
+    for sym, iso in _SYMBOL_TO_ISO.items():
+        if sym in text:
+            return iso, "symbol"
+    m = _CODE_RE.search(text)
+    if m:
+        return _CODE_TO_ISO[m.group(1).upper()], "iso_code"
+    return None, None
+
+
+def parse_amount(text: str) -> int:
+    """Printed amount -> integer minor units, without guessing.
+
+    Handles "₹ 1,23,456.78" (lakh grouping), "1,234.56", "6.980,00" (decimal
+    comma), "(500.00)" and "500.00 CR" / "-500" as negatives, trailing "DR".
+    Raises ValueError if no number can be read.
+    """
+    s = text.strip()
+    negative = False
+    if s.startswith("(") and s.endswith(")"):
+        negative, s = True, s[1:-1]
+    upper = s.upper()
+    if re.search(r"\bCR\.?$", upper):
+        negative = True
+    s = re.sub(r"\b(CR|DR)\.?$", "", s, flags=re.IGNORECASE)
+    s = _CODE_RE.sub("", s).strip()
+    if s.endswith("/-"):          # Indian convention: "Rs 1,500/-" means exactly 1,500
+        s = s[:-2].strip()
+    if s.startswith("-") or s.endswith("-"):
+        negative = True
+    digits = re.sub(r"[^0-9.,]", "", s)
+    if not re.search(r"\d", digits):
+        raise ValueError(f"no amount in {text!r}")
+
+    last_sep = max(digits.rfind("."), digits.rfind(","))
+    if last_sep == -1:
+        whole, frac = digits, ""
+    else:
+        tail = digits[last_sep + 1:]
+        # A final separator followed by 1-2 digits is the decimal point; followed
+        # by 3 it is a thousands separator ("1,234" or "1.234").
+        if 1 <= len(tail) <= 2:
+            whole, frac = digits[:last_sep], tail
+        else:
+            whole, frac = digits, ""
+    whole = re.sub(r"[.,]", "", whole) or "0"
+    value = Decimal(f"{whole}.{frac or '0'}")
+    minor = to_minor(value)
+    return -minor if negative else minor
 
 
 def to_minor(amount: str | int | Decimal) -> int:

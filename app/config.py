@@ -7,6 +7,7 @@ Money is always INTEGER minor units (paise / cents).
 from __future__ import annotations
 
 import os
+from datetime import date
 from pathlib import Path
 
 
@@ -56,6 +57,13 @@ STATIC_DIR = ROOT_DIR / "static"
 TESSERACT_CMD: str | None = os.environ.get("TESSERACT_CMD") or None
 
 
+def as_of_date() -> date:
+    """'Today' for date rules (R09 staleness / future dates). INVOICE_AS_OF_DATE=YYYY-MM-DD pins
+    it, so a recorded demo or a test gives the same verdict on any calendar day."""
+    pinned = os.environ.get("INVOICE_AS_OF_DATE")
+    return date.fromisoformat(pinned) if pinned else date.today()
+
+
 # --------------------------------------------------------------------------
 # The buyer — us. Used by the sample generator and to sanity-check "Bill To".
 # --------------------------------------------------------------------------
@@ -66,7 +74,7 @@ BUYER = {
     "state_code": "29",  # Karnataka: same-state vendors charge CGST+SGST, others IGST
     "bill_to": ["Halden Precision Engineering Pvt Ltd", "Plot 14, KIADB Industrial Area",
                 "Bommasandra, Bengaluru 560099", "Karnataka, India"],
-    "ship_to": ["Halden Precision — Plant 2 (Stores)", "Survey No. 88, Jigani Link Road",
+    "ship_to": ["Halden Precision - Plant 2 (Stores)", "Survey No. 88, Jigani Link Road",
                 "Anekal Taluk, Bengaluru 562106", "Karnataka, India"],
 }
 
@@ -84,10 +92,12 @@ ACCEPTED_MIME = ("application/pdf", "image/png", "image/jpeg", "image/tiff", "im
 # S02 Text layer
 # --------------------------------------------------------------------------
 
-# Chars per square inch below which a PDF page is treated as image-only.
-# A sparse but genuine digital invoice runs ~60-150; a scan with a stray
-# producer stamp is < 5. 40 leaves margin on both sides.
-TEXT_COVERAGE_MIN = 40.0
+# Non-space chars per square inch below which a PDF page is treated as image-only.
+# Measured: our one-page digital invoices score ~14 (an A4 page is 96.7 sq.in, so
+# 14/sq.in is ~1,400 characters); an image-only scan scores 0, and a scan with a
+# scanner-app footer stays under 1. The brief's suggested 40 would class almost
+# every real digital invoice as a scan (see ASSUMPTIONS.md).
+TEXT_COVERAGE_MIN = 3.0
 
 
 # --------------------------------------------------------------------------
@@ -138,6 +148,7 @@ LLM_MODEL = "claude-sonnet-4-5"
 LLM_TEMPERATURE = 0.0               # extraction should be reproducible, not creative
 LLM_MAX_TOKENS = 8000               # a 40-line invoice with evidence strings fits comfortably
 LLM_IMAGE_MAX_SIDE_PX = 1568        # the model's native resolution; larger only costs tokens
+LLM_RASTER_DPI = 150                # A4 at 150 DPI is 1754px tall: just above 1568, so no detail is lost
 LLM_IMAGE_JPEG_QUALITY = 85         # keeps small print legible while keeping the payload small
 LLM_SCHEMA_RETRIES = 1              # one retry with the validator error; a second failure is real
 
@@ -179,6 +190,11 @@ PO_DATE_SCORE_DECAY_DAYS = 30       # date score falls linearly to 0 this many d
 PO_AUTOMATCH_MIN = 0.80             # below this, no implicit PO match is trusted
 PO_MARGIN_MIN = 0.15                # the winner must beat the runner-up clearly, else a human picks
 PO_CANDIDATES_SHOWN = 3             # how many candidates to offer a human when we will not auto-match
+LINE_DESC_MATCH_MIN = 85            # description similarity at which an invoice line maps to a PO line SKU
+
+# Fuzzy score (0-100) for locating a field's evidence among the page's words.
+# Below this we draw no box: a missing box is honest, a wrong box misleads a clerk.
+EVIDENCE_MATCH_MIN = 80
 
 # Only these invoice_history statuses consume PO budget; a rejected invoice was never paid.
 PO_CONSUMING_STATUSES = ("approved", "paid")
@@ -246,10 +262,12 @@ REASON_WEIGHTS = {
     "PO_NOT_FOUND": 30,
     "VENDOR_AMBIGUOUS": 28,
     "TAX_IMPLAUSIBLE": 25,
+    "DATE_AMBIGUOUS": 22,             # payment date unknown until a human reads the date
     "DATE_INVALID": 20,
     "UNREADABLE_REQUIRED_FIELD": 15,
     "LOW_CONFIDENCE": 10,
     "STAGE_FAILED": 99,               # a pipeline stage could not complete
+    "RULE_ERROR": 98,                 # a rule crashed; we fail closed rather than trust a partial check
 }
 
 # Approval matrix for APPROVE_PENDING_SIGNOFF: (upper bound inclusive, role).
@@ -259,6 +277,7 @@ APPROVAL_MATRIX = (
     (25_00_000_00, "financial_controller"), # up to Rs 25 lakh
     (None, "cfo"),
 )
+FOREIGN_CURRENCY_APPROVER = "financial_controller"  # no FX rates held, so foreign invoices skip the INR bands
 
 # Named owners for recommended next actions (fictional people).
 OWNERS = {
@@ -270,6 +289,7 @@ OWNERS = {
     "cfo": "Vikram Iyer, CFO",
     "vendor_management": "Sanjay Kulkarni, Vendor Management",
     "stores": "Kavya Shetty, Stores / Receiving",
+    "payment_run": "Scheduled payment run (Treasury)",
 }
 
 # Roles allowed to override each verdict. BLOCK is locked to the AP manager:
