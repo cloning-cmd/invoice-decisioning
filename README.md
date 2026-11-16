@@ -53,11 +53,13 @@ docker build -t invoice-decisioning .
 docker run -p 7860:7860 -e GEMINI_API_KEY=... invoice-decisioning
 ```
 
-The hosted copy runs on a Hugging Face Docker Space. To redeploy the
-committed tree, put `HF_TOKEN` (a write token) in `.env` and run
-`python -m pip install huggingface_hub && python -m tools.deploy_space`.
-The Gemini key goes to the Space as a secret, never as a file. The Space's
+The hosted copy runs on Render's free plan from `render.yaml` (New >
+Blueprint > this repo; Render asks for `GEMINI_API_KEY` once and keeps it as a
+secret). Every push to `main` redeploys. The free instance sleeps after 15
+minutes idle, so the first request after a pause takes about a minute, and its
 disk is not persistent: a restart reseeds the database and clears run history.
+A Hugging Face Docker Space also works (`python -m tools.deploy_space`, needs
+`HF_TOKEN` in `.env` and a PRO plan).
 
 ## Architecture
 
