@@ -9,6 +9,10 @@ replayed and audited later.
 Verdicts: `AUTO_APPROVE` · `APPROVE_PENDING_SIGNOFF` · `HOLD_FOR_REVIEW` ·
 `REJECT` (send back to the vendor) · `BLOCK` (do not pay; escalate).
 
+**Live prototype:** https://invoice-decisioning.onrender.com (free plan: the
+first visit after 15 minutes idle takes about a minute to wake; scanned
+samples take 1–2 minutes to OCR on its shared CPU).
+
 ## Run it
 
 ```bash
