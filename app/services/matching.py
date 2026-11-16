@@ -218,3 +218,29 @@ def locate_evidence(evidence: str | None, page: int | None,
         return None
     xs0, ys0, xs1, ys1 = zip(*(w["bbox"] for w in window))
     return [round(min(xs0), 4), round(min(ys0), 4), round(max(xs1), 4), round(max(ys1), 4)]
+
+
+def locate_field(field: dict[str, Any], word_boxes: list[dict[str, Any]]) -> list[float] | None:
+    """The box for an extracted field: its evidence, else one line of it, else its value.
+
+    Evidence often spans a label and a value (label "INVOICE NO." on one line,
+    "OE/2026/598" on the next). On a digital PDF those words are adjacent; in
+    OCR reading order a header strip reads all labels first, then all values,
+    so the pair never appears side by side. The fallbacks find the value on its
+    own. Short strings (under 4 characters, e.g. "18%") are not searched alone:
+    too many places match.
+    """
+    page = field.get("page")
+    evidence, value = field.get("evidence"), field.get("value")
+    tries = [evidence]
+    if evidence and "\n" in evidence:
+        lines = [ln for ln in evidence.split("\n") if ln.strip()]
+        tries += sorted(lines, key=len, reverse=True)
+    tries.append(value)
+    for text in tries:
+        if text and len(text.strip()) >= 4:
+            bbox = locate_evidence(text, page, word_boxes)
+            if bbox:
+                return bbox
+    return None
+

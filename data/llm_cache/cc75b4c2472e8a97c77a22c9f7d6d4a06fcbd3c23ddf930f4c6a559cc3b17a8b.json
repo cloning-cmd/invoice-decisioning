@@ -1,0 +1,487 @@
+{
+  "sha256": "cc75b4c2472e8a97c77a22c9f7d6d4a06fcbd3c23ddf930f4c6a559cc3b17a8b",
+  "model": "gemini-3.5-flash",
+  "prompt_version": "2026-11-16.1",
+  "created_at": "2026-11-16T03:27:01+00:00",
+  "usage": {
+    "input_tokens": 7698,
+    "output_tokens": 1363
+  },
+  "payload": {
+    "invoice_number": {
+      "evidence": "INVOICE NO.\nOE/2026/583",
+      "value": "OE/2026/583",
+      "confidence": 0.99,
+      "page": 1
+    },
+    "supplier": {
+      "name": {
+        "page": 1,
+        "value": "Orbit Electricals",
+        "confidence": 0.99,
+        "evidence": "Orbit Electricals"
+      },
+      "email": {
+        "confidence": 0.99,
+        "page": 1,
+        "value": "accounts@orbitelectricals.in",
+        "evidence": "accounts@orbitelectricals.in"
+      },
+      "address": {
+        "evidence": "B-61, Okhla Industrial Area Phase I\nNew Delhi 110020, Delhi, India",
+        "page": 1,
+        "confidence": 0.99,
+        "value": "B-61, Okhla Industrial Area Phase I\nNew Delhi 110020, Delhi, India"
+      },
+      "tax_id": {
+        "confidence": 0.99,
+        "value": "07AAGFO3317H1Z6",
+        "evidence": "GSTIN: 07AAGFO3317H1Z6",
+        "page": 1
+      }
+    },
+    "line_items": [
+      {
+        "line_no": 1,
+        "tax_rate_pct": {
+          "confidence": 0.99,
+          "page": 1,
+          "evidence": "18%",
+          "value": "18%"
+        },
+        "unit_price": {
+          "value": "1,700.00",
+          "evidence": "1,700.00",
+          "page": 1,
+          "confidence": 0.99
+        },
+        "qty": {
+          "evidence": "100",
+          "page": 1,
+          "value": "100",
+          "confidence": 0.99
+        },
+        "description": {
+          "evidence": "8-way TPN distribution board, double door",
+          "value": "8-way TPN distribution board, double door",
+          "page": 1,
+          "confidence": 0.99
+        },
+        "uom": {
+          "evidence": "NOS",
+          "value": "NOS",
+          "confidence": 0.99,
+          "page": 1
+        },
+        "sku": {
+          "evidence": "DB-8W",
+          "confidence": 0.99,
+          "value": "DB-8W",
+          "page": 1
+        },
+        "line_total": {
+          "evidence": "1,70,000.00",
+          "value": "1,70,000.00",
+          "confidence": 0.99,
+          "page": 1
+        }
+      }
+    ],
+    "buyer": {
+      "name": {
+        "confidence": 0.99,
+        "page": 1,
+        "value": "Halden Precision Engineering Pvt Ltd",
+        "evidence": "Halden Precision Engineering Pvt Ltd"
+      },
+      "tax_id": {
+        "confidence": 0.99,
+        "value": "29AAECH0007L1Z2",
+        "page": 1,
+        "evidence": "GSTIN: 29AAECH0007L1Z2"
+      }
+    },
+    "po_references": [
+      {
+        "value": "PO-2047",
+        "confidence": 0.99,
+        "explicit": true,
+        "evidence": "PO REFERENCE\nPO-2047"
+      }
+    ],
+    "payment": {
+      "account_number": {
+        "page": 1,
+        "confidence": 0.99,
+        "value": "••••••3317",
+        "evidence": "A/c No.:\n••••••3317"
+      },
+      "beneficiary_name": {
+        "confidence": 0.99,
+        "page": 1,
+        "value": "Orbit Electricals",
+        "evidence": "A/c Name:\nOrbit Electricals"
+      },
+      "bank_name": {
+        "evidence": "Bank:\nKotak Mahindra Bank, Okhla Branch",
+        "page": 1,
+        "value": "Kotak Mahindra Bank, Okhla Branch",
+        "confidence": 0.99
+      },
+      "ifsc_or_swift": {
+        "page": 1,
+        "confidence": 0.99,
+        "evidence": "IFSC:\nKKBK0000172",
+        "value": "KKBK0000172"
+      },
+      "terms": {
+        "evidence": "Payment: Net 30 days",
+        "value": "Payment: Net 30 days",
+        "page": 1,
+        "confidence": 0.99
+      }
+    },
+    "document_quality": {
+      "pages": 1,
+      "issues": [],
+      "is_scan": false,
+      "legibility": 1
+    },
+    "unreadable_regions": [],
+    "document_type": "tax_invoice",
+    "notes": "",
+    "invoice_date": {
+      "value": "09/11/2026",
+      "confidence": 0.99,
+      "evidence": "INVOICE DATE\n09/11/2026",
+      "page": 1
+    },
+    "due_date": {
+      "value": "09/12/2026",
+      "confidence": 0.99,
+      "page": 1,
+      "evidence": "DUE DATE\n09/12/2026"
+    },
+    "totals": {
+      "tax_breakdown": [
+        {
+          "amount": {
+            "evidence": "30,600.00",
+            "value": "30,600.00",
+            "confidence": 0.99,
+            "page": 1
+          },
+          "label": "IGST @ 18%"
+        }
+      ],
+      "subtotal": {
+        "value": "1,70,000.00",
+        "evidence": "Taxable Value\n1,70,000.00",
+        "page": 1,
+        "confidence": 0.99
+      },
+      "grand_total": {
+        "page": 1,
+        "evidence": "2,04,800.00",
+        "value": "2,04,800.00",
+        "confidence": 0.99
+      },
+      "amount_in_words": {
+        "page": 1,
+        "confidence": 0.99,
+        "evidence": "Rupees Two Lakh Four Thousand Eight Hundred Only",
+        "value": "Rupees Two Lakh Four Thousand Eight Hundred Only"
+      },
+      "discount": {
+        "evidence": null,
+        "page": null,
+        "confidence": 0,
+        "value": null
+      },
+      "tax_total": {
+        "evidence": "30,600.00",
+        "page": 1,
+        "value": "30,600.00",
+        "confidence": 0.99
+      },
+      "shipping": {
+        "value": "4,200.00",
+        "page": 1,
+        "evidence": "Freight & Forwarding\n4,200.00",
+        "confidence": 0.99
+      }
+    },
+    "currency": {
+      "value": "INR",
+      "evidence": "Grand Total (INR)",
+      "confidence": 0.99,
+      "page": 1
+    }
+  },
+  "responses": [
+    {
+      "sdk_http_response": {
+        "headers": {
+          "x-gemini-service-tier": "standard",
+          "content-type": "application/json; charset=UTF-8",
+          "vary": "Origin, X-Origin, Referer",
+          "content-encoding": "gzip",
+          "date": "Mon, 16 Nov 2026 03:27:01 GMT",
+          "server": "scaffolding on HTTPServer2",
+          "x-xss-protection": "0",
+          "x-frame-options": "SAMEORIGIN",
+          "x-content-type-options": "nosniff",
+          "server-timing": "gfet4t7; dur=6175",
+          "alt-svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+          "transfer-encoding": "chunked"
+        }
+      },
+      "candidates": [
+        {
+          "content": {
+            "parts": [
+              {
+                "function_call": {
+                  "id": "call_15845549125689593883",
+                  "args": {
+                    "invoice_number": {
+                      "evidence": "INVOICE NO.\nOE/2026/583",
+                      "value": "OE/2026/583",
+                      "confidence": 0.99,
+                      "page": 1
+                    },
+                    "supplier": {
+                      "name": {
+                        "page": 1,
+                        "value": "Orbit Electricals",
+                        "confidence": 0.99,
+                        "evidence": "Orbit Electricals"
+                      },
+                      "email": {
+                        "confidence": 0.99,
+                        "page": 1,
+                        "value": "accounts@orbitelectricals.in",
+                        "evidence": "accounts@orbitelectricals.in"
+                      },
+                      "address": {
+                        "evidence": "B-61, Okhla Industrial Area Phase I\nNew Delhi 110020, Delhi, India",
+                        "page": 1,
+                        "confidence": 0.99,
+                        "value": "B-61, Okhla Industrial Area Phase I\nNew Delhi 110020, Delhi, India"
+                      },
+                      "tax_id": {
+                        "confidence": 0.99,
+                        "value": "07AAGFO3317H1Z6",
+                        "evidence": "GSTIN: 07AAGFO3317H1Z6",
+                        "page": 1
+                      }
+                    },
+                    "line_items": [
+                      {
+                        "line_no": 1,
+                        "tax_rate_pct": {
+                          "confidence": 0.99,
+                          "page": 1,
+                          "evidence": "18%",
+                          "value": "18%"
+                        },
+                        "unit_price": {
+                          "value": "1,700.00",
+                          "evidence": "1,700.00",
+                          "page": 1,
+                          "confidence": 0.99
+                        },
+                        "qty": {
+                          "evidence": "100",
+                          "page": 1,
+                          "value": "100",
+                          "confidence": 0.99
+                        },
+                        "description": {
+                          "evidence": "8-way TPN distribution board, double door",
+                          "value": "8-way TPN distribution board, double door",
+                          "page": 1,
+                          "confidence": 0.99
+                        },
+                        "uom": {
+                          "evidence": "NOS",
+                          "value": "NOS",
+                          "confidence": 0.99,
+                          "page": 1
+                        },
+                        "sku": {
+                          "evidence": "DB-8W",
+                          "confidence": 0.99,
+                          "value": "DB-8W",
+                          "page": 1
+                        },
+                        "line_total": {
+                          "evidence": "1,70,000.00",
+                          "value": "1,70,000.00",
+                          "confidence": 0.99,
+                          "page": 1
+                        }
+                      }
+                    ],
+                    "buyer": {
+                      "name": {
+                        "confidence": 0.99,
+                        "page": 1,
+                        "value": "Halden Precision Engineering Pvt Ltd",
+                        "evidence": "Halden Precision Engineering Pvt Ltd"
+                      },
+                      "tax_id": {
+                        "confidence": 0.99,
+                        "value": "29AAECH0007L1Z2",
+                        "page": 1,
+                        "evidence": "GSTIN: 29AAECH0007L1Z2"
+                      }
+                    },
+                    "po_references": [
+                      {
+                        "value": "PO-2047",
+                        "confidence": 0.99,
+                        "explicit": true,
+                        "evidence": "PO REFERENCE\nPO-2047"
+                      }
+                    ],
+                    "payment": {
+                      "account_number": {
+                        "page": 1,
+                        "confidence": 0.99,
+                        "value": "••••••3317",
+                        "evidence": "A/c No.:\n••••••3317"
+                      },
+                      "beneficiary_name": {
+                        "confidence": 0.99,
+                        "page": 1,
+                        "value": "Orbit Electricals",
+                        "evidence": "A/c Name:\nOrbit Electricals"
+                      },
+                      "bank_name": {
+                        "evidence": "Bank:\nKotak Mahindra Bank, Okhla Branch",
+                        "page": 1,
+                        "value": "Kotak Mahindra Bank, Okhla Branch",
+                        "confidence": 0.99
+                      },
+                      "ifsc_or_swift": {
+                        "page": 1,
+                        "confidence": 0.99,
+                        "evidence": "IFSC:\nKKBK0000172",
+                        "value": "KKBK0000172"
+                      },
+                      "terms": {
+                        "evidence": "Payment: Net 30 days",
+                        "value": "Payment: Net 30 days",
+                        "page": 1,
+                        "confidence": 0.99
+                      }
+                    },
+                    "document_quality": {
+                      "pages": 1,
+                      "issues": [],
+                      "is_scan": false,
+                      "legibility": 1
+                    },
+                    "unreadable_regions": [],
+                    "document_type": "tax_invoice",
+                    "notes": "",
+                    "invoice_date": {
+                      "value": "09/11/2026",
+                      "confidence": 0.99,
+                      "evidence": "INVOICE DATE\n09/11/2026",
+                      "page": 1
+                    },
+                    "due_date": {
+                      "value": "09/12/2026",
+                      "confidence": 0.99,
+                      "page": 1,
+                      "evidence": "DUE DATE\n09/12/2026"
+                    },
+                    "totals": {
+                      "tax_breakdown": [
+                        {
+                          "amount": {
+                            "evidence": "30,600.00",
+                            "value": "30,600.00",
+                            "confidence": 0.99,
+                            "page": 1
+                          },
+                          "label": "IGST @ 18%"
+                        }
+                      ],
+                      "subtotal": {
+                        "value": "1,70,000.00",
+                        "evidence": "Taxable Value\n1,70,000.00",
+                        "page": 1,
+                        "confidence": 0.99
+                      },
+                      "grand_total": {
+                        "page": 1,
+                        "evidence": "2,04,800.00",
+                        "value": "2,04,800.00",
+                        "confidence": 0.99
+                      },
+                      "amount_in_words": {
+                        "page": 1,
+                        "confidence": 0.99,
+                        "evidence": "Rupees Two Lakh Four Thousand Eight Hundred Only",
+                        "value": "Rupees Two Lakh Four Thousand Eight Hundred Only"
+                      },
+                      "discount": {
+                        "evidence": null,
+                        "page": null,
+                        "confidence": 0,
+                        "value": null
+                      },
+                      "tax_total": {
+                        "evidence": "30,600.00",
+                        "page": 1,
+                        "value": "30,600.00",
+                        "confidence": 0.99
+                      },
+                      "shipping": {
+                        "value": "4,200.00",
+                        "page": 1,
+                        "evidence": "Freight & Forwarding\n4,200.00",
+                        "confidence": 0.99
+                      }
+                    },
+                    "currency": {
+                      "value": "INR",
+                      "evidence": "Grand Total (INR)",
+                      "confidence": 0.99,
+                      "page": 1
+                    }
+                  },
+                  "name": "record_invoice_extraction"
+                },
+                "thought_signature": "EmkKZwFpFH0TQTJc-0g2givt34H5V2rNDknxWDbK6u75Z9zzMeoIhXGxGg2meT5BkGMlx9BM6P_noAKTScaeYHAjNS9ycx0P-2AQyqgE6zoc-25R2erwgGwLc2yAMAjOBbZQ-rQwPy_SeNg="
+              }
+            ],
+            "role": "model"
+          },
+          "finish_reason": "STOP",
+          "index": 0
+        }
+      ],
+      "model_version": "gemini-3.6-flash",
+      "response_id": "AHj6ataZGuSM694PvfL1-AQ",
+      "usage_metadata": {
+        "candidates_token_count": 1363,
+        "prompt_token_count": 7698,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 6606
+          },
+          {
+            "modality": "IMAGE",
+            "token_count": 1092
+          }
+        ],
+        "total_token_count": 9061
+      }
+    }
+  ]
+}

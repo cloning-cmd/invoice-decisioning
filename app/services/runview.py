@@ -19,6 +19,7 @@ from PIL import Image, ImageOps
 from app import config, db
 from app.pipeline.stages.s09_decide import VERDICT_WORDS
 from app.services.money import format_money
+from app.services.ocr import processed_page_path
 
 
 class NotFound(LookupError):
@@ -131,11 +132,6 @@ def record(conn, run_id: str, include_raw: bool = False) -> dict[str, Any]:
 
 
 # ---------------------------------------------------------------- page images
-
-def processed_page_path(sha256: str, page: int) -> Path:
-    """Where S03 writes the preprocessed raster of a page (1-based)."""
-    return config.UPLOADS_DIR / sha256 / f"processed-{page}.png"
-
 
 def _write_atomic(path: Path, data: bytes) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)

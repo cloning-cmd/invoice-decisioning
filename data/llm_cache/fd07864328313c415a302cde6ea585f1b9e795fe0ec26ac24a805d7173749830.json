@@ -1,0 +1,499 @@
+{
+  "sha256": "fd07864328313c415a302cde6ea585f1b9e795fe0ec26ac24a805d7173749830",
+  "model": "gemini-3.5-flash",
+  "prompt_version": "2026-11-16.1",
+  "created_at": "2026-11-16T03:27:21+00:00",
+  "usage": {
+    "input_tokens": 7630,
+    "output_tokens": 1409
+  },
+  "payload": {
+    "invoice_number": {
+      "page": 1,
+      "confidence": 0.99,
+      "evidence": "INVOICE NO.\nOE/2026/598",
+      "value": "OE/2026/598"
+    },
+    "totals": {
+      "shipping": {
+        "evidence": null,
+        "page": null,
+        "value": null,
+        "confidence": 0
+      },
+      "subtotal": {
+        "evidence": "Taxable Value 25,500.00",
+        "value": "25,500.00",
+        "confidence": 0.99,
+        "page": 1
+      },
+      "grand_total": {
+        "page": 1,
+        "confidence": 0.99,
+        "value": "30,090.00",
+        "evidence": "Grand Total (INR) 30,090.00"
+      },
+      "tax_breakdown": [
+        {
+          "amount": {
+            "evidence": "IGST @ 18% 4,590.00",
+            "confidence": 0.99,
+            "value": "4,590.00",
+            "page": 1
+          },
+          "label": "IGST @ 18%"
+        }
+      ],
+      "tax_total": {
+        "page": 1,
+        "value": "4,590.00",
+        "evidence": "IGST @ 18% 4,590.00",
+        "confidence": 0.99
+      },
+      "amount_in_words": {
+        "page": 1,
+        "value": "Rupees Thirty Thousand Ninety Only",
+        "evidence": "AMOUNT IN WORDS\nRupees Thirty Thousand Ninety Only",
+        "confidence": 0.99
+      },
+      "discount": {
+        "confidence": 0,
+        "evidence": null,
+        "value": null,
+        "page": null
+      }
+    },
+    "buyer": {
+      "tax_id": {
+        "value": "29AAECH0007L1Z2",
+        "evidence": "GSTIN: 29AAECH0007L1Z2",
+        "confidence": 0.99,
+        "page": 1
+      },
+      "name": {
+        "value": "Halden Precision Engineering Pvt Ltd",
+        "confidence": 0.99,
+        "page": 1,
+        "evidence": "BILL TO\nHalden Precision Engineering Pvt Ltd"
+      }
+    },
+    "payment": {
+      "terms": {
+        "page": 1,
+        "value": "Net 30 days",
+        "confidence": 0.99,
+        "evidence": "Payment: Net 30 days"
+      },
+      "bank_name": {
+        "value": "Kotak Mahindra Bank, Okhla Branch",
+        "confidence": 0.99,
+        "page": 1,
+        "evidence": "Bank: Kotak Mahindra Bank, Okhla Branch"
+      },
+      "beneficiary_name": {
+        "value": "Orbit Electricals",
+        "evidence": "A/c Name: Orbit Electricals",
+        "confidence": 0.99,
+        "page": 1
+      },
+      "account_number": {
+        "evidence": "A/c No.: ••••••3317",
+        "page": 1,
+        "value": "••••••3317",
+        "confidence": 0.99
+      },
+      "ifsc_or_swift": {
+        "evidence": "IFSC: KKBK0000172",
+        "page": 1,
+        "value": "KKBK0000172",
+        "confidence": 0.99
+      }
+    },
+    "line_items": [
+      {
+        "unit_price": {
+          "value": "255.00",
+          "confidence": 0.99,
+          "evidence": "255.00",
+          "page": 1
+        },
+        "uom": {
+          "page": 1,
+          "confidence": 0.99,
+          "value": "NOS",
+          "evidence": "NOS"
+        },
+        "qty": {
+          "confidence": 0.99,
+          "page": 1,
+          "evidence": "100",
+          "value": "100"
+        },
+        "description": {
+          "page": 1,
+          "value": "MCB 32A C-curve, 10kA, 1 pole",
+          "evidence": "MCB 32A C-curve, 10kA, 1 pole",
+          "confidence": 0.99
+        },
+        "tax_rate_pct": {
+          "page": 1,
+          "value": "18%",
+          "confidence": 0.99,
+          "evidence": "18%"
+        },
+        "line_no": 1,
+        "line_total": {
+          "confidence": 0.99,
+          "evidence": "25,500.00",
+          "page": 1,
+          "value": "25,500.00"
+        },
+        "sku": {
+          "evidence": "MCB-32C",
+          "value": "MCB-32C",
+          "page": 1,
+          "confidence": 0.99
+        }
+      }
+    ],
+    "document_quality": {
+      "is_scan": false,
+      "legibility": 0.99,
+      "issues": [],
+      "pages": 1
+    },
+    "due_date": {
+      "value": "11/12/2026",
+      "page": 1,
+      "confidence": 0.99,
+      "evidence": "DUE DATE\n11/12/2026"
+    },
+    "document_type": "tax_invoice",
+    "unreadable_regions": [],
+    "currency": {
+      "value": "INR",
+      "evidence": "Grand Total (INR)",
+      "page": 1,
+      "confidence": 0.99
+    },
+    "invoice_date": {
+      "confidence": 0.99,
+      "page": 1,
+      "value": "11/11/2026",
+      "evidence": "INVOICE DATE\n11/11/2026"
+    },
+    "po_references": [
+      {
+        "confidence": 0.99,
+        "value": "PO-2051",
+        "evidence": "PO REFERENCE\nPO-2051",
+        "explicit": true
+      },
+      {
+        "confidence": 0.99,
+        "value": "PO-2051",
+        "explicit": false,
+        "evidence": "Part delivery against PO-2051"
+      }
+    ],
+    "supplier": {
+      "email": {
+        "evidence": "accounts@orbitelectricals.in",
+        "confidence": 0.99,
+        "page": 1,
+        "value": "accounts@orbitelectricals.in"
+      },
+      "address": {
+        "confidence": 0.99,
+        "value": "B-61, Okhla Industrial Area Phase I\nNew Delhi 110020, Delhi, India",
+        "page": 1,
+        "evidence": "B-61, Okhla Industrial Area Phase I\nNew Delhi 110020, Delhi, India"
+      },
+      "name": {
+        "page": 1,
+        "value": "Orbit Electricals",
+        "evidence": "Orbit Electricals",
+        "confidence": 0.99
+      },
+      "tax_id": {
+        "page": 1,
+        "confidence": 0.99,
+        "value": "07AAGFO3317H1Z6",
+        "evidence": "GSTIN: 07AAGFO3317H1Z6"
+      }
+    },
+    "notes": "Light watermark background ('COPY') present on page, all fields fully legible."
+  },
+  "responses": [
+    {
+      "sdk_http_response": {
+        "headers": {
+          "x-gemini-service-tier": "standard",
+          "content-type": "application/json; charset=UTF-8",
+          "vary": "Origin, X-Origin, Referer",
+          "content-encoding": "gzip",
+          "date": "Mon, 16 Nov 2026 03:27:21 GMT",
+          "server": "scaffolding on HTTPServer2",
+          "x-xss-protection": "0",
+          "x-frame-options": "SAMEORIGIN",
+          "x-content-type-options": "nosniff",
+          "server-timing": "gfet4t7; dur=6560",
+          "alt-svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+          "transfer-encoding": "chunked"
+        }
+      },
+      "candidates": [
+        {
+          "content": {
+            "parts": [
+              {
+                "function_call": {
+                  "id": "call_4695773859454010453",
+                  "args": {
+                    "invoice_number": {
+                      "page": 1,
+                      "confidence": 0.99,
+                      "evidence": "INVOICE NO.\nOE/2026/598",
+                      "value": "OE/2026/598"
+                    },
+                    "totals": {
+                      "shipping": {
+                        "evidence": null,
+                        "page": null,
+                        "value": null,
+                        "confidence": 0
+                      },
+                      "subtotal": {
+                        "evidence": "Taxable Value 25,500.00",
+                        "value": "25,500.00",
+                        "confidence": 0.99,
+                        "page": 1
+                      },
+                      "grand_total": {
+                        "page": 1,
+                        "confidence": 0.99,
+                        "value": "30,090.00",
+                        "evidence": "Grand Total (INR) 30,090.00"
+                      },
+                      "tax_breakdown": [
+                        {
+                          "amount": {
+                            "evidence": "IGST @ 18% 4,590.00",
+                            "confidence": 0.99,
+                            "value": "4,590.00",
+                            "page": 1
+                          },
+                          "label": "IGST @ 18%"
+                        }
+                      ],
+                      "tax_total": {
+                        "page": 1,
+                        "value": "4,590.00",
+                        "evidence": "IGST @ 18% 4,590.00",
+                        "confidence": 0.99
+                      },
+                      "amount_in_words": {
+                        "page": 1,
+                        "value": "Rupees Thirty Thousand Ninety Only",
+                        "evidence": "AMOUNT IN WORDS\nRupees Thirty Thousand Ninety Only",
+                        "confidence": 0.99
+                      },
+                      "discount": {
+                        "confidence": 0,
+                        "evidence": null,
+                        "value": null,
+                        "page": null
+                      }
+                    },
+                    "buyer": {
+                      "tax_id": {
+                        "value": "29AAECH0007L1Z2",
+                        "evidence": "GSTIN: 29AAECH0007L1Z2",
+                        "confidence": 0.99,
+                        "page": 1
+                      },
+                      "name": {
+                        "value": "Halden Precision Engineering Pvt Ltd",
+                        "confidence": 0.99,
+                        "page": 1,
+                        "evidence": "BILL TO\nHalden Precision Engineering Pvt Ltd"
+                      }
+                    },
+                    "payment": {
+                      "terms": {
+                        "page": 1,
+                        "value": "Net 30 days",
+                        "confidence": 0.99,
+                        "evidence": "Payment: Net 30 days"
+                      },
+                      "bank_name": {
+                        "value": "Kotak Mahindra Bank, Okhla Branch",
+                        "confidence": 0.99,
+                        "page": 1,
+                        "evidence": "Bank: Kotak Mahindra Bank, Okhla Branch"
+                      },
+                      "beneficiary_name": {
+                        "value": "Orbit Electricals",
+                        "evidence": "A/c Name: Orbit Electricals",
+                        "confidence": 0.99,
+                        "page": 1
+                      },
+                      "account_number": {
+                        "evidence": "A/c No.: ••••••3317",
+                        "page": 1,
+                        "value": "••••••3317",
+                        "confidence": 0.99
+                      },
+                      "ifsc_or_swift": {
+                        "evidence": "IFSC: KKBK0000172",
+                        "page": 1,
+                        "value": "KKBK0000172",
+                        "confidence": 0.99
+                      }
+                    },
+                    "line_items": [
+                      {
+                        "unit_price": {
+                          "value": "255.00",
+                          "confidence": 0.99,
+                          "evidence": "255.00",
+                          "page": 1
+                        },
+                        "uom": {
+                          "page": 1,
+                          "confidence": 0.99,
+                          "value": "NOS",
+                          "evidence": "NOS"
+                        },
+                        "qty": {
+                          "confidence": 0.99,
+                          "page": 1,
+                          "evidence": "100",
+                          "value": "100"
+                        },
+                        "description": {
+                          "page": 1,
+                          "value": "MCB 32A C-curve, 10kA, 1 pole",
+                          "evidence": "MCB 32A C-curve, 10kA, 1 pole",
+                          "confidence": 0.99
+                        },
+                        "tax_rate_pct": {
+                          "page": 1,
+                          "value": "18%",
+                          "confidence": 0.99,
+                          "evidence": "18%"
+                        },
+                        "line_no": 1,
+                        "line_total": {
+                          "confidence": 0.99,
+                          "evidence": "25,500.00",
+                          "page": 1,
+                          "value": "25,500.00"
+                        },
+                        "sku": {
+                          "evidence": "MCB-32C",
+                          "value": "MCB-32C",
+                          "page": 1,
+                          "confidence": 0.99
+                        }
+                      }
+                    ],
+                    "document_quality": {
+                      "is_scan": false,
+                      "legibility": 0.99,
+                      "issues": [],
+                      "pages": 1
+                    },
+                    "due_date": {
+                      "value": "11/12/2026",
+                      "page": 1,
+                      "confidence": 0.99,
+                      "evidence": "DUE DATE\n11/12/2026"
+                    },
+                    "document_type": "tax_invoice",
+                    "unreadable_regions": [],
+                    "currency": {
+                      "value": "INR",
+                      "evidence": "Grand Total (INR)",
+                      "page": 1,
+                      "confidence": 0.99
+                    },
+                    "invoice_date": {
+                      "confidence": 0.99,
+                      "page": 1,
+                      "value": "11/11/2026",
+                      "evidence": "INVOICE DATE\n11/11/2026"
+                    },
+                    "po_references": [
+                      {
+                        "confidence": 0.99,
+                        "value": "PO-2051",
+                        "evidence": "PO REFERENCE\nPO-2051",
+                        "explicit": true
+                      },
+                      {
+                        "confidence": 0.99,
+                        "value": "PO-2051",
+                        "explicit": false,
+                        "evidence": "Part delivery against PO-2051"
+                      }
+                    ],
+                    "supplier": {
+                      "email": {
+                        "evidence": "accounts@orbitelectricals.in",
+                        "confidence": 0.99,
+                        "page": 1,
+                        "value": "accounts@orbitelectricals.in"
+                      },
+                      "address": {
+                        "confidence": 0.99,
+                        "value": "B-61, Okhla Industrial Area Phase I\nNew Delhi 110020, Delhi, India",
+                        "page": 1,
+                        "evidence": "B-61, Okhla Industrial Area Phase I\nNew Delhi 110020, Delhi, India"
+                      },
+                      "name": {
+                        "page": 1,
+                        "value": "Orbit Electricals",
+                        "evidence": "Orbit Electricals",
+                        "confidence": 0.99
+                      },
+                      "tax_id": {
+                        "page": 1,
+                        "confidence": 0.99,
+                        "value": "07AAGFO3317H1Z6",
+                        "evidence": "GSTIN: 07AAGFO3317H1Z6"
+                      }
+                    },
+                    "notes": "Light watermark background ('COPY') present on page, all fields fully legible."
+                  },
+                  "name": "record_invoice_extraction"
+                },
+                "thought_signature": "EmkKZwFpFH0TKAaEQF0QFuQEoSW0P9K2PnJ9OVABoE2PltwNKmJaAz31wNY0Drc63KkAsodd3etVtLEKAr-7TJfW4dsl05asabzX0VgxF1OjrEQHOvFJEdwEqxs_ZrdIFvU7GfUnTbEMkh8="
+              }
+            ],
+            "role": "model"
+          },
+          "finish_reason": "STOP",
+          "index": 0
+        }
+      ],
+      "model_version": "gemini-3.6-flash",
+      "response_id": "FHj6av-4Ctz0v_gPiP_1kAs",
+      "usage_metadata": {
+        "candidates_token_count": 1409,
+        "prompt_token_count": 7630,
+        "prompt_tokens_details": [
+          {
+            "modality": "IMAGE",
+            "token_count": 1092
+          },
+          {
+            "modality": "TEXT",
+            "token_count": 6538
+          }
+        ],
+        "total_token_count": 9039
+      }
+    }
+  ]
+}

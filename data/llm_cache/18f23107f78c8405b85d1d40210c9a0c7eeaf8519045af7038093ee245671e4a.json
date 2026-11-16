@@ -1,0 +1,667 @@
+{
+  "sha256": "18f23107f78c8405b85d1d40210c9a0c7eeaf8519045af7038093ee245671e4a",
+  "model": "gemini-3.5-flash",
+  "prompt_version": "2026-11-16.1",
+  "created_at": "2026-11-16T03:26:52+00:00",
+  "usage": {
+    "input_tokens": 7801,
+    "output_tokens": 1878
+  },
+  "payload": {
+    "supplier": {
+      "tax_id": {
+        "value": "33AADCK6652Q1Z7",
+        "confidence": 0.99,
+        "evidence": "GSTIN: 33AADCK6652Q1Z7",
+        "page": 1
+      },
+      "name": {
+        "page": 1,
+        "evidence": "Kaveri Logistics Pvt Ltd",
+        "value": "Kaveri Logistics Pvt Ltd",
+        "confidence": 0.99
+      },
+      "email": {
+        "evidence": "accounts@kaveri-logistics.co",
+        "value": "accounts@kaveri-logistics.co",
+        "page": 1,
+        "confidence": 0.99
+      },
+      "address": {
+        "confidence": 0.99,
+        "evidence": "SP-14, SIDCO Industrial Estate, Guindy\nChennai 600032, Tamil Nadu, India",
+        "value": "SP-14, SIDCO Industrial Estate, Guindy\nChennai 600032, Tamil Nadu, India",
+        "page": 1
+      }
+    },
+    "notes": "",
+    "buyer": {
+      "name": {
+        "value": "Halden Precision Engineering Pvt Ltd",
+        "evidence": "Halden Precision Engineering Pvt Ltd",
+        "confidence": 0.99,
+        "page": 1
+      },
+      "tax_id": {
+        "evidence": "GSTIN: 29AAECH0007L1Z2",
+        "value": "29AAECH0007L1Z2",
+        "confidence": 0.99,
+        "page": 1
+      }
+    },
+    "document_quality": {
+      "is_scan": false,
+      "pages": 1,
+      "issues": [],
+      "legibility": 0.99
+    },
+    "unreadable_regions": [],
+    "payment": {
+      "bank_name": {
+        "value": "Kotak Mahindra Bank, Guindy Branch",
+        "confidence": 0.99,
+        "page": 1,
+        "evidence": "Bank:\nKotak Mahindra Bank, Guindy Branch"
+      },
+      "beneficiary_name": {
+        "value": "Kaveri Logistics Pvt Ltd",
+        "confidence": 0.99,
+        "evidence": "A/c Name:\nKaveri Logistics Pvt Ltd",
+        "page": 1
+      },
+      "terms": {
+        "page": 1,
+        "evidence": "Payment: 15 days from invoice date",
+        "confidence": 0.99,
+        "value": "15 days from invoice date"
+      },
+      "ifsc_or_swift": {
+        "page": 1,
+        "value": "KKBK0008817",
+        "confidence": 0.99,
+        "evidence": "IFSC:\nKKBK0008817"
+      },
+      "account_number": {
+        "confidence": 0.99,
+        "evidence": "A/c No.:\n••••••9043",
+        "value": "••••••9043",
+        "page": 1
+      }
+    },
+    "line_items": [
+      {
+        "uom": {
+          "page": 1,
+          "confidence": 0.99,
+          "evidence": "PLT",
+          "value": "PLT"
+        },
+        "tax_rate_pct": {
+          "confidence": 0.99,
+          "evidence": "18%",
+          "value": "18%",
+          "page": 1
+        },
+        "unit_price": {
+          "value": "220.00",
+          "confidence": 0.99,
+          "page": 1,
+          "evidence": "220.00"
+        },
+        "line_total": {
+          "page": 1,
+          "evidence": "1,54,000.00",
+          "value": "1,54,000.00",
+          "confidence": 0.99
+        },
+        "sku": {
+          "value": "WH-PLT",
+          "evidence": "WH-PLT",
+          "confidence": 0.99,
+          "page": 1
+        },
+        "qty": {
+          "value": "700",
+          "evidence": "700",
+          "page": 1,
+          "confidence": 0.99
+        },
+        "description": {
+          "evidence": "Pallet storage, October 2026",
+          "page": 1,
+          "confidence": 0.99,
+          "value": "Pallet storage, October 2026"
+        },
+        "line_no": 1
+      },
+      {
+        "uom": {
+          "page": 1,
+          "value": "PKG",
+          "evidence": "PKG",
+          "confidence": 0.99
+        },
+        "tax_rate_pct": {
+          "page": 1,
+          "confidence": 0.99,
+          "evidence": "18%",
+          "value": "18%"
+        },
+        "line_no": 2,
+        "sku": {
+          "page": 1,
+          "value": "HDL-IN",
+          "confidence": 0.99,
+          "evidence": "HDL-IN"
+        },
+        "description": {
+          "value": "Inbound handling and put-away",
+          "evidence": "Inbound handling and put-away",
+          "page": 1,
+          "confidence": 0.99
+        },
+        "line_total": {
+          "confidence": 0.99,
+          "evidence": "45,000.00",
+          "page": 1,
+          "value": "45,000.00"
+        },
+        "unit_price": {
+          "evidence": "45.00",
+          "page": 1,
+          "confidence": 0.99,
+          "value": "45.00"
+        },
+        "qty": {
+          "value": "1000",
+          "evidence": "1000",
+          "confidence": 0.99,
+          "page": 1
+        }
+      },
+      {
+        "qty": {
+          "evidence": "1000",
+          "page": 1,
+          "confidence": 0.99,
+          "value": "1000"
+        },
+        "sku": {
+          "confidence": 0.99,
+          "page": 1,
+          "value": "HDL-OUT",
+          "evidence": "HDL-OUT"
+        },
+        "line_no": 3,
+        "line_total": {
+          "value": "45,000.00",
+          "page": 1,
+          "confidence": 0.99,
+          "evidence": "45,000.00"
+        },
+        "unit_price": {
+          "evidence": "45.00",
+          "value": "45.00",
+          "page": 1,
+          "confidence": 0.99
+        },
+        "description": {
+          "confidence": 0.99,
+          "value": "Outbound picking and dispatch",
+          "page": 1,
+          "evidence": "Outbound picking and dispatch"
+        },
+        "tax_rate_pct": {
+          "evidence": "18%",
+          "value": "18%",
+          "page": 1,
+          "confidence": 0.99
+        },
+        "uom": {
+          "page": 1,
+          "evidence": "PKG",
+          "value": "PKG",
+          "confidence": 0.99
+        }
+      }
+    ],
+    "currency": {
+      "value": "INR",
+      "evidence": "Grand Total (INR)",
+      "confidence": 0.99,
+      "page": 1
+    },
+    "invoice_number": {
+      "confidence": 0.99,
+      "page": 1,
+      "evidence": "Invoice No.\nKLPL/2026/1241",
+      "value": "KLPL/2026/1241"
+    },
+    "invoice_date": {
+      "confidence": 0.99,
+      "page": 1,
+      "evidence": "Invoice Date\n08/11/2026",
+      "value": "08/11/2026"
+    },
+    "document_type": "tax_invoice",
+    "due_date": {
+      "evidence": "Due Date\n23/11/2026",
+      "value": "23/11/2026",
+      "confidence": 0.99,
+      "page": 1
+    },
+    "totals": {
+      "tax_total": {
+        "confidence": 0.99,
+        "page": 1,
+        "value": "43,920.00",
+        "evidence": "IGST @ 18%\n43,920.00"
+      },
+      "discount": {
+        "evidence": null,
+        "page": null,
+        "value": null,
+        "confidence": 0
+      },
+      "grand_total": {
+        "page": 1,
+        "confidence": 0.99,
+        "evidence": "Grand Total (INR)\n2,98,400.00",
+        "value": "2,98,400.00"
+      },
+      "amount_in_words": {
+        "evidence": "AMOUNT IN WORDS\nRupees Two Lakh Ninety-Eight Thousand Four Hundred Only",
+        "confidence": 0.99,
+        "page": 1,
+        "value": "Rupees Two Lakh Ninety-Eight Thousand Four Hundred Only"
+      },
+      "subtotal": {
+        "page": 1,
+        "value": "2,44,000.00",
+        "confidence": 0.99,
+        "evidence": "Taxable Value\n2,44,000.00"
+      },
+      "shipping": {
+        "page": 1,
+        "confidence": 0.99,
+        "evidence": "Freight & Forwarding\n10,480.00",
+        "value": "10,480.00"
+      },
+      "tax_breakdown": [
+        {
+          "amount": {
+            "evidence": "43,920.00",
+            "page": 1,
+            "confidence": 0.99,
+            "value": "43,920.00"
+          },
+          "label": "IGST @ 18%"
+        }
+      ]
+    },
+    "po_references": [
+      {
+        "evidence": "Buyer's PO No.\nPO-2044",
+        "value": "PO-2044",
+        "explicit": true,
+        "confidence": 0.99
+      }
+    ]
+  },
+  "responses": [
+    {
+      "sdk_http_response": {
+        "headers": {
+          "x-gemini-service-tier": "standard",
+          "content-type": "application/json; charset=UTF-8",
+          "vary": "Origin, X-Origin, Referer",
+          "content-encoding": "gzip",
+          "date": "Mon, 16 Nov 2026 03:26:53 GMT",
+          "server": "scaffolding on HTTPServer2",
+          "x-xss-protection": "0",
+          "x-frame-options": "SAMEORIGIN",
+          "x-content-type-options": "nosniff",
+          "server-timing": "gfet4t7; dur=7793",
+          "alt-svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+          "transfer-encoding": "chunked"
+        }
+      },
+      "candidates": [
+        {
+          "content": {
+            "parts": [
+              {
+                "function_call": {
+                  "id": "call_7840462641289272319",
+                  "args": {
+                    "supplier": {
+                      "tax_id": {
+                        "value": "33AADCK6652Q1Z7",
+                        "confidence": 0.99,
+                        "evidence": "GSTIN: 33AADCK6652Q1Z7",
+                        "page": 1
+                      },
+                      "name": {
+                        "page": 1,
+                        "evidence": "Kaveri Logistics Pvt Ltd",
+                        "value": "Kaveri Logistics Pvt Ltd",
+                        "confidence": 0.99
+                      },
+                      "email": {
+                        "evidence": "accounts@kaveri-logistics.co",
+                        "value": "accounts@kaveri-logistics.co",
+                        "page": 1,
+                        "confidence": 0.99
+                      },
+                      "address": {
+                        "confidence": 0.99,
+                        "evidence": "SP-14, SIDCO Industrial Estate, Guindy\nChennai 600032, Tamil Nadu, India",
+                        "value": "SP-14, SIDCO Industrial Estate, Guindy\nChennai 600032, Tamil Nadu, India",
+                        "page": 1
+                      }
+                    },
+                    "notes": "",
+                    "buyer": {
+                      "name": {
+                        "value": "Halden Precision Engineering Pvt Ltd",
+                        "evidence": "Halden Precision Engineering Pvt Ltd",
+                        "confidence": 0.99,
+                        "page": 1
+                      },
+                      "tax_id": {
+                        "evidence": "GSTIN: 29AAECH0007L1Z2",
+                        "value": "29AAECH0007L1Z2",
+                        "confidence": 0.99,
+                        "page": 1
+                      }
+                    },
+                    "document_quality": {
+                      "is_scan": false,
+                      "pages": 1,
+                      "issues": [],
+                      "legibility": 0.99
+                    },
+                    "unreadable_regions": [],
+                    "payment": {
+                      "bank_name": {
+                        "value": "Kotak Mahindra Bank, Guindy Branch",
+                        "confidence": 0.99,
+                        "page": 1,
+                        "evidence": "Bank:\nKotak Mahindra Bank, Guindy Branch"
+                      },
+                      "beneficiary_name": {
+                        "value": "Kaveri Logistics Pvt Ltd",
+                        "confidence": 0.99,
+                        "evidence": "A/c Name:\nKaveri Logistics Pvt Ltd",
+                        "page": 1
+                      },
+                      "terms": {
+                        "page": 1,
+                        "evidence": "Payment: 15 days from invoice date",
+                        "confidence": 0.99,
+                        "value": "15 days from invoice date"
+                      },
+                      "ifsc_or_swift": {
+                        "page": 1,
+                        "value": "KKBK0008817",
+                        "confidence": 0.99,
+                        "evidence": "IFSC:\nKKBK0008817"
+                      },
+                      "account_number": {
+                        "confidence": 0.99,
+                        "evidence": "A/c No.:\n••••••9043",
+                        "value": "••••••9043",
+                        "page": 1
+                      }
+                    },
+                    "line_items": [
+                      {
+                        "uom": {
+                          "page": 1,
+                          "confidence": 0.99,
+                          "evidence": "PLT",
+                          "value": "PLT"
+                        },
+                        "tax_rate_pct": {
+                          "confidence": 0.99,
+                          "evidence": "18%",
+                          "value": "18%",
+                          "page": 1
+                        },
+                        "unit_price": {
+                          "value": "220.00",
+                          "confidence": 0.99,
+                          "page": 1,
+                          "evidence": "220.00"
+                        },
+                        "line_total": {
+                          "page": 1,
+                          "evidence": "1,54,000.00",
+                          "value": "1,54,000.00",
+                          "confidence": 0.99
+                        },
+                        "sku": {
+                          "value": "WH-PLT",
+                          "evidence": "WH-PLT",
+                          "confidence": 0.99,
+                          "page": 1
+                        },
+                        "qty": {
+                          "value": "700",
+                          "evidence": "700",
+                          "page": 1,
+                          "confidence": 0.99
+                        },
+                        "description": {
+                          "evidence": "Pallet storage, October 2026",
+                          "page": 1,
+                          "confidence": 0.99,
+                          "value": "Pallet storage, October 2026"
+                        },
+                        "line_no": 1
+                      },
+                      {
+                        "uom": {
+                          "page": 1,
+                          "value": "PKG",
+                          "evidence": "PKG",
+                          "confidence": 0.99
+                        },
+                        "tax_rate_pct": {
+                          "page": 1,
+                          "confidence": 0.99,
+                          "evidence": "18%",
+                          "value": "18%"
+                        },
+                        "line_no": 2,
+                        "sku": {
+                          "page": 1,
+                          "value": "HDL-IN",
+                          "confidence": 0.99,
+                          "evidence": "HDL-IN"
+                        },
+                        "description": {
+                          "value": "Inbound handling and put-away",
+                          "evidence": "Inbound handling and put-away",
+                          "page": 1,
+                          "confidence": 0.99
+                        },
+                        "line_total": {
+                          "confidence": 0.99,
+                          "evidence": "45,000.00",
+                          "page": 1,
+                          "value": "45,000.00"
+                        },
+                        "unit_price": {
+                          "evidence": "45.00",
+                          "page": 1,
+                          "confidence": 0.99,
+                          "value": "45.00"
+                        },
+                        "qty": {
+                          "value": "1000",
+                          "evidence": "1000",
+                          "confidence": 0.99,
+                          "page": 1
+                        }
+                      },
+                      {
+                        "qty": {
+                          "evidence": "1000",
+                          "page": 1,
+                          "confidence": 0.99,
+                          "value": "1000"
+                        },
+                        "sku": {
+                          "confidence": 0.99,
+                          "page": 1,
+                          "value": "HDL-OUT",
+                          "evidence": "HDL-OUT"
+                        },
+                        "line_no": 3,
+                        "line_total": {
+                          "value": "45,000.00",
+                          "page": 1,
+                          "confidence": 0.99,
+                          "evidence": "45,000.00"
+                        },
+                        "unit_price": {
+                          "evidence": "45.00",
+                          "value": "45.00",
+                          "page": 1,
+                          "confidence": 0.99
+                        },
+                        "description": {
+                          "confidence": 0.99,
+                          "value": "Outbound picking and dispatch",
+                          "page": 1,
+                          "evidence": "Outbound picking and dispatch"
+                        },
+                        "tax_rate_pct": {
+                          "evidence": "18%",
+                          "value": "18%",
+                          "page": 1,
+                          "confidence": 0.99
+                        },
+                        "uom": {
+                          "page": 1,
+                          "evidence": "PKG",
+                          "value": "PKG",
+                          "confidence": 0.99
+                        }
+                      }
+                    ],
+                    "currency": {
+                      "value": "INR",
+                      "evidence": "Grand Total (INR)",
+                      "confidence": 0.99,
+                      "page": 1
+                    },
+                    "invoice_number": {
+                      "confidence": 0.99,
+                      "page": 1,
+                      "evidence": "Invoice No.\nKLPL/2026/1241",
+                      "value": "KLPL/2026/1241"
+                    },
+                    "invoice_date": {
+                      "confidence": 0.99,
+                      "page": 1,
+                      "evidence": "Invoice Date\n08/11/2026",
+                      "value": "08/11/2026"
+                    },
+                    "document_type": "tax_invoice",
+                    "due_date": {
+                      "evidence": "Due Date\n23/11/2026",
+                      "value": "23/11/2026",
+                      "confidence": 0.99,
+                      "page": 1
+                    },
+                    "totals": {
+                      "tax_total": {
+                        "confidence": 0.99,
+                        "page": 1,
+                        "value": "43,920.00",
+                        "evidence": "IGST @ 18%\n43,920.00"
+                      },
+                      "discount": {
+                        "evidence": null,
+                        "page": null,
+                        "value": null,
+                        "confidence": 0
+                      },
+                      "grand_total": {
+                        "page": 1,
+                        "confidence": 0.99,
+                        "evidence": "Grand Total (INR)\n2,98,400.00",
+                        "value": "2,98,400.00"
+                      },
+                      "amount_in_words": {
+                        "evidence": "AMOUNT IN WORDS\nRupees Two Lakh Ninety-Eight Thousand Four Hundred Only",
+                        "confidence": 0.99,
+                        "page": 1,
+                        "value": "Rupees Two Lakh Ninety-Eight Thousand Four Hundred Only"
+                      },
+                      "subtotal": {
+                        "page": 1,
+                        "value": "2,44,000.00",
+                        "confidence": 0.99,
+                        "evidence": "Taxable Value\n2,44,000.00"
+                      },
+                      "shipping": {
+                        "page": 1,
+                        "confidence": 0.99,
+                        "evidence": "Freight & Forwarding\n10,480.00",
+                        "value": "10,480.00"
+                      },
+                      "tax_breakdown": [
+                        {
+                          "amount": {
+                            "evidence": "43,920.00",
+                            "page": 1,
+                            "confidence": 0.99,
+                            "value": "43,920.00"
+                          },
+                          "label": "IGST @ 18%"
+                        }
+                      ]
+                    },
+                    "po_references": [
+                      {
+                        "evidence": "Buyer's PO No.\nPO-2044",
+                        "value": "PO-2044",
+                        "explicit": true,
+                        "confidence": 0.99
+                      }
+                    ]
+                  },
+                  "name": "record_invoice_extraction"
+                },
+                "thought_signature": "EmkKZwFpFH0TEhkPSKo-3BAf9In70h5a4M5UaXOcH-CaO2eKGP4QxMb0mA4svg-ubuDrQq-WnxaGsk486fEoaW6fcecZ9R6MVhTbDk00ITbiANSvN0q1R51MeB2SDqfSez8ZQbZk6WnG4hU="
+              }
+            ],
+            "role": "model"
+          },
+          "finish_reason": "STOP",
+          "index": 0
+        }
+      ],
+      "model_version": "gemini-3.6-flash",
+      "response_id": "9nf6avPeFZjH694PiJTuwA4",
+      "usage_metadata": {
+        "candidates_token_count": 1878,
+        "prompt_token_count": 7801,
+        "prompt_tokens_details": [
+          {
+            "modality": "IMAGE",
+            "token_count": 1092
+          },
+          {
+            "modality": "TEXT",
+            "token_count": 6709
+          }
+        ],
+        "total_token_count": 9679
+      }
+    }
+  ]
+}

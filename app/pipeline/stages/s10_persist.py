@@ -12,7 +12,7 @@ from app import config, db
 from app.models import NormalisedInvoice, RunContext, StageResult, to_jsonable
 from app.rules.definitions import run_confidence
 from app.services.llm import iter_fields, mask_long_digit_runs
-from app.services.matching import locate_evidence
+from app.services.matching import locate_field
 
 
 def now_iso() -> str:
@@ -67,7 +67,7 @@ def write_fields(conn, ctx: RunContext) -> tuple[int, int]:
     conn.execute("DELETE FROM extracted_fields WHERE run_id = ?", (ctx.run_id,))
     rows, located = [], 0
     for path, f in iter_fields(ctx.extraction or {}):
-        bbox = locate_evidence(f.get("evidence"), f.get("page"), ctx.word_boxes)
+        bbox = locate_field(f, ctx.word_boxes)
         located += bbox is not None
         norm = _normalised_value(path, ctx.invoice) if ctx.invoice else None
         rows.append((ctx.run_id, path, f.get("value"), None if norm is None else str(to_jsonable(norm)),

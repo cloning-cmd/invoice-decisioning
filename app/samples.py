@@ -28,6 +28,10 @@ SAMPLES: tuple[Sample, ...] = (
     Sample("EC4", "EC4_kaveri_redirect.pdf", "Edge 4 · Bank change", "scenario"),
     Sample("EC5", "EC5_orbit_variance.pdf", "Edge 5 · Variance + short GRN", "scenario"),
     Sample("EC6", "EC6_apex_eur.pdf", "Edge 6 · EUR on a closed PO", "scenario"),
+    # Clean invoices from other vendors, delivered in each remaining input format.
+    Sample("FMT_SCAN", "FMT_orbit_scan.pdf", "Scanned PDF", "format"),
+    Sample("FMT_PNG", "FMT_meridian_scan.png", "PNG scan", "format"),
+    Sample("FMT_TIFF", "FMT_shreeji_fax.tif", "TIFF fax", "format"),
 )
 
 BY_KEY = {s.key: s for s in SAMPLES}

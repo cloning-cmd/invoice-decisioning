@@ -1,0 +1,591 @@
+{
+  "sha256": "fdca94cf5841f78f7d03c24d8fb765eade2c4f9313f66e2cbee29990519173c7",
+  "model": "gemini-3.5-flash",
+  "prompt_version": "2026-11-16.1",
+  "created_at": "2026-11-16T03:26:22+00:00",
+  "usage": {
+    "input_tokens": 7707,
+    "output_tokens": 1658
+  },
+  "payload": {
+    "unreadable_regions": [
+      {
+        "page": 1,
+        "description": "Dark smudge/blur obscuring INVOICE NO field in the top left header above BILL TO section."
+      }
+    ],
+    "invoice_date": {
+      "page": 1,
+      "confidence": 0.95,
+      "value": "10/11/2026",
+      "evidence": "INVOICE DATE\n10/11/2026"
+    },
+    "line_items": [
+      {
+        "unit_price": {
+          "evidence": "50.00",
+          "confidence": 0.95,
+          "page": 1,
+          "value": "50.00"
+        },
+        "line_no": 1,
+        "uom": {
+          "evidence": "NOS",
+          "confidence": 0.95,
+          "page": 1,
+          "value": "NOS"
+        },
+        "description": {
+          "page": 1,
+          "evidence": "5-ply corrugated carton 450x300x300",
+          "confidence": 0.95,
+          "value": "5-ply corrugated carton 450x300x300"
+        },
+        "tax_rate_pct": {
+          "evidence": "18%",
+          "value": "18%",
+          "confidence": 0.95,
+          "page": 1
+        },
+        "line_total": {
+          "confidence": 0.95,
+          "evidence": "15,000.00",
+          "page": 1,
+          "value": "15,000.00"
+        },
+        "qty": {
+          "page": 1,
+          "value": "300",
+          "evidence": "300",
+          "confidence": 0.95
+        },
+        "sku": {
+          "evidence": "CTN-5PLY",
+          "value": "CTN-5PLY",
+          "confidence": 0.95,
+          "page": 1
+        }
+      },
+      {
+        "unit_price": {
+          "value": "25.00",
+          "evidence": "25.00",
+          "confidence": 0.95,
+          "page": 1
+        },
+        "qty": {
+          "value": "120",
+          "page": 1,
+          "confidence": 0.95,
+          "evidence": "120"
+        },
+        "description": {
+          "value": "BOPP packing tape 48mm x 65m",
+          "page": 1,
+          "confidence": 0.95,
+          "evidence": "BOPP packing tape 48mm x 65m"
+        },
+        "sku": {
+          "evidence": "TAPE-48",
+          "page": 1,
+          "value": "TAPE-48",
+          "confidence": 0.95
+        },
+        "line_no": 2,
+        "line_total": {
+          "evidence": "3,000.00",
+          "value": "3,000.00",
+          "confidence": 0.95,
+          "page": 1
+        },
+        "tax_rate_pct": {
+          "confidence": 0.95,
+          "evidence": "18%",
+          "page": 1,
+          "value": "18%"
+        },
+        "uom": {
+          "evidence": "ROLL",
+          "confidence": 0.95,
+          "value": "ROLL",
+          "page": 1
+        }
+      }
+    ],
+    "currency": {
+      "page": 1,
+      "confidence": 0.95,
+      "value": "INR",
+      "evidence": "Grand Total (INR)"
+    },
+    "document_type": "tax_invoice",
+    "due_date": {
+      "confidence": 0.95,
+      "page": 1,
+      "value": "10/12/2026",
+      "evidence": "DUE DATE\n10/12/2026"
+    },
+    "po_references": [
+      {
+        "value": "PO-2043",
+        "confidence": 0.95,
+        "explicit": true,
+        "evidence": "Supplied against your Purchase Order PO-2043"
+      }
+    ],
+    "buyer": {
+      "name": {
+        "evidence": "Halden Precision Engineering Pvt Ltd",
+        "confidence": 0.95,
+        "value": "Halden Precision Engineering Pvt Ltd",
+        "page": 1
+      },
+      "tax_id": {
+        "confidence": 0.95,
+        "value": "29AAECH0007L1Z2",
+        "page": 1,
+        "evidence": "GSTIN: 29AAECH0007L1Z2"
+      }
+    },
+    "document_quality": {
+      "issues": [
+        "watermark"
+      ],
+      "pages": 1,
+      "legibility": 0.9,
+      "is_scan": true
+    },
+    "totals": {
+      "tax_breakdown": [
+        {
+          "label": "IGST @ 18%",
+          "amount": {
+            "evidence": "3,240.00",
+            "page": 1,
+            "value": "3,240.00",
+            "confidence": 0.95
+          }
+        }
+      ],
+      "tax_total": {
+        "confidence": 0.95,
+        "page": 1,
+        "value": "3,240.00",
+        "evidence": "IGST @ 18% 3,240.00"
+      },
+      "amount_in_words": {
+        "confidence": 0.95,
+        "value": "Rupees Twenty-One Thousand Nine Hundred Only",
+        "page": 1,
+        "evidence": "Rupees Twenty-One Thousand Nine Hundred Only"
+      },
+      "grand_total": {
+        "confidence": 0.95,
+        "page": 1,
+        "value": "21,900.00",
+        "evidence": "Grand Total (INR) 21,900.00"
+      },
+      "discount": {
+        "evidence": null,
+        "value": null,
+        "page": 1,
+        "confidence": 0
+      },
+      "subtotal": {
+        "page": 1,
+        "evidence": "Taxable Value 18,000.00",
+        "value": "18,000.00",
+        "confidence": 0.95
+      },
+      "shipping": {
+        "page": 1,
+        "confidence": 0.95,
+        "evidence": "Freight & Forwarding 660.00",
+        "value": "660.00"
+      }
+    },
+    "invoice_number": {
+      "evidence": null,
+      "page": 1,
+      "value": null,
+      "confidence": 0
+    },
+    "notes": "Invoice number field is obscured by a dark smudge/blur in the top left header area.",
+    "payment": {
+      "terms": {
+        "value": "Payment: 30 days from date of invoice",
+        "page": 1,
+        "evidence": "Payment: 30 days from date of invoice",
+        "confidence": 0.95
+      },
+      "beneficiary_name": {
+        "evidence": "Meridian Packaging LLP",
+        "value": "Meridian Packaging LLP",
+        "page": 1,
+        "confidence": 0.95
+      },
+      "bank_name": {
+        "confidence": 0.95,
+        "evidence": "Axis Bank Ltd, Bhiwandi Branch",
+        "page": 1,
+        "value": "Axis Bank Ltd, Bhiwandi Branch"
+      },
+      "account_number": {
+        "evidence": "A/c No.: •••••••••••1109",
+        "confidence": 0.95,
+        "page": 1,
+        "value": "•••••••••••1109"
+      },
+      "ifsc_or_swift": {
+        "value": "UTIB0000247",
+        "evidence": "IFSC: UTIB0000247",
+        "page": 1,
+        "confidence": 0.95
+      }
+    },
+    "supplier": {
+      "address": {
+        "value": "Gala 7-9, Shree Sai Industrial Estate, Vadpe\nBhiwandi 421302, Maharashtra, India",
+        "page": 1,
+        "evidence": "Gala 7-9, Shree Sai Industrial Estate, Vadpe\nBhiwandi 421302, Maharashtra, India",
+        "confidence": 0.95
+      },
+      "tax_id": {
+        "page": 1,
+        "value": "27AASFM1109P1Z4",
+        "confidence": 0.95,
+        "evidence": "GSTIN: 27AASFM1109P1Z4"
+      },
+      "email": {
+        "evidence": "accounts@meridianpack.in",
+        "value": "accounts@meridianpack.in",
+        "confidence": 0.95,
+        "page": 1
+      },
+      "name": {
+        "value": "Meridian Packaging LLP",
+        "confidence": 0.95,
+        "evidence": "Meridian Packaging LLP",
+        "page": 1
+      }
+    }
+  },
+  "responses": [
+    {
+      "sdk_http_response": {
+        "headers": {
+          "x-gemini-service-tier": "standard",
+          "content-type": "application/json; charset=UTF-8",
+          "vary": "Origin, X-Origin, Referer",
+          "content-encoding": "gzip",
+          "date": "Mon, 16 Nov 2026 03:26:23 GMT",
+          "server": "scaffolding on HTTPServer2",
+          "x-xss-protection": "0",
+          "x-frame-options": "SAMEORIGIN",
+          "x-content-type-options": "nosniff",
+          "server-timing": "gfet4t7; dur=7408",
+          "alt-svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+          "transfer-encoding": "chunked"
+        }
+      },
+      "candidates": [
+        {
+          "content": {
+            "parts": [
+              {
+                "function_call": {
+                  "id": "call_3864032998283392887",
+                  "args": {
+                    "unreadable_regions": [
+                      {
+                        "page": 1,
+                        "description": "Dark smudge/blur obscuring INVOICE NO field in the top left header above BILL TO section."
+                      }
+                    ],
+                    "invoice_date": {
+                      "page": 1,
+                      "confidence": 0.95,
+                      "value": "10/11/2026",
+                      "evidence": "INVOICE DATE\n10/11/2026"
+                    },
+                    "line_items": [
+                      {
+                        "unit_price": {
+                          "evidence": "50.00",
+                          "confidence": 0.95,
+                          "page": 1,
+                          "value": "50.00"
+                        },
+                        "line_no": 1,
+                        "uom": {
+                          "evidence": "NOS",
+                          "confidence": 0.95,
+                          "page": 1,
+                          "value": "NOS"
+                        },
+                        "description": {
+                          "page": 1,
+                          "evidence": "5-ply corrugated carton 450x300x300",
+                          "confidence": 0.95,
+                          "value": "5-ply corrugated carton 450x300x300"
+                        },
+                        "tax_rate_pct": {
+                          "evidence": "18%",
+                          "value": "18%",
+                          "confidence": 0.95,
+                          "page": 1
+                        },
+                        "line_total": {
+                          "confidence": 0.95,
+                          "evidence": "15,000.00",
+                          "page": 1,
+                          "value": "15,000.00"
+                        },
+                        "qty": {
+                          "page": 1,
+                          "value": "300",
+                          "evidence": "300",
+                          "confidence": 0.95
+                        },
+                        "sku": {
+                          "evidence": "CTN-5PLY",
+                          "value": "CTN-5PLY",
+                          "confidence": 0.95,
+                          "page": 1
+                        }
+                      },
+                      {
+                        "unit_price": {
+                          "value": "25.00",
+                          "evidence": "25.00",
+                          "confidence": 0.95,
+                          "page": 1
+                        },
+                        "qty": {
+                          "value": "120",
+                          "page": 1,
+                          "confidence": 0.95,
+                          "evidence": "120"
+                        },
+                        "description": {
+                          "value": "BOPP packing tape 48mm x 65m",
+                          "page": 1,
+                          "confidence": 0.95,
+                          "evidence": "BOPP packing tape 48mm x 65m"
+                        },
+                        "sku": {
+                          "evidence": "TAPE-48",
+                          "page": 1,
+                          "value": "TAPE-48",
+                          "confidence": 0.95
+                        },
+                        "line_no": 2,
+                        "line_total": {
+                          "evidence": "3,000.00",
+                          "value": "3,000.00",
+                          "confidence": 0.95,
+                          "page": 1
+                        },
+                        "tax_rate_pct": {
+                          "confidence": 0.95,
+                          "evidence": "18%",
+                          "page": 1,
+                          "value": "18%"
+                        },
+                        "uom": {
+                          "evidence": "ROLL",
+                          "confidence": 0.95,
+                          "value": "ROLL",
+                          "page": 1
+                        }
+                      }
+                    ],
+                    "currency": {
+                      "page": 1,
+                      "confidence": 0.95,
+                      "value": "INR",
+                      "evidence": "Grand Total (INR)"
+                    },
+                    "document_type": "tax_invoice",
+                    "due_date": {
+                      "confidence": 0.95,
+                      "page": 1,
+                      "value": "10/12/2026",
+                      "evidence": "DUE DATE\n10/12/2026"
+                    },
+                    "po_references": [
+                      {
+                        "value": "PO-2043",
+                        "confidence": 0.95,
+                        "explicit": true,
+                        "evidence": "Supplied against your Purchase Order PO-2043"
+                      }
+                    ],
+                    "buyer": {
+                      "name": {
+                        "evidence": "Halden Precision Engineering Pvt Ltd",
+                        "confidence": 0.95,
+                        "value": "Halden Precision Engineering Pvt Ltd",
+                        "page": 1
+                      },
+                      "tax_id": {
+                        "confidence": 0.95,
+                        "value": "29AAECH0007L1Z2",
+                        "page": 1,
+                        "evidence": "GSTIN: 29AAECH0007L1Z2"
+                      }
+                    },
+                    "document_quality": {
+                      "issues": [
+                        "watermark"
+                      ],
+                      "pages": 1,
+                      "legibility": 0.9,
+                      "is_scan": true
+                    },
+                    "totals": {
+                      "tax_breakdown": [
+                        {
+                          "label": "IGST @ 18%",
+                          "amount": {
+                            "evidence": "3,240.00",
+                            "page": 1,
+                            "value": "3,240.00",
+                            "confidence": 0.95
+                          }
+                        }
+                      ],
+                      "tax_total": {
+                        "confidence": 0.95,
+                        "page": 1,
+                        "value": "3,240.00",
+                        "evidence": "IGST @ 18% 3,240.00"
+                      },
+                      "amount_in_words": {
+                        "confidence": 0.95,
+                        "value": "Rupees Twenty-One Thousand Nine Hundred Only",
+                        "page": 1,
+                        "evidence": "Rupees Twenty-One Thousand Nine Hundred Only"
+                      },
+                      "grand_total": {
+                        "confidence": 0.95,
+                        "page": 1,
+                        "value": "21,900.00",
+                        "evidence": "Grand Total (INR) 21,900.00"
+                      },
+                      "discount": {
+                        "evidence": null,
+                        "value": null,
+                        "page": 1,
+                        "confidence": 0
+                      },
+                      "subtotal": {
+                        "page": 1,
+                        "evidence": "Taxable Value 18,000.00",
+                        "value": "18,000.00",
+                        "confidence": 0.95
+                      },
+                      "shipping": {
+                        "page": 1,
+                        "confidence": 0.95,
+                        "evidence": "Freight & Forwarding 660.00",
+                        "value": "660.00"
+                      }
+                    },
+                    "invoice_number": {
+                      "evidence": null,
+                      "page": 1,
+                      "value": null,
+                      "confidence": 0
+                    },
+                    "notes": "Invoice number field is obscured by a dark smudge/blur in the top left header area.",
+                    "payment": {
+                      "terms": {
+                        "value": "Payment: 30 days from date of invoice",
+                        "page": 1,
+                        "evidence": "Payment: 30 days from date of invoice",
+                        "confidence": 0.95
+                      },
+                      "beneficiary_name": {
+                        "evidence": "Meridian Packaging LLP",
+                        "value": "Meridian Packaging LLP",
+                        "page": 1,
+                        "confidence": 0.95
+                      },
+                      "bank_name": {
+                        "confidence": 0.95,
+                        "evidence": "Axis Bank Ltd, Bhiwandi Branch",
+                        "page": 1,
+                        "value": "Axis Bank Ltd, Bhiwandi Branch"
+                      },
+                      "account_number": {
+                        "evidence": "A/c No.: •••••••••••1109",
+                        "confidence": 0.95,
+                        "page": 1,
+                        "value": "•••••••••••1109"
+                      },
+                      "ifsc_or_swift": {
+                        "value": "UTIB0000247",
+                        "evidence": "IFSC: UTIB0000247",
+                        "page": 1,
+                        "confidence": 0.95
+                      }
+                    },
+                    "supplier": {
+                      "address": {
+                        "value": "Gala 7-9, Shree Sai Industrial Estate, Vadpe\nBhiwandi 421302, Maharashtra, India",
+                        "page": 1,
+                        "evidence": "Gala 7-9, Shree Sai Industrial Estate, Vadpe\nBhiwandi 421302, Maharashtra, India",
+                        "confidence": 0.95
+                      },
+                      "tax_id": {
+                        "page": 1,
+                        "value": "27AASFM1109P1Z4",
+                        "confidence": 0.95,
+                        "evidence": "GSTIN: 27AASFM1109P1Z4"
+                      },
+                      "email": {
+                        "evidence": "accounts@meridianpack.in",
+                        "value": "accounts@meridianpack.in",
+                        "confidence": 0.95,
+                        "page": 1
+                      },
+                      "name": {
+                        "value": "Meridian Packaging LLP",
+                        "confidence": 0.95,
+                        "evidence": "Meridian Packaging LLP",
+                        "page": 1
+                      }
+                    }
+                  },
+                  "name": "record_invoice_extraction"
+                },
+                "thought_signature": "EmkKZwFpFH0TEmXBC8Fa8LFA1SOlaGlRXc1F8wmnZoPFmBw61u3nXUwpP6BwEXLbmpfxWp_k3jSWV6wiJMQld2BQmUdyS2o77YI2WOzbJld_1HKErVmPT_KiQR86G8TygUsrzCqWix5y8wY="
+              }
+            ],
+            "role": "model"
+          },
+          "finish_reason": "STOP",
+          "index": 0
+        }
+      ],
+      "model_version": "gemini-3.6-flash",
+      "response_id": "2Hf6asyRKore694PoNzGmAU",
+      "usage_metadata": {
+        "candidates_token_count": 1658,
+        "prompt_token_count": 7707,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 6615
+          },
+          {
+            "modality": "IMAGE",
+            "token_count": 1092
+          }
+        ],
+        "total_token_count": 9365
+      }
+    }
+  ]
+}

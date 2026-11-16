@@ -1,0 +1,577 @@
+{
+  "sha256": "e2fa74afa15833bb120f6f9f8cbb22c2a402330bea85d82683b0d732f56d2705",
+  "model": "gemini-3.5-flash",
+  "prompt_version": "2026-11-16.1",
+  "created_at": "2026-11-16T03:27:11+00:00",
+  "usage": {
+    "input_tokens": 7669,
+    "output_tokens": 1562
+  },
+  "payload": {
+    "document_quality": {
+      "issues": [],
+      "legibility": 1,
+      "pages": 1,
+      "is_scan": false
+    },
+    "payment": {
+      "account_number": {
+        "value": "•••• •••• •••• •••• ••30 00",
+        "confidence": 0.99,
+        "page": 1,
+        "evidence": "IBAN: •••• •••• •••• •••• ••30 00"
+      },
+      "terms": {
+        "confidence": 0.99,
+        "evidence": "Payment terms: 60 days net from invoice date.",
+        "page": 1,
+        "value": "60 days net from invoice date."
+      },
+      "bank_name": {
+        "page": 1,
+        "value": "Commerzbank Stuttgart",
+        "evidence": "Bank: Commerzbank Stuttgart",
+        "confidence": 0.99
+      },
+      "ifsc_or_swift": {
+        "page": 1,
+        "confidence": 0.99,
+        "evidence": "BIC: COBADEFFXXX",
+        "value": "COBADEFFXXX"
+      },
+      "beneficiary_name": {
+        "confidence": 0,
+        "page": null,
+        "evidence": null,
+        "value": null
+      }
+    },
+    "invoice_number": {
+      "confidence": 0.99,
+      "page": 1,
+      "evidence": "Invoice no.\\nAT-2026-0912",
+      "value": "AT-2026-0912"
+    },
+    "supplier": {
+      "email": {
+        "page": 1,
+        "value": "invoices@apex-tooling.de",
+        "evidence": "invoices@apex-tooling.de",
+        "confidence": 0.99
+      },
+      "tax_id": {
+        "page": 1,
+        "value": "DE298765431",
+        "evidence": "VAT ID\\nDE298765431",
+        "confidence": 0.99
+      },
+      "address": {
+        "value": "Industriestrasse 14\\n70565 Stuttgart, Germany",
+        "evidence": "Industriestrasse 14\\n70565 Stuttgart, Germany",
+        "page": 1,
+        "confidence": 0.99
+      },
+      "name": {
+        "evidence": "Apex Tooling GmbH",
+        "page": 1,
+        "confidence": 0.99,
+        "value": "Apex Tooling GmbH"
+      }
+    },
+    "totals": {
+      "tax_breakdown": [
+        {
+          "amount": {
+            "evidence": "VAT 0% - tax-free export delivery (s. 4 No. 1a UStG)\\n0,00",
+            "confidence": 0.99,
+            "page": 1,
+            "value": "0,00"
+          },
+          "label": "VAT 0% - tax-free export delivery (s. 4 No. 1a UStG)"
+        }
+      ],
+      "tax_total": {
+        "evidence": "VAT 0% - tax-free export delivery (s. 4 No. 1a UStG)\\n0,00",
+        "page": 1,
+        "confidence": 0.99,
+        "value": "0,00"
+      },
+      "shipping": {
+        "confidence": 0,
+        "value": null,
+        "page": null,
+        "evidence": null
+      },
+      "subtotal": {
+        "evidence": "Net amount\\n6.980,00",
+        "value": "6.980,00",
+        "page": 1,
+        "confidence": 0.99
+      },
+      "amount_in_words": {
+        "evidence": null,
+        "value": null,
+        "confidence": 0,
+        "page": null
+      },
+      "discount": {
+        "evidence": null,
+        "value": null,
+        "page": null,
+        "confidence": 0
+      },
+      "grand_total": {
+        "evidence": "Total amount EUR\\n6.980,00",
+        "page": 1,
+        "value": "6.980,00",
+        "confidence": 0.99
+      }
+    },
+    "buyer": {
+      "name": {
+        "evidence": "Halden Precision Engineering Pvt Ltd",
+        "value": "Halden Precision Engineering Pvt Ltd",
+        "confidence": 0.99,
+        "page": 1
+      },
+      "tax_id": {
+        "confidence": 0.99,
+        "value": "29AAECH0007L1Z2",
+        "page": 1,
+        "evidence": "GSTIN 29AAECH0007L1Z2"
+      }
+    },
+    "invoice_date": {
+      "evidence": "Invoice date\\n06.11.2026",
+      "confidence": 0.99,
+      "value": "06.11.2026",
+      "page": 1
+    },
+    "due_date": {
+      "page": 1,
+      "value": "05.01.2027",
+      "evidence": "Due date\\n05.01.2027",
+      "confidence": 0.99
+    },
+    "line_items": [
+      {
+        "sku": {
+          "page": 1,
+          "value": "TL-EM10",
+          "evidence": "TL-EM10",
+          "confidence": 0.99
+        },
+        "line_no": 1,
+        "tax_rate_pct": {
+          "evidence": "VAT 0%",
+          "page": 1,
+          "value": "0%",
+          "confidence": 0.99
+        },
+        "description": {
+          "evidence": "Solid carbide end mill D10 Z4",
+          "value": "Solid carbide end mill D10 Z4",
+          "confidence": 0.99,
+          "page": 1
+        },
+        "qty": {
+          "evidence": "40",
+          "confidence": 0.99,
+          "value": "40",
+          "page": 1
+        },
+        "line_total": {
+          "confidence": 0.99,
+          "value": "3.800,00",
+          "page": 1,
+          "evidence": "3.800,00"
+        },
+        "unit_price": {
+          "confidence": 0.99,
+          "value": "95,00",
+          "evidence": "95,00",
+          "page": 1
+        },
+        "uom": {
+          "evidence": "pc",
+          "confidence": 0.99,
+          "value": "pc",
+          "page": 1
+        }
+      },
+      {
+        "description": {
+          "page": 1,
+          "confidence": 0.99,
+          "value": "HSK-A63 shrink-fit chuck D12",
+          "evidence": "HSK-A63 shrink-fit chuck D12"
+        },
+        "uom": {
+          "page": 1,
+          "evidence": "pc",
+          "value": "pc",
+          "confidence": 0.99
+        },
+        "qty": {
+          "evidence": "6",
+          "value": "6",
+          "confidence": 0.99,
+          "page": 1
+        },
+        "line_no": 2,
+        "unit_price": {
+          "evidence": "530,00",
+          "page": 1,
+          "value": "530,00",
+          "confidence": 0.99
+        },
+        "line_total": {
+          "evidence": "3.180,00",
+          "page": 1,
+          "confidence": 0.99,
+          "value": "3.180,00"
+        },
+        "sku": {
+          "page": 1,
+          "value": "TL-HSK63",
+          "confidence": 0.99,
+          "evidence": "TL-HSK63"
+        },
+        "tax_rate_pct": {
+          "evidence": "VAT 0%",
+          "confidence": 0.99,
+          "page": 1,
+          "value": "0%"
+        }
+      }
+    ],
+    "notes": "",
+    "po_references": [
+      {
+        "value": "PO-2045",
+        "confidence": 0.99,
+        "evidence": "Your order\\nPO-2045",
+        "explicit": true
+      }
+    ],
+    "document_type": "tax_invoice",
+    "currency": {
+      "page": 1,
+      "evidence": "Amount EUR",
+      "value": "EUR",
+      "confidence": 0.99
+    },
+    "unreadable_regions": []
+  },
+  "responses": [
+    {
+      "sdk_http_response": {
+        "headers": {
+          "x-gemini-service-tier": "standard",
+          "content-type": "application/json; charset=UTF-8",
+          "vary": "Origin, X-Origin, Referer",
+          "content-encoding": "gzip",
+          "date": "Mon, 16 Nov 2026 03:27:11 GMT",
+          "server": "scaffolding on HTTPServer2",
+          "x-xss-protection": "0",
+          "x-frame-options": "SAMEORIGIN",
+          "x-content-type-options": "nosniff",
+          "server-timing": "gfet4t7; dur=6920",
+          "alt-svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+          "transfer-encoding": "chunked"
+        }
+      },
+      "candidates": [
+        {
+          "content": {
+            "parts": [
+              {
+                "function_call": {
+                  "id": "call_16609330404905927638",
+                  "args": {
+                    "document_quality": {
+                      "issues": [],
+                      "legibility": 1,
+                      "pages": 1,
+                      "is_scan": false
+                    },
+                    "payment": {
+                      "account_number": {
+                        "value": "•••• •••• •••• •••• ••30 00",
+                        "confidence": 0.99,
+                        "page": 1,
+                        "evidence": "IBAN: •••• •••• •••• •••• ••30 00"
+                      },
+                      "terms": {
+                        "confidence": 0.99,
+                        "evidence": "Payment terms: 60 days net from invoice date.",
+                        "page": 1,
+                        "value": "60 days net from invoice date."
+                      },
+                      "bank_name": {
+                        "page": 1,
+                        "value": "Commerzbank Stuttgart",
+                        "evidence": "Bank: Commerzbank Stuttgart",
+                        "confidence": 0.99
+                      },
+                      "ifsc_or_swift": {
+                        "page": 1,
+                        "confidence": 0.99,
+                        "evidence": "BIC: COBADEFFXXX",
+                        "value": "COBADEFFXXX"
+                      },
+                      "beneficiary_name": {
+                        "confidence": 0,
+                        "page": null,
+                        "evidence": null,
+                        "value": null
+                      }
+                    },
+                    "invoice_number": {
+                      "confidence": 0.99,
+                      "page": 1,
+                      "evidence": "Invoice no.\\nAT-2026-0912",
+                      "value": "AT-2026-0912"
+                    },
+                    "supplier": {
+                      "email": {
+                        "page": 1,
+                        "value": "invoices@apex-tooling.de",
+                        "evidence": "invoices@apex-tooling.de",
+                        "confidence": 0.99
+                      },
+                      "tax_id": {
+                        "page": 1,
+                        "value": "DE298765431",
+                        "evidence": "VAT ID\\nDE298765431",
+                        "confidence": 0.99
+                      },
+                      "address": {
+                        "value": "Industriestrasse 14\\n70565 Stuttgart, Germany",
+                        "evidence": "Industriestrasse 14\\n70565 Stuttgart, Germany",
+                        "page": 1,
+                        "confidence": 0.99
+                      },
+                      "name": {
+                        "evidence": "Apex Tooling GmbH",
+                        "page": 1,
+                        "confidence": 0.99,
+                        "value": "Apex Tooling GmbH"
+                      }
+                    },
+                    "totals": {
+                      "tax_breakdown": [
+                        {
+                          "amount": {
+                            "evidence": "VAT 0% - tax-free export delivery (s. 4 No. 1a UStG)\\n0,00",
+                            "confidence": 0.99,
+                            "page": 1,
+                            "value": "0,00"
+                          },
+                          "label": "VAT 0% - tax-free export delivery (s. 4 No. 1a UStG)"
+                        }
+                      ],
+                      "tax_total": {
+                        "evidence": "VAT 0% - tax-free export delivery (s. 4 No. 1a UStG)\\n0,00",
+                        "page": 1,
+                        "confidence": 0.99,
+                        "value": "0,00"
+                      },
+                      "shipping": {
+                        "confidence": 0,
+                        "value": null,
+                        "page": null,
+                        "evidence": null
+                      },
+                      "subtotal": {
+                        "evidence": "Net amount\\n6.980,00",
+                        "value": "6.980,00",
+                        "page": 1,
+                        "confidence": 0.99
+                      },
+                      "amount_in_words": {
+                        "evidence": null,
+                        "value": null,
+                        "confidence": 0,
+                        "page": null
+                      },
+                      "discount": {
+                        "evidence": null,
+                        "value": null,
+                        "page": null,
+                        "confidence": 0
+                      },
+                      "grand_total": {
+                        "evidence": "Total amount EUR\\n6.980,00",
+                        "page": 1,
+                        "value": "6.980,00",
+                        "confidence": 0.99
+                      }
+                    },
+                    "buyer": {
+                      "name": {
+                        "evidence": "Halden Precision Engineering Pvt Ltd",
+                        "value": "Halden Precision Engineering Pvt Ltd",
+                        "confidence": 0.99,
+                        "page": 1
+                      },
+                      "tax_id": {
+                        "confidence": 0.99,
+                        "value": "29AAECH0007L1Z2",
+                        "page": 1,
+                        "evidence": "GSTIN 29AAECH0007L1Z2"
+                      }
+                    },
+                    "invoice_date": {
+                      "evidence": "Invoice date\\n06.11.2026",
+                      "confidence": 0.99,
+                      "value": "06.11.2026",
+                      "page": 1
+                    },
+                    "due_date": {
+                      "page": 1,
+                      "value": "05.01.2027",
+                      "evidence": "Due date\\n05.01.2027",
+                      "confidence": 0.99
+                    },
+                    "line_items": [
+                      {
+                        "sku": {
+                          "page": 1,
+                          "value": "TL-EM10",
+                          "evidence": "TL-EM10",
+                          "confidence": 0.99
+                        },
+                        "line_no": 1,
+                        "tax_rate_pct": {
+                          "evidence": "VAT 0%",
+                          "page": 1,
+                          "value": "0%",
+                          "confidence": 0.99
+                        },
+                        "description": {
+                          "evidence": "Solid carbide end mill D10 Z4",
+                          "value": "Solid carbide end mill D10 Z4",
+                          "confidence": 0.99,
+                          "page": 1
+                        },
+                        "qty": {
+                          "evidence": "40",
+                          "confidence": 0.99,
+                          "value": "40",
+                          "page": 1
+                        },
+                        "line_total": {
+                          "confidence": 0.99,
+                          "value": "3.800,00",
+                          "page": 1,
+                          "evidence": "3.800,00"
+                        },
+                        "unit_price": {
+                          "confidence": 0.99,
+                          "value": "95,00",
+                          "evidence": "95,00",
+                          "page": 1
+                        },
+                        "uom": {
+                          "evidence": "pc",
+                          "confidence": 0.99,
+                          "value": "pc",
+                          "page": 1
+                        }
+                      },
+                      {
+                        "description": {
+                          "page": 1,
+                          "confidence": 0.99,
+                          "value": "HSK-A63 shrink-fit chuck D12",
+                          "evidence": "HSK-A63 shrink-fit chuck D12"
+                        },
+                        "uom": {
+                          "page": 1,
+                          "evidence": "pc",
+                          "value": "pc",
+                          "confidence": 0.99
+                        },
+                        "qty": {
+                          "evidence": "6",
+                          "value": "6",
+                          "confidence": 0.99,
+                          "page": 1
+                        },
+                        "line_no": 2,
+                        "unit_price": {
+                          "evidence": "530,00",
+                          "page": 1,
+                          "value": "530,00",
+                          "confidence": 0.99
+                        },
+                        "line_total": {
+                          "evidence": "3.180,00",
+                          "page": 1,
+                          "confidence": 0.99,
+                          "value": "3.180,00"
+                        },
+                        "sku": {
+                          "page": 1,
+                          "value": "TL-HSK63",
+                          "confidence": 0.99,
+                          "evidence": "TL-HSK63"
+                        },
+                        "tax_rate_pct": {
+                          "evidence": "VAT 0%",
+                          "confidence": 0.99,
+                          "page": 1,
+                          "value": "0%"
+                        }
+                      }
+                    ],
+                    "notes": "",
+                    "po_references": [
+                      {
+                        "value": "PO-2045",
+                        "confidence": 0.99,
+                        "evidence": "Your order\\nPO-2045",
+                        "explicit": true
+                      }
+                    ],
+                    "document_type": "tax_invoice",
+                    "currency": {
+                      "page": 1,
+                      "evidence": "Amount EUR",
+                      "value": "EUR",
+                      "confidence": 0.99
+                    },
+                    "unreadable_regions": []
+                  },
+                  "name": "record_invoice_extraction"
+                },
+                "thought_signature": "EmkKZwFpFH0TRmtlvLcDGGCrlyHIkYmn6ERq0XhOOPW3njHozhMLewkx89FiT5bhFE3tCRfuLpLfQ7jWYRfFZ5lSiyt70DrqLZLtmGyFfZUFuak-EgFRMJv5LjNYcSmd_AFcalothSA6MqQ="
+              }
+            ],
+            "role": "model"
+          },
+          "finish_reason": "STOP",
+          "index": 0
+        }
+      ],
+      "model_version": "gemini-3.6-flash",
+      "response_id": "CXj6aqSaI7ybz7sPs-q8sAE",
+      "usage_metadata": {
+        "candidates_token_count": 1562,
+        "prompt_token_count": 7669,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 6577
+          },
+          {
+            "modality": "IMAGE",
+            "token_count": 1092
+          }
+        ],
+        "total_token_count": 9231
+      }
+    }
+  ]
+}

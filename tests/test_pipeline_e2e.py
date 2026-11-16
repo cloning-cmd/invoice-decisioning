@@ -9,6 +9,7 @@ from __future__ import annotations
 import hashlib
 import json
 from datetime import date
+from pathlib import Path
 
 import pytest
 
@@ -22,6 +23,16 @@ TODAY = date(2026, 11, 16)
 # filename -> (verdict, reason codes in order)
 EXPECTED = {
     "HP_nordic_clean.pdf": ("AUTO_APPROVE", []),
+    "EC1_meridian_photo.jpg": ("REJECT", ["REQUIRED_FIELD_MISSING:invoice_number"]),
+    "EC2_nordic_third_tranche.pdf": ("REJECT", ["PO_OVER_CONSUMPTION"]),
+    "EC3_shreeji_reissue.pdf": ("HOLD_FOR_REVIEW", ["POSSIBLE_DUPLICATE"]),
+    "EC4_kaveri_redirect.pdf": ("BLOCK", ["BANK_DETAILS_CHANGED"]),
+    "EC5_orbit_variance.pdf": ("HOLD_FOR_REVIEW", ["PO_AMOUNT_TOLERANCE", "GRN_SHORT_RECEIPT"]),
+    "EC6_apex_eur.pdf": ("REJECT", ["PO_VENDOR_MISMATCH", "CURRENCY_MISMATCH", "PO_STATUS_INVALID"]),
+    # Input formats: a clean invoice must survive being scanned, faxed or saved as an image.
+    "FMT_orbit_scan.pdf": ("AUTO_APPROVE", []),
+    "FMT_meridian_scan.png": ("AUTO_APPROVE", []),
+    "FMT_shreeji_fax.tif": ("AUTO_APPROVE", []),
 }
 
 
@@ -91,6 +102,85 @@ def test_same_file_again_after_approval_is_an_exact_duplicate(samples, fresh_db,
     _run(samples, "HP_nordic_clean.pdf", fresh_db, monkeypatch)
     second = _run(samples, "HP_nordic_clean.pdf", fresh_db, monkeypatch)
     assert second.decision.verdict == "BLOCK" and second.decision.reason_codes == ["DUPLICATE_EXACT"]
+
+
+def _rule(ctx, code):
+    return next(r for r in ctx.rule_results if r.code == code)
+
+
+def test_edge2_names_the_prior_invoices_and_the_overage(samples, fresh_db, monkeypatch):
+    ctx = _run(samples, "EC2_nordic_third_tranche.pdf", fresh_db, monkeypatch)
+    msg = _rule(ctx, "R07_PO_OVER_CONSUMPTION").message
+    assert "INV-NC-5501" in msg and "INV-NC-5502" in msg and "₹42,000.00 over" in msg
+    assert ctx.consumption.consumed_minor == 4_50_000_00 and ctx.consumption.remaining_minor == 1_50_000_00
+
+
+def test_edge3_points_at_the_suspected_original(samples, fresh_db, monkeypatch):
+    ctx = _run(samples, "EC3_shreeji_reissue.pdf", fresh_db, monkeypatch)
+    assert _rule(ctx, "R04_DUPLICATE_EXACT").status == "pass"
+    assert [d["invoice_number"] for d in ctx.duplicates.near] == ["INV-SH-7781"]
+
+
+def test_edge4_blocks_with_phone_verification_and_both_accounts(samples, fresh_db, monkeypatch):
+    ctx = _run(samples, "EC4_kaveri_redirect.pdf", fresh_db, monkeypatch)
+    r12 = _rule(ctx, "R12_BANK_DETAILS_UNCHANGED")
+    assert "9043" in r12.message and "6652" in r12.message
+    assert ctx.decision.next_action.lower().startswith("verify by phone")
+    assert "ap_manager" in config.OVERRIDE_ROLES["BLOCK"] and "ap_clerk" not in config.OVERRIDE_ROLES["BLOCK"]
+    # every other control passed: the bank change alone stops it
+    assert [r.code for r in ctx.rule_results if r.status == "fail"] == ["R12_BANK_DETAILS_UNCHANGED"]
+
+
+def test_edge6_reports_all_three_hard_failures_independently(samples, fresh_db, monkeypatch):
+    ctx = _run(samples, "EC6_apex_eur.pdf", fresh_db, monkeypatch)
+    assert ctx.po_match.tier == "T2" and ctx.invoice.currency == "EUR"
+    assert len(ctx.rule_results) == 20     # no short-circuit: every rule ran
+
+
+# ---------------------------------------------------------------- the scanner path
+
+def _needs_tesseract():
+    from app.services.ocr import tesseract_version
+    if tesseract_version() is None:
+        pytest.skip("tesseract is not installed")
+
+
+def test_scanned_pdf_is_image_only(samples):
+    import pymupdf
+    page = pymupdf.open(samples["FMT_orbit_scan.pdf"])[0]
+    chars = len("".join(page.get_text("text").split()))
+    assert chars / ((page.rect.width / 72) * (page.rect.height / 72)) < config.TEXT_COVERAGE_MIN
+
+
+def test_scan_goes_through_ocr_and_boxes_land_on_the_printed_words(samples, fresh_db, monkeypatch):
+    _needs_tesseract()
+    import pymupdf
+    ctx = _run(samples, "FMT_orbit_scan.pdf", fresh_db, monkeypatch)
+    assert ctx.is_scanned and not ctx.ocr_unavailable and ctx.legibility_by_page[1] > config.OCR_LEGIBILITY_MIN
+    assert ctx.word_boxes and all(w["source"] == "ocr" for w in ctx.word_boxes)
+    assert Path(ctx.processed_page_paths[0]).name == "p1_proc.png" and Path(ctx.processed_page_paths[0]).exists()
+    # Where the invoice number really is, from the clean digital render of the same document.
+    clean = pymupdf.open(stream=generate_samples.as_clean_pdf(generate_samples.fmt_orbit_scan()), filetype="pdf")[0]
+    r = clean.search_for("OE/2026/598")[0]
+    truth = (r.x0 / clean.rect.width, r.y0 / clean.rect.height, r.x1 / clean.rect.width, r.y1 / clean.rect.height)
+    with db.session(fresh_db) as conn:
+        row = db.query_one(conn, "SELECT bbox_json FROM extracted_fields WHERE run_id = ? AND field_path = "
+                                 "'invoice_number'", (ctx.run_id,))
+    box = json.loads(row["bbox_json"])
+    centre = ((box[0] + box[2]) / 2, (box[1] + box[3]) / 2)
+    assert truth[0] - 0.02 <= centre[0] <= truth[2] + 0.02 and truth[1] - 0.02 <= centre[1] <= truth[3] + 0.02
+
+
+def test_phone_photo_is_deskewed_and_reads_degraded_but_legible(samples, fresh_db, monkeypatch):
+    _needs_tesseract()
+    ctx = _run(samples, "EC1_meridian_photo.jpg", fresh_db, monkeypatch)
+    with db.session(fresh_db) as conn:
+        detail = json.loads(db.query_one(conn, "SELECT detail_json FROM run_stages WHERE run_id = ? AND "
+                                               "stage_key = 'ocr'", (ctx.run_id,))["detail_json"])
+    steps = {s["step"]: s["applied"] for s in detail["steps"]}
+    assert steps["deskew"] and steps["shadow removal"] and steps["threshold"]
+    assert config.OCR_LEGIBILITY_MIN < ctx.legibility_by_page[1] < 0.8
+    assert ctx.extraction["unreadable_regions"], "the model should report where the number was lost"
 
 
 # ---------------------------------------------------------------- honest degradation (no recording needed)

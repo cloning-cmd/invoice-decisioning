@@ -199,6 +199,49 @@ flagged for review.
   the pipeline read them, and cached next to the upload. Browsers cannot
   display TIFF, and the boxes must line up with what was read.
 
+## Scanner path (S03) and the generated samples
+
+- **Word boxes on scans are mapped back to the original page.** S03 records
+  the deskew rotation and the upscale factor, and inverts both for every OCR
+  word box, so the overlay is drawn on the image the clerk sees (Original).
+  The Preprocessed toggle shows what tesseract read, without boxes.
+- **The processed page is what OCR reads; the model sees the original.**
+  Binarisation helps tesseract and loses information a vision model can use,
+  so S04 sends the original page (downscaled) plus the OCR text.
+- **Locating a field on the page tries its evidence, then each line of the
+  evidence, then the value itself.** OCR reads a header strip label row
+  first, then the value row, so "INVOICE NO. OE/2026/598" is never adjacent
+  in reading order. Strings under 4 characters are not searched alone, and a
+  match below `EVIDENCE_MATCH_MIN` draws no box rather than a wrong one.
+- **The Edge 1 phone photo is rendered at 120 DPI of paper.** The spec's
+  photo effects (warp, -1.8°, radial shadow, blur 0.8, noise 4, JPEG 72) on a
+  200 DPI render still OCR at 0.885 legibility; 120 DPI measures 0.69,
+  "around 0.6" as the brief describes and still above the 0.55 floor, so the
+  run lands on AUTO_APPROVE once the clerk supplies the invoice number.
+- **Deskew skips angles under 0.3°**, so the flat scans report "left as is"
+  rather than rotating by noise.
+- **Format samples are three extra clean invoices** (an image-only scanned
+  PDF from Orbit on PO-2051, a PNG from Meridian on PO-2049, a 1-bit TIFF fax
+  from Shreeji on PO-2052), each chosen to auto-approve so a correct decision
+  proves the format path. They are separate invoices, not the happy path
+  re-encoded, so running them after the happy path does not trip the
+  duplicate controls. They appear as a second row of chips ("Formats").
+- **Vendor layouts vary as the brief asks:** Nordic (V001) letterhead and a
+  five-cell strip with right-aligned totals; Shreeji (V002) and Kaveri (V004)
+  a two-column header with a details panel; Meridian (V003) prints no PO in
+  the header, only in the notes; Apex (V006) a German layout with an address
+  window, Pos./Article/HS code columns, European number format (6.980,00),
+  tax-free export and IBAN/BIC.
+- **Edge-case figures:** Edge 1 is ₹21,900 (₹18,000 + IGST ₹3,240 + freight
+  ₹660); Edge 2 ₹1,92,000; Edge 3 ₹46,200 on PO-2052, dated 04/11/2026, two
+  days after the paid INV-SH-7781; Edge 4 ₹2,98,400 (the full PO-2044 lines
+  plus ₹10,480 freight) paid into Kotak …9043 / KKBK0008817; Edge 5
+  ₹2,04,800 (100 boards at ₹1,700, revised from ₹1,650); Edge 6 EUR 6,980.00
+  at 0% (export).
+- **Tesseract was installed with winget** (UB-Mannheim 5.4.0, English) on
+  the build machine. Without it S03 still preprocesses (so the before/after
+  view works), warns, and extraction runs vision-only.
+
 ## Operations
 
 - **`python -m app.cli run --replay <id>` is a dry run.** It re-decides with

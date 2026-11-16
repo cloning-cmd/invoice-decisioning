@@ -11,7 +11,7 @@ import { clear, h, icon } from "./ui.js";
 
 export function createViewer({ onSelect } = {}) {
   const state = { runId: null, pageCount: 0, page: 1, variant: "original", hasProcessed: false,
-                  fields: [], highlighted: null, boxesOnProcessed: false };
+                  fields: [], highlighted: null };
 
   const title = h("span", { class: "text-sm font-medium text-zinc-900" }, "Document");
   const pageLabel = h("span", { class: "mono text-xs text-zinc-500" });
@@ -69,15 +69,15 @@ export function createViewer({ onSelect } = {}) {
 
   function drawBoxes() {
     clear(overlay);
-    // Boxes are measured on the image the words were read from. On a scan that
-    // is the preprocessed raster, so they are drawn only on that variant.
-    const show = state.boxesOnProcessed ? state.variant === "processed" : state.variant === "original";
+    // Boxes are in original-page coordinates (S03 undoes its deskew and
+    // upscale), so they are drawn on the Original variant only.
+    const show = state.variant === "original";
     const onPage = state.fields.filter((f) => f.bbox && (f.page || 1) === state.page);
     legend.classList.toggle("hidden", !state.fields.length);
     const located = state.fields.filter((f) => f.bbox).length;
     legend.textContent = show
       ? `${located} of ${state.fields.length} fields located on the page. Click a box to find its field.`
-      : `Boxes are drawn on the preprocessed image, where the words were read.`;
+      : "This is what OCR read: deskewed, de-shadowed and binarised. Boxes are drawn on the original.";
     if (!show) return;
     for (const f of onPage) {
       const [x0, y0, x1, y1] = f.bbox;
@@ -97,15 +97,16 @@ export function createViewer({ onSelect } = {}) {
     state.highlighted = path;
     for (const b of overlay.querySelectorAll(".bbox")) b.classList.toggle("bbox-active", b.dataset.path === path);
     const f = state.fields.find((x) => x.field_path === path && x.bbox);
-    if (f && (f.page || 1) !== state.page) { state.page = f.page; render(); }
+    if (f && (f.page || 1) !== state.page) { state.page = f.page; render(); return; }
+    if (f && state.variant !== "original") { state.variant = "original"; render(); }
   }
 
   return {
     el: root,
-    setDocument({ runId, pageCount, hasProcessed = false, boxesOnProcessed = false }) {
+    setDocument({ runId, pageCount, hasProcessed = false }) {
       const changed = runId !== state.runId;
-      Object.assign(state, { runId, pageCount, hasProcessed, boxesOnProcessed });
-      if (changed) { state.page = 1; state.variant = boxesOnProcessed ? "processed" : "original"; }
+      Object.assign(state, { runId, pageCount, hasProcessed });
+      if (changed) { state.page = 1; state.variant = "original"; }
       if (!toggle.childElementCount) toggle.append(variantButton("original", "Original"), variantButton("processed", "Preprocessed"));
       render();
     },

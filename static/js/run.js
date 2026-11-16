@@ -197,7 +197,7 @@ export function createWorkspace(runId, { onRecord } = {}) {
     const processed = pages.some((p) => p.processed);
     if (processed) {
       const ingest = rows.get("ingest");
-      viewer.setDocument({ runId, pageCount: ingest.stage.detail.pages.length, hasProcessed: true, boxesOnProcessed: true });
+      viewer.setDocument({ runId, pageCount: ingest.stage.detail.pages.length, hasProcessed: true });
     }
   }
 
