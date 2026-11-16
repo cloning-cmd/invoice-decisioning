@@ -4,6 +4,47 @@ Each entry: what I decided, and why. Entries marked **[confirm]** resolve a
 place where the brief contradicts itself; they are my best reading and are
 flagged for review.
 
+## Why it is built this way
+
+**Why the model does not decide.** A verdict on a payment has to be
+reproducible, explainable and changeable by policy. A model's judgement is
+none of those: the same invoice can get a different answer tomorrow, there is
+no rule to point an auditor at, and "raise the tolerance to 3%" is a prompt
+edit with unknown side effects. So the model's job ends at reading: it fills a
+fixed schema through a forced function call, never sees the vendor master,
+the POs, the history or the rules, and its verbatim output is stored next to
+the decision. Every verdict is a pure function of that reading plus
+`config.py`, which is why a stored run can be replayed under new thresholds
+without calling the model.
+
+**Why these tolerances.** `min(max(2% of PO, ₹500), ₹5,000)`. Two percent
+absorbs the routine noise in Indian invoicing (freight rounding, a revised
+unit rate on one line, paise differences in GST). The ₹500 floor stops small
+POs from flagging differences not worth a person's time. The ₹5,000 ceiling
+stops large POs from waving through real money: 2% of ₹25 lakh is ₹50,000,
+which nobody should approve unseen. The ₹1,00,000 auto-approve ceiling is a
+delegation-of-authority limit, not a risk score: above it a named approver
+signs off however clean the invoice is. Confidence 0.85 is where a required
+field stops being a reading and starts being a guess. All of them are named
+constants in `app/config.py`, each with its reason.
+
+**Why BLOCK and REJECT are separate.** They send work to different people
+and mean opposite things about the sender. REJECT says the invoice is wrong
+and the vendor can fix it: send it back (wrong PO, over the PO, missing
+number). BLOCK says the invoice may not be from the vendor at all, or paying
+it would pay twice: do not reply to the sender, escalate, verify out of band.
+Merging them would put "return to vendor" next to a redirection fraud, which
+is exactly the reply the fraudster wants. BLOCK is also locked: only the AP
+manager can release it.
+
+**Why near-duplicates are soft.** An exact duplicate (same file, or same
+vendor and invoice number already approved) is certain, so it blocks. A near
+duplicate (same vendor, same amount, a few days apart, new number) is
+usually a re-issue: a voided invoice replaced with a corrected GSTIN or
+date. Auto-rejecting those creates a vendor dispute every time a vendor
+corrects its own paperwork. Holding puts a person exactly where judgement is
+needed, with both invoices side by side.
+
 ## Data model
 
 - **PO totals are the tax-inclusive authorised ceiling.** Invoice grand totals
@@ -286,6 +327,11 @@ flagged for review.
 
 ## Operations
 
+- **`LLM_CACHE_MODE=offline` replays whatever is recorded for a file, even
+  one recorded under an older prompt version** (it still has to validate
+  against today's schema). Offline means "never call the network"; `cached`
+  is the mode that re-reads a stale recording live. The extract panel shows
+  the prompt version and model behind every reading.
 - **`python -m app.cli run --replay <id>` is a dry run.** It re-decides with
   the current `config.py` and prints stored → replayed, but never rewrites
   the stored decision: history is evidence. Supplying a missing field
@@ -306,3 +352,25 @@ flagged for review.
   invoice against it would add a second, unrelated reason.
 - No other history row shares a vendor and total with any sample invoice, so
   R04b fires only where intended.
+
+## What I would build next, with another week
+
+- **ERP integration.** Post approved runs to the ledger and read PO
+  consumption from it, instead of from a seeded history table.
+- **A learning loop from clerk overrides.** Every override already carries a
+  role and a note. Aggregated per rule and per vendor, they show which
+  controls are too tight (overridden to approve most of the time) or too
+  loose; that becomes a report for whoever owns `config.py`, never an
+  automatic threshold change.
+- **Batch email ingestion.** Read the AP mailbox, keep the sender address
+  and headers (which makes the Edge 4 domain check much stronger), and queue
+  each attachment as a run.
+- **Per-vendor tolerance profiles.** Freight-heavy vendors and fixed-price
+  vendors should not share one band.
+- **Confidence calibration from historical override rates.** Measure how
+  often a field read at 0.9 was corrected by a clerk, and set
+  `CONFIDENCE_MIN` from that rather than by judgement.
+- **Authentication and real roles**, replacing the "Acting as" switch.
+- **A shared event bus** (Redis or Postgres LISTEN/NOTIFY) so the server can
+  run more than one worker.
+

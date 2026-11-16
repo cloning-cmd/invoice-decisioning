@@ -27,7 +27,8 @@ fi
 
 "$PYTHON" -m app.seed
 
-if [[ -f tools/generate_samples.py ]] && [[ -z "$(ls -A data/samples | grep -v '^.gitkeep$' || true)" ]]; then
+# Samples are deterministic; build them if any registered one is missing.
+if ! "$PYTHON" -c 'import sys; from app import samples; sys.exit(0 if all(samples.path_of(s).exists() for s in samples.SAMPLES) else 1)'; then
   echo "generating sample invoices..."
   "$PYTHON" -m tools.generate_samples
 fi

@@ -103,6 +103,15 @@ def test_replay_with_a_lower_ceiling_changes_the_verdict_without_rewriting_histo
         assert db.query_one(conn, "SELECT decision FROM runs WHERE id = ?", (ctx.run_id,))["decision"] == "AUTO_APPROVE"
 
 
+def test_replay_with_a_wider_tolerance_clears_the_variance_on_edge5(samples, fresh_db, monkeypatch):
+    ctx = _run(samples, "EC5_orbit_variance.pdf", fresh_db, monkeypatch)
+    assert ctx.decision.reason_codes == ["PO_AMOUNT_TOLERANCE", "GRN_SHORT_RECEIPT"]
+    monkeypatch.setattr(config, "PO_TOLERANCE_PCT", 0.03)        # 3% of Rs 2,00,000 = Rs 6,000, capped at Rs 5,000
+    replayed = runner.replay(ctx.run_id, db_path=fresh_db, today=TODAY)
+    assert replayed.decision.verdict == "HOLD_FOR_REVIEW"         # the short receipt still needs Stores
+    assert replayed.decision.reason_codes == ["GRN_SHORT_RECEIPT"]
+
+
 def test_same_file_again_after_approval_is_an_exact_duplicate(samples, fresh_db, monkeypatch):
     _run(samples, "HP_nordic_clean.pdf", fresh_db, monkeypatch)
     second = _run(samples, "HP_nordic_clean.pdf", fresh_db, monkeypatch)
