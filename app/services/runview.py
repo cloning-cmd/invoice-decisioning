@@ -18,7 +18,8 @@ from PIL import Image, ImageOps
 
 from app import config, db
 from app.pipeline.stages.s09_decide import VERDICT_WORDS
-from app.services.money import format_money
+from app.services import actions
+from app.services.money import format_money, po_tolerance_minor
 from app.services.ocr import processed_page_path
 
 
@@ -85,7 +86,20 @@ def card(conn, run_id: str) -> dict[str, Any] | None:
     ]
     return {**d, "verdict_words": VERDICT_WORDS[d["verdict"]], "figures": figures,
             "override_roles": list(config.OVERRIDE_ROLES[d["verdict"]]),
-            "currency": cur, "total_minor": total}
+            "currency": cur, "total_minor": total, "resolution": resolution(conn, run_id)}
+
+
+def resolution(conn, run_id: str) -> dict[str, Any] | None:
+    """The latest human override since the latest system decision, if any."""
+    row = db.query_one(conn, """SELECT actor, action, note, created_at FROM audit_log
+                                WHERE run_id = ? AND action IN ('override_approve', 'override_reject')
+                                  AND id > COALESCE((SELECT MAX(id) FROM audit_log WHERE run_id = ?
+                                                     AND action = 'decision_made'), 0)
+                                ORDER BY id DESC LIMIT 1""", (run_id, run_id))
+    if row is None:
+        return None
+    return {**row, "actor_name": config.OWNERS[row["actor"]],
+            "words": "Approved for payment" if row["action"] == "override_approve" else "Rejected"}
 
 
 # ---------------------------------------------------------------- replay for SSE
@@ -123,9 +137,25 @@ def record(conn, run_id: str, include_raw: bool = False) -> dict[str, Any]:
         f["bbox"] = _loads(f.pop("bbox_json"))
     audit = db.query(conn, "SELECT actor, action, from_value, to_value, note, created_at FROM audit_log "
                            "WHERE run_id = ? ORDER BY id", (run_id,))
+    for a in audit:
+        a["actor_name"] = config.OWNERS[a["actor"]] if a["actor"] in config.OWNERS else "System"
+    payload = _loads(raw, {}).get("payload") if raw else None
+    stages = _stages(conn, run_id)
+    match = next((st["detail"] for st in stages if st["stage_key"] == "match"), {}) or {}
+    cons = match.get("consumption")
+    if cons:
+        po = db.query_one(conn, "SELECT currency, allow_partial_invoicing FROM purchase_orders WHERE po_number = ?",
+                          (cons["po_number"],))
+        cons = {**cons, "tolerance_minor": po_tolerance_minor(cons["po_total_minor"]),
+                "currency": po["currency"] if po else "INR",
+                "allow_partial_invoicing": bool(po["allow_partial_invoicing"]) if po else None}
     out = {"run": run, "invoice": extracted.get("invoice"), "selfcheck": extracted.get("selfcheck"),
-           "stages": _stages(conn, run_id), "rules": rules, "fields": fields, "audit": audit,
-           "card": card(conn, run_id), "has_raw_llm": raw is not None}
+           "stages": stages, "rules": rules, "consumption": cons, "duplicates": match.get("duplicates"), "fields": fields, "audit": audit,
+           "card": card(conn, run_id), "has_raw_llm": raw is not None,
+           "unreadable_regions": (payload or {}).get("unreadable_regions", []),
+           "suppliable_fields": actions.suppliable_fields(payload) if payload else [],
+           "supplied_fields": actions.supplied_fields(conn, run_id),
+           "roles": {r: config.OWNERS[r] for r in config.ACTION_ACTORS}}
     if include_raw:
         out["raw_llm_json"] = _loads(raw)
     return out

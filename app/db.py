@@ -12,7 +12,7 @@ from typing import Any, Iterable, Iterator
 
 from app import config
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
 
 SCHEMA_V1 = """
 CREATE TABLE IF NOT EXISTS vendors (
@@ -155,8 +155,19 @@ CREATE INDEX IF NOT EXISTS ix_history_vendor_inv  ON invoice_history(vendor_id, 
 CREATE INDEX IF NOT EXISTS ix_history_sha         ON invoice_history(file_sha256);
 """
 
+# v2: the vendor's known email domain (Edge 4 flags an invoice sent from a
+# look-alike domain), and expression indexes so the dashboard can filter and
+# sort on fields that live inside runs.extracted_json without a table scan.
+SCHEMA_V2 = """
+ALTER TABLE vendors ADD COLUMN email_domain TEXT;
+CREATE INDEX IF NOT EXISTS ix_runs_total   ON runs(json_extract(extracted_json, '$.invoice.grand_total_minor'));
+CREATE INDEX IF NOT EXISTS ix_runs_invno   ON runs(json_extract(extracted_json, '$.invoice.invoice_number'));
+CREATE INDEX IF NOT EXISTS ix_runs_vendor  ON runs(matched_vendor_id);
+CREATE INDEX IF NOT EXISTS ix_audit_run    ON audit_log(run_id, id);
+"""
+
 # Ordered migrations: index i upgrades user_version i -> i+1.
-MIGRATIONS: list[str] = [SCHEMA_V1]
+MIGRATIONS: list[str] = [SCHEMA_V1, SCHEMA_V2]
 
 TABLES = ("vendors", "purchase_orders", "po_line_items", "goods_receipts", "invoice_history",
           "runs", "run_stages", "rule_results", "extracted_fields", "audit_log")

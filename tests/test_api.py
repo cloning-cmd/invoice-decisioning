@@ -141,3 +141,114 @@ def test_hub_gives_a_late_subscriber_the_full_history_then_live_events():
         assert hub.subscribe("r1") is None            # finished runs are served from the database
 
     asyncio.run(scenario())
+
+
+# ---------------------------------------------------------------- Phase 4: dashboard, actions, export
+
+def _require(client, name):
+    data = (config.SAMPLES_DIR / name).read_bytes()
+    path = llm.cache_path(hashlib.sha256(data).hexdigest())
+    if not path.exists() or json.loads(path.read_text(encoding="utf-8")).get("prompt_version") != llm.PROMPT_VERSION:
+        pytest.skip(f"no current recording for {name}")
+
+
+def _start(client, key):
+    return client.post("/api/runs/from-sample", json={"sample": key}).json()["run_id"]
+
+
+def test_list_filters_search_sort_and_the_exception_queue(client):
+    for name in ("HP_nordic_clean.pdf", "EC4_kaveri_redirect.pdf", "EC3_shreeji_reissue.pdf"):
+        _require(client, name)
+    hp, ec4, ec3 = _start(client, "HP"), _start(client, "EC4"), _start(client, "EC3")
+
+    everything = client.get("/api/runs").json()
+    assert everything["total"] == 3
+    blocked = client.get("/api/runs", params={"verdict": "BLOCK"}).json()
+    assert [r["id"] for r in blocked["rows"]] == [ec4]
+    assert blocked["rows"][0]["vendor_name"] == "Kaveri Logistics Pvt Ltd"
+    assert blocked["rows"][0]["total_display"] == "₹2,98,400.00"
+    by_invoice = client.get("/api/runs", params={"q": "SH-7793"}).json()
+    assert [r["id"] for r in by_invoice["rows"]] == [ec3]
+    by_po = client.get("/api/runs", params={"q": "PO-2041"}).json()
+    assert [r["id"] for r in by_po["rows"]] == [hp]
+    by_amount = client.get("/api/runs", params={"sort": "amount", "order": "desc"}).json()
+    assert [r["id"] for r in by_amount["rows"]] == [ec4, hp, ec3]
+    assert client.get("/api/runs", params={"sort": "drop table"}).status_code == 400
+
+    queue = client.get("/api/runs", params={"queue": "true"}).json()["rows"]
+    assert [r["id"] for r in queue] == [ec4, ec3]           # needs a human, biggest first; HP is done
+
+    stats = client.get("/api/stats").json()
+    tiles = {t["key"]: t for t in stats["tiles"]}
+    assert len(stats["days"]) == config.STATS_SERIES_DAYS and len(tiles["runs"]["series"]) == config.STATS_SERIES_DAYS
+    assert tiles["runs"]["value"] == 3 and tiles["blocked"]["value"] == 1 and tiles["held"]["value"] == 1
+    assert tiles["value_auto"]["display"] == "₹95,250"
+    assert {r["code"]: r["count"] for r in stats["reasons"]} == {"BANK_DETAILS_CHANGED": 1, "POSSIBLE_DUPLICATE": 1}
+    assert stats["queue_count"] == 2
+
+
+def test_block_can_only_be_released_by_the_ap_manager_and_needs_a_note(client):
+    _require(client, "EC4_kaveri_redirect.pdf")
+    run_id = _start(client, "EC4")
+    url = f"/api/runs/{run_id}/actions"
+    clerk = client.post(url, json={"action": "override_approve", "actor": "ap_clerk", "note": "looks fine"})
+    assert clerk.status_code == 403 and "AP Manager" in clerk.json()["detail"]
+    no_note = client.post(url, json={"action": "override_approve", "actor": "ap_manager", "note": "  "})
+    assert no_note.status_code == 400
+    ok = client.post(url, json={"action": "override_reject", "actor": "ap_manager",
+                                "note": "Called Kaveri on the master number: they never changed banks."})
+    assert ok.status_code == 200
+
+    rec = client.get(f"/api/runs/{run_id}").json()
+    assert rec["run"]["decision"] == "BLOCK"                         # the system decision is never rewritten
+    assert rec["card"]["resolution"]["action"] == "override_reject"
+    assert rec["card"]["resolution"]["actor_name"] == config.OWNERS["ap_manager"]
+    assert [(a["actor"], a["action"]) for a in rec["audit"]] == [("system", "decision_made"),
+                                                                 ("ap_manager", "override_reject")]
+    assert client.get("/api/runs", params={"queue": "true"}).json()["rows"] == []
+
+
+def test_edge1_supplying_the_missing_number_lands_on_auto_approve(client):
+    _require(client, "EC1_meridian_photo.jpg")
+    run_id = _start(client, "EC1")
+    rec = client.get(f"/api/runs/{run_id}").json()
+    assert rec["run"]["decision"] == "REJECT" and "invoice_number" in rec["suppliable_fields"]
+    region = rec["unreadable_regions"][0]
+    assert region["page"] == 1 and len(region["box_2d"]) == 4
+
+    url = f"/api/runs/{run_id}/actions"
+    wrong = client.post(url, json={"action": "field_supplied", "actor": "ap_clerk", "note": "x",
+                                   "payload": {"field": "totals.grand_total", "value": "1.00"}})
+    assert wrong.status_code == 400                     # only fields the model could not read are suppliable
+    resp = client.post(url, json={"action": "field_supplied", "actor": "ap_clerk",
+                                  "note": "Read from the paper copy", "payload": {"field": "invoice_number",
+                                                                                  "value": "MPL/26-27/0457"}})
+    assert resp.status_code == 200, resp.text
+    assert resp.json()["verdict"] == "AUTO_APPROVE"
+
+    rec = client.get(f"/api/runs/{run_id}").json()
+    assert rec["run"]["decision"] == "AUTO_APPROVE"
+    assert rec["supplied_fields"] == {"invoice_number": "MPL/26-27/0457"}
+    assert [(a["actor"], a["action"]) for a in rec["audit"]] == [
+        ("system", "decision_made"), ("ap_clerk", "field_supplied"), ("system", "decision_made")]
+    assert rec["invoice"]["human_supplied"] == ["invoice_number"]
+
+
+def test_export_is_the_complete_record_with_the_model_output(client):
+    _require(client, "HP_nordic_clean.pdf")
+    run_id = _start(client, "HP")
+    resp = client.get(f"/api/runs/{run_id}/export")
+    assert resp.status_code == 200
+    assert resp.headers["content-disposition"] == f'attachment; filename="decision-{run_id}.json"'
+    body = resp.json()
+    assert body["raw_llm_json"]["payload"]["invoice_number"]["value"] == "INV-NC-5531"
+    assert body["card"]["verdict"] == "AUTO_APPROVE" and len(body["rules"]) == 20
+
+
+def test_reference_endpoints(client):
+    vendors = client.get("/api/reference/vendors").json()
+    assert {v["id"] for v in vendors} >= {"V001", "V004"}
+    po = client.get("/api/reference/pos/PO-2041").json()
+    assert po["vendor_name"] == "Nordic Components Pvt Ltd" and po["allow_partial_invoicing"] is True
+    assert [i["invoice_number"] for i in po["invoices"]] == ["INV-NC-5501", "INV-NC-5502"]
+    assert client.get("/api/reference/pos/PO-9999").status_code == 404

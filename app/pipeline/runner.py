@@ -60,7 +60,7 @@ def load_reference(db_path: Path | None = None) -> ReferenceData:
     with db.session(db_path) as conn:
         vendors = {r["id"]: Vendor(r["id"], r["legal_name"], tuple(json.loads(r["aliases_json"])), r["status"],
                                    r["tax_id"], r["bank_account_last4"], r["bank_ifsc"], r["payment_terms_days"],
-                                   r["default_currency"])
+                                   r["default_currency"], r["email_domain"])
                    for r in db.query(conn, "SELECT * FROM vendors")}
         lines: dict[str, list[POLine]] = {}
         for r in db.query(conn, "SELECT * FROM po_line_items ORDER BY id"):

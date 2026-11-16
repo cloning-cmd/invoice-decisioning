@@ -1,190 +1,148 @@
 {
   "sha256": "92d8c14755f83b8a8789d3c0c50bc6216ba31eef79adb0e26a06ef3c11312aa9",
   "model": "gemini-3.5-flash",
-  "prompt_version": "2026-11-16.1",
-  "created_at": "2026-11-16T03:27:32+00:00",
+  "prompt_version": "2026-11-16.2",
+  "created_at": "2026-11-16T03:34:54+00:00",
   "usage": {
-    "input_tokens": 7692,
-    "output_tokens": 1392
+    "input_tokens": 7786,
+    "output_tokens": 1395
   },
   "payload": {
     "po_references": [
       {
+        "evidence": "Supplied against your Purchase Order PO-2049",
         "explicit": false,
-        "confidence": 0.99,
-        "value": "PO-2049",
-        "evidence": "Supplied against your Purchase Order PO-2049"
+        "confidence": 0.98,
+        "value": "PO-2049"
       }
     ],
-    "invoice_date": {
-      "value": "13/11/2026",
-      "page": 1,
-      "evidence": "INVOICE DATE\\n13/11/2026",
-      "confidence": 0.99
-    },
-    "due_date": {
-      "confidence": 0.99,
-      "evidence": "DUE DATE\\n13/12/2026",
-      "value": "13/12/2026",
-      "page": 1
-    },
-    "invoice_number": {
-      "evidence": "INVOICE NO.\\nMPL/26-27/0466",
-      "confidence": 0.99,
-      "value": "MPL/26-27/0466",
-      "page": 1
+    "buyer": {
+      "tax_id": {
+        "confidence": 0.98,
+        "evidence": "GSTIN: 29AAECH0007L1Z2",
+        "page": 1,
+        "value": "29AAECH0007L1Z2"
+      },
+      "name": {
+        "value": "Halden Precision Engineering Pvt Ltd",
+        "confidence": 0.98,
+        "page": 1,
+        "evidence": "BILL TO\\nHalden Precision Engineering Pvt Ltd"
+      }
     },
     "document_type": "tax_invoice",
-    "document_quality": {
-      "pages": 1,
-      "is_scan": false,
-      "legibility": 0.99,
-      "issues": []
+    "currency": {
+      "value": "INR",
+      "confidence": 0.98,
+      "evidence": "Grand Total (INR)",
+      "page": 1
     },
-    "buyer": {
-      "name": {
-        "confidence": 0.99,
-        "evidence": "BILL TO\\nHalden Precision Engineering Pvt Ltd",
-        "page": 1,
-        "value": "Halden Precision Engineering Pvt Ltd"
-      },
-      "tax_id": {
-        "value": "29AAECH0007L1Z2",
-        "confidence": 0.99,
-        "evidence": "GSTIN: 29AAECH0007L1Z2",
-        "page": 1
-      }
+    "due_date": {
+      "confidence": 0.98,
+      "page": 1,
+      "value": "13/12/2026",
+      "evidence": "DUE DATE\\n13/12/2026"
     },
-    "line_items": [
-      {
-        "sku": {
-          "value": "STR-23",
-          "evidence": "STR-23",
-          "page": 1,
-          "confidence": 0.99
-        },
-        "line_total": {
-          "confidence": 0.99,
-          "value": "14,000.00",
-          "page": 1,
-          "evidence": "14,000.00"
-        },
-        "tax_rate_pct": {
-          "page": 1,
-          "confidence": 0.99,
-          "value": "18%",
-          "evidence": "18%"
-        },
-        "line_no": 1,
-        "qty": {
-          "value": "50",
-          "confidence": 0.99,
-          "evidence": "50",
-          "page": 1
-        },
-        "uom": {
-          "page": 1,
-          "evidence": "ROLL",
-          "confidence": 0.99,
-          "value": "ROLL"
-        },
-        "unit_price": {
-          "page": 1,
-          "value": "280.00",
-          "confidence": 0.99,
-          "evidence": "280.00"
-        },
-        "description": {
-          "evidence": "Stretch film 23 micron x 500mm",
-          "value": "Stretch film 23 micron x 500mm",
-          "confidence": 0.99,
-          "page": 1
-        }
-      }
-    ],
-    "notes": "Watermark 'COPY' present across middle of page.",
-    "unreadable_regions": [],
+    "notes": "Watermark 'COPY' present in background.",
     "supplier": {
-      "email": {
-        "evidence": "accounts@meridianpack.in",
+      "tax_id": {
+        "confidence": 0.98,
+        "value": "27AASFM1109P1Z4",
         "page": 1,
-        "confidence": 0.99,
+        "evidence": "GSTIN: 27AASFM1109P1Z4"
+      },
+      "email": {
+        "page": 1,
+        "confidence": 0.98,
+        "evidence": "accounts@meridianpack.in",
         "value": "accounts@meridianpack.in"
       },
-      "tax_id": {
+      "address": {
+        "confidence": 0.98,
         "page": 1,
-        "confidence": 0.99,
-        "evidence": "GSTIN: 27AASFM1109P1Z4",
-        "value": "27AASFM1109P1Z4"
+        "value": "Gala 7-9, Shree Sai Industrial Estate, Vadpe\\nBhiwandi 421302, Maharashtra, India",
+        "evidence": "Gala 7-9, Shree Sai Industrial Estate, Vadpe\\nBhiwandi 421302, Maharashtra, India"
       },
       "name": {
-        "confidence": 0.99,
         "value": "Meridian Packaging LLP",
         "page": 1,
-        "evidence": "Meridian Packaging LLP"
-      },
-      "address": {
-        "confidence": 0.99,
-        "value": "Gala 7-9, Shree Sai Industrial Estate, Vadpe\\nBhiwandi 421302, Maharashtra, India",
-        "evidence": "Gala 7-9, Shree Sai Industrial Estate, Vadpe\\nBhiwandi 421302, Maharashtra, India",
-        "page": 1
+        "evidence": "Meridian Packaging LLP",
+        "confidence": 0.98
       }
+    },
+    "invoice_date": {
+      "evidence": "INVOICE DATE\\n13/11/2026",
+      "value": "13/11/2026",
+      "page": 1,
+      "confidence": 0.98
     },
     "payment": {
       "bank_name": {
-        "page": 1,
-        "confidence": 0.99,
         "value": "Axis Bank Ltd, Bhiwandi Branch",
+        "confidence": 0.98,
+        "page": 1,
         "evidence": "Bank:\\nAxis Bank Ltd, Bhiwandi Branch"
-      },
-      "account_number": {
-        "value": "•••••••••••1109",
-        "page": 1,
-        "evidence": "A/c No.:\\n•••••••••••1109",
-        "confidence": 0.99
-      },
-      "terms": {
-        "evidence": "Payment: 30 days from date of invoice",
-        "confidence": 0.99,
-        "page": 1,
-        "value": "Payment: 30 days from date of invoice"
       },
       "ifsc_or_swift": {
         "evidence": "IFSC:\\nUTIB0000247",
+        "value": "UTIB0000247",
+        "confidence": 0.98,
+        "page": 1
+      },
+      "terms": {
+        "value": "Payment: 30 days from date of invoice",
         "page": 1,
-        "confidence": 0.99,
-        "value": "UTIB0000247"
+        "confidence": 0.98,
+        "evidence": "Payment: 30 days from date of invoice"
+      },
+      "account_number": {
+        "page": 1,
+        "evidence": "A/c No.:\\n•••••••••••1109",
+        "value": "•••••••••••1109",
+        "confidence": 0.98
       },
       "beneficiary_name": {
         "evidence": "A/c Name:\\nMeridian Packaging LLP",
-        "page": 1,
-        "confidence": 0.99,
-        "value": "Meridian Packaging LLP"
+        "confidence": 0.98,
+        "value": "Meridian Packaging LLP",
+        "page": 1
       }
     },
+    "invoice_number": {
+      "value": "MPL/26-27/0466",
+      "evidence": "INVOICE NO.\\nMPL/26-27/0466",
+      "confidence": 0.98,
+      "page": 1
+    },
     "totals": {
-      "subtotal": {
+      "grand_total": {
+        "value": "16,520.00",
+        "confidence": 0.98,
         "page": 1,
-        "value": "14,000.00",
-        "evidence": "Taxable Value\\n14,000.00",
-        "confidence": 0.99
+        "evidence": "Grand Total (INR)\\n16,520.00"
+      },
+      "tax_total": {
+        "value": "2,520.00",
+        "evidence": "IGST @ 18%\\n2,520.00",
+        "page": 1,
+        "confidence": 0.98
       },
       "tax_breakdown": [
         {
-          "label": "IGST @ 18%",
           "amount": {
+            "value": "2,520.00",
             "evidence": "IGST @ 18%\\n2,520.00",
-            "confidence": 0.99,
-            "page": 1,
-            "value": "2,520.00"
-          }
+            "confidence": 0.98,
+            "page": 1
+          },
+          "label": "IGST @ 18%"
         }
       ],
-      "grand_total": {
-        "confidence": 0.99,
-        "page": 1,
-        "value": "16,520.00",
-        "evidence": "Grand Total (INR)\\n16,520.00"
+      "amount_in_words": {
+        "confidence": 0.98,
+        "evidence": "AMOUNT IN WORDS\\nRupees Sixteen Thousand Five Hundred Twenty Only",
+        "value": "Rupees Sixteen Thousand Five Hundred Twenty Only",
+        "page": 1
       },
       "discount": {
         "evidence": null,
@@ -194,28 +152,70 @@
       },
       "shipping": {
         "confidence": 0,
-        "page": null,
         "value": null,
+        "page": null,
         "evidence": null
       },
-      "tax_total": {
-        "evidence": "IGST @ 18%\\n2,520.00",
-        "confidence": 0.99,
+      "subtotal": {
+        "evidence": "Taxable Value\\n14,000.00",
+        "value": "14,000.00",
         "page": 1,
-        "value": "2,520.00"
-      },
-      "amount_in_words": {
-        "confidence": 0.99,
-        "evidence": "Rupees Sixteen Thousand Five Hundred Twenty Only",
-        "page": 1,
-        "value": "Rupees Sixteen Thousand Five Hundred Twenty Only"
+        "confidence": 0.98
       }
     },
-    "currency": {
-      "page": 1,
-      "value": "INR",
-      "confidence": 0.99,
-      "evidence": "Grand Total (INR)"
+    "line_items": [
+      {
+        "unit_price": {
+          "evidence": "280.00",
+          "confidence": 0.98,
+          "page": 1,
+          "value": "280.00"
+        },
+        "sku": {
+          "value": "STR-23",
+          "confidence": 0.98,
+          "evidence": "STR-23",
+          "page": 1
+        },
+        "description": {
+          "value": "Stretch film 23 micron x 500mm",
+          "confidence": 0.98,
+          "page": 1,
+          "evidence": "Stretch film 23 micron x 500mm"
+        },
+        "tax_rate_pct": {
+          "page": 1,
+          "value": "18%",
+          "confidence": 0.98,
+          "evidence": "18%"
+        },
+        "line_total": {
+          "evidence": "14,000.00",
+          "value": "14,000.00",
+          "page": 1,
+          "confidence": 0.98
+        },
+        "line_no": 1,
+        "uom": {
+          "page": 1,
+          "confidence": 0.98,
+          "value": "ROLL",
+          "evidence": "ROLL"
+        },
+        "qty": {
+          "page": 1,
+          "value": "50",
+          "evidence": "50",
+          "confidence": 0.98
+        }
+      }
+    ],
+    "unreadable_regions": [],
+    "document_quality": {
+      "is_scan": false,
+      "legibility": 0.98,
+      "issues": [],
+      "pages": 1
     }
   },
   "responses": [
@@ -226,12 +226,12 @@
           "content-type": "application/json; charset=UTF-8",
           "vary": "Origin, X-Origin, Referer",
           "content-encoding": "gzip",
-          "date": "Mon, 16 Nov 2026 03:27:32 GMT",
+          "date": "Mon, 16 Nov 2026 03:34:54 GMT",
           "server": "scaffolding on HTTPServer2",
           "x-xss-protection": "0",
           "x-frame-options": "SAMEORIGIN",
           "x-content-type-options": "nosniff",
-          "server-timing": "gfet4t7; dur=6331",
+          "server-timing": "gfet4t7; dur=6295",
           "alt-svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
           "transfer-encoding": "chunked"
         }
@@ -242,185 +242,143 @@
             "parts": [
               {
                 "function_call": {
-                  "id": "call_8974887486834271771",
+                  "id": "call_3215613944571625617",
                   "args": {
                     "po_references": [
                       {
+                        "evidence": "Supplied against your Purchase Order PO-2049",
                         "explicit": false,
-                        "confidence": 0.99,
-                        "value": "PO-2049",
-                        "evidence": "Supplied against your Purchase Order PO-2049"
+                        "confidence": 0.98,
+                        "value": "PO-2049"
                       }
                     ],
-                    "invoice_date": {
-                      "value": "13/11/2026",
-                      "page": 1,
-                      "evidence": "INVOICE DATE\\n13/11/2026",
-                      "confidence": 0.99
-                    },
-                    "due_date": {
-                      "confidence": 0.99,
-                      "evidence": "DUE DATE\\n13/12/2026",
-                      "value": "13/12/2026",
-                      "page": 1
-                    },
-                    "invoice_number": {
-                      "evidence": "INVOICE NO.\\nMPL/26-27/0466",
-                      "confidence": 0.99,
-                      "value": "MPL/26-27/0466",
-                      "page": 1
+                    "buyer": {
+                      "tax_id": {
+                        "confidence": 0.98,
+                        "evidence": "GSTIN: 29AAECH0007L1Z2",
+                        "page": 1,
+                        "value": "29AAECH0007L1Z2"
+                      },
+                      "name": {
+                        "value": "Halden Precision Engineering Pvt Ltd",
+                        "confidence": 0.98,
+                        "page": 1,
+                        "evidence": "BILL TO\\nHalden Precision Engineering Pvt Ltd"
+                      }
                     },
                     "document_type": "tax_invoice",
-                    "document_quality": {
-                      "pages": 1,
-                      "is_scan": false,
-                      "legibility": 0.99,
-                      "issues": []
+                    "currency": {
+                      "value": "INR",
+                      "confidence": 0.98,
+                      "evidence": "Grand Total (INR)",
+                      "page": 1
                     },
-                    "buyer": {
-                      "name": {
-                        "confidence": 0.99,
-                        "evidence": "BILL TO\\nHalden Precision Engineering Pvt Ltd",
-                        "page": 1,
-                        "value": "Halden Precision Engineering Pvt Ltd"
-                      },
-                      "tax_id": {
-                        "value": "29AAECH0007L1Z2",
-                        "confidence": 0.99,
-                        "evidence": "GSTIN: 29AAECH0007L1Z2",
-                        "page": 1
-                      }
+                    "due_date": {
+                      "confidence": 0.98,
+                      "page": 1,
+                      "value": "13/12/2026",
+                      "evidence": "DUE DATE\\n13/12/2026"
                     },
-                    "line_items": [
-                      {
-                        "sku": {
-                          "value": "STR-23",
-                          "evidence": "STR-23",
-                          "page": 1,
-                          "confidence": 0.99
-                        },
-                        "line_total": {
-                          "confidence": 0.99,
-                          "value": "14,000.00",
-                          "page": 1,
-                          "evidence": "14,000.00"
-                        },
-                        "tax_rate_pct": {
-                          "page": 1,
-                          "confidence": 0.99,
-                          "value": "18%",
-                          "evidence": "18%"
-                        },
-                        "line_no": 1,
-                        "qty": {
-                          "value": "50",
-                          "confidence": 0.99,
-                          "evidence": "50",
-                          "page": 1
-                        },
-                        "uom": {
-                          "page": 1,
-                          "evidence": "ROLL",
-                          "confidence": 0.99,
-                          "value": "ROLL"
-                        },
-                        "unit_price": {
-                          "page": 1,
-                          "value": "280.00",
-                          "confidence": 0.99,
-                          "evidence": "280.00"
-                        },
-                        "description": {
-                          "evidence": "Stretch film 23 micron x 500mm",
-                          "value": "Stretch film 23 micron x 500mm",
-                          "confidence": 0.99,
-                          "page": 1
-                        }
-                      }
-                    ],
-                    "notes": "Watermark 'COPY' present across middle of page.",
-                    "unreadable_regions": [],
+                    "notes": "Watermark 'COPY' present in background.",
                     "supplier": {
-                      "email": {
-                        "evidence": "accounts@meridianpack.in",
+                      "tax_id": {
+                        "confidence": 0.98,
+                        "value": "27AASFM1109P1Z4",
                         "page": 1,
-                        "confidence": 0.99,
+                        "evidence": "GSTIN: 27AASFM1109P1Z4"
+                      },
+                      "email": {
+                        "page": 1,
+                        "confidence": 0.98,
+                        "evidence": "accounts@meridianpack.in",
                         "value": "accounts@meridianpack.in"
                       },
-                      "tax_id": {
+                      "address": {
+                        "confidence": 0.98,
                         "page": 1,
-                        "confidence": 0.99,
-                        "evidence": "GSTIN: 27AASFM1109P1Z4",
-                        "value": "27AASFM1109P1Z4"
+                        "value": "Gala 7-9, Shree Sai Industrial Estate, Vadpe\\nBhiwandi 421302, Maharashtra, India",
+                        "evidence": "Gala 7-9, Shree Sai Industrial Estate, Vadpe\\nBhiwandi 421302, Maharashtra, India"
                       },
                       "name": {
-                        "confidence": 0.99,
                         "value": "Meridian Packaging LLP",
                         "page": 1,
-                        "evidence": "Meridian Packaging LLP"
-                      },
-                      "address": {
-                        "confidence": 0.99,
-                        "value": "Gala 7-9, Shree Sai Industrial Estate, Vadpe\\nBhiwandi 421302, Maharashtra, India",
-                        "evidence": "Gala 7-9, Shree Sai Industrial Estate, Vadpe\\nBhiwandi 421302, Maharashtra, India",
-                        "page": 1
+                        "evidence": "Meridian Packaging LLP",
+                        "confidence": 0.98
                       }
+                    },
+                    "invoice_date": {
+                      "evidence": "INVOICE DATE\\n13/11/2026",
+                      "value": "13/11/2026",
+                      "page": 1,
+                      "confidence": 0.98
                     },
                     "payment": {
                       "bank_name": {
-                        "page": 1,
-                        "confidence": 0.99,
                         "value": "Axis Bank Ltd, Bhiwandi Branch",
+                        "confidence": 0.98,
+                        "page": 1,
                         "evidence": "Bank:\\nAxis Bank Ltd, Bhiwandi Branch"
-                      },
-                      "account_number": {
-                        "value": "•••••••••••1109",
-                        "page": 1,
-                        "evidence": "A/c No.:\\n•••••••••••1109",
-                        "confidence": 0.99
-                      },
-                      "terms": {
-                        "evidence": "Payment: 30 days from date of invoice",
-                        "confidence": 0.99,
-                        "page": 1,
-                        "value": "Payment: 30 days from date of invoice"
                       },
                       "ifsc_or_swift": {
                         "evidence": "IFSC:\\nUTIB0000247",
+                        "value": "UTIB0000247",
+                        "confidence": 0.98,
+                        "page": 1
+                      },
+                      "terms": {
+                        "value": "Payment: 30 days from date of invoice",
                         "page": 1,
-                        "confidence": 0.99,
-                        "value": "UTIB0000247"
+                        "confidence": 0.98,
+                        "evidence": "Payment: 30 days from date of invoice"
+                      },
+                      "account_number": {
+                        "page": 1,
+                        "evidence": "A/c No.:\\n•••••••••••1109",
+                        "value": "•••••••••••1109",
+                        "confidence": 0.98
                       },
                       "beneficiary_name": {
                         "evidence": "A/c Name:\\nMeridian Packaging LLP",
-                        "page": 1,
-                        "confidence": 0.99,
-                        "value": "Meridian Packaging LLP"
+                        "confidence": 0.98,
+                        "value": "Meridian Packaging LLP",
+                        "page": 1
                       }
                     },
+                    "invoice_number": {
+                      "value": "MPL/26-27/0466",
+                      "evidence": "INVOICE NO.\\nMPL/26-27/0466",
+                      "confidence": 0.98,
+                      "page": 1
+                    },
                     "totals": {
-                      "subtotal": {
+                      "grand_total": {
+                        "value": "16,520.00",
+                        "confidence": 0.98,
                         "page": 1,
-                        "value": "14,000.00",
-                        "evidence": "Taxable Value\\n14,000.00",
-                        "confidence": 0.99
+                        "evidence": "Grand Total (INR)\\n16,520.00"
+                      },
+                      "tax_total": {
+                        "value": "2,520.00",
+                        "evidence": "IGST @ 18%\\n2,520.00",
+                        "page": 1,
+                        "confidence": 0.98
                       },
                       "tax_breakdown": [
                         {
-                          "label": "IGST @ 18%",
                           "amount": {
+                            "value": "2,520.00",
                             "evidence": "IGST @ 18%\\n2,520.00",
-                            "confidence": 0.99,
-                            "page": 1,
-                            "value": "2,520.00"
-                          }
+                            "confidence": 0.98,
+                            "page": 1
+                          },
+                          "label": "IGST @ 18%"
                         }
                       ],
-                      "grand_total": {
-                        "confidence": 0.99,
-                        "page": 1,
-                        "value": "16,520.00",
-                        "evidence": "Grand Total (INR)\\n16,520.00"
+                      "amount_in_words": {
+                        "confidence": 0.98,
+                        "evidence": "AMOUNT IN WORDS\\nRupees Sixteen Thousand Five Hundred Twenty Only",
+                        "value": "Rupees Sixteen Thousand Five Hundred Twenty Only",
+                        "page": 1
                       },
                       "discount": {
                         "evidence": null,
@@ -430,33 +388,75 @@
                       },
                       "shipping": {
                         "confidence": 0,
-                        "page": null,
                         "value": null,
+                        "page": null,
                         "evidence": null
                       },
-                      "tax_total": {
-                        "evidence": "IGST @ 18%\\n2,520.00",
-                        "confidence": 0.99,
+                      "subtotal": {
+                        "evidence": "Taxable Value\\n14,000.00",
+                        "value": "14,000.00",
                         "page": 1,
-                        "value": "2,520.00"
-                      },
-                      "amount_in_words": {
-                        "confidence": 0.99,
-                        "evidence": "Rupees Sixteen Thousand Five Hundred Twenty Only",
-                        "page": 1,
-                        "value": "Rupees Sixteen Thousand Five Hundred Twenty Only"
+                        "confidence": 0.98
                       }
                     },
-                    "currency": {
-                      "page": 1,
-                      "value": "INR",
-                      "confidence": 0.99,
-                      "evidence": "Grand Total (INR)"
+                    "line_items": [
+                      {
+                        "unit_price": {
+                          "evidence": "280.00",
+                          "confidence": 0.98,
+                          "page": 1,
+                          "value": "280.00"
+                        },
+                        "sku": {
+                          "value": "STR-23",
+                          "confidence": 0.98,
+                          "evidence": "STR-23",
+                          "page": 1
+                        },
+                        "description": {
+                          "value": "Stretch film 23 micron x 500mm",
+                          "confidence": 0.98,
+                          "page": 1,
+                          "evidence": "Stretch film 23 micron x 500mm"
+                        },
+                        "tax_rate_pct": {
+                          "page": 1,
+                          "value": "18%",
+                          "confidence": 0.98,
+                          "evidence": "18%"
+                        },
+                        "line_total": {
+                          "evidence": "14,000.00",
+                          "value": "14,000.00",
+                          "page": 1,
+                          "confidence": 0.98
+                        },
+                        "line_no": 1,
+                        "uom": {
+                          "page": 1,
+                          "confidence": 0.98,
+                          "value": "ROLL",
+                          "evidence": "ROLL"
+                        },
+                        "qty": {
+                          "page": 1,
+                          "value": "50",
+                          "evidence": "50",
+                          "confidence": 0.98
+                        }
+                      }
+                    ],
+                    "unreadable_regions": [],
+                    "document_quality": {
+                      "is_scan": false,
+                      "legibility": 0.98,
+                      "issues": [],
+                      "pages": 1
                     }
                   },
                   "name": "record_invoice_extraction"
                 },
-                "thought_signature": "EmkKZwFpFH0TW8cjPGWBQY_qEDaqpc6RwVuU8CsSugnT_wT3kCr3uUhzCwfeGtEVDWZAf08jW_CzWmVAlsEukdiJ0me0mB0vfI3tTZsOn7WZGN9NEIMTgsquIcm0FJQcQK7czjhyhhW2U-A="
+                "thought_signature": "EmkKZwFpFH0TUs-gcnrba4WmmwUhzcrybe8fy6VV4MbFvZs0O5SecVh8CdvvxTkHF1P58vahY7l0zsLPg-guRTMSorBs1YlJFLun0OWjywWd7OKz55nbcLthvVZqC8s3pZTKNEQwQ1YPyRo="
               }
             ],
             "role": "model"
@@ -466,21 +466,21 @@
         }
       ],
       "model_version": "gemini-3.6-flash",
-      "response_id": "Hnj6avO5N5jH694Ph9fK-Aw",
+      "response_id": "2Xn6asyqGryM694Po9mkoQk",
       "usage_metadata": {
-        "candidates_token_count": 1392,
-        "prompt_token_count": 7692,
+        "candidates_token_count": 1395,
+        "prompt_token_count": 7786,
         "prompt_tokens_details": [
           {
             "modality": "TEXT",
-            "token_count": 6600
+            "token_count": 6694
           },
           {
             "modality": "IMAGE",
             "token_count": 1092
           }
         ],
-        "total_token_count": 9084
+        "total_token_count": 9181
       }
     }
   ]

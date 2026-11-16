@@ -1,319 +1,319 @@
 {
   "sha256": "8f4011ca00bea92684f49b2798a7c40195684bd1bc5286a9c1bf9c9885d1ef27",
   "model": "gemini-3.5-flash",
-  "prompt_version": "2026-11-16.1",
-  "created_at": "2026-11-16T01:51:50+00:00",
+  "prompt_version": "2026-11-16.2",
+  "created_at": "2026-11-16T03:33:43+00:00",
   "usage": {
-    "input_tokens": 7835,
+    "input_tokens": 7929,
     "output_tokens": 1927
   },
   "payload": {
-    "payment": {
-      "terms": {
-        "confidence": 0.98,
-        "value": "Net 30 days from invoice date",
-        "evidence": "Payment: Net 30 days from invoice date",
-        "page": 1
-      },
-      "ifsc_or_swift": {
-        "evidence": "IFSC:\nHDFC0000523",
-        "page": 1,
-        "value": "HDFC0000523",
-        "confidence": 0.98
-      },
-      "bank_name": {
-        "evidence": "Bank:\nHDFC Bank Ltd, Peenya Branch",
-        "confidence": 0.98,
-        "page": 1,
-        "value": "HDFC Bank Ltd, Peenya Branch"
-      },
-      "account_number": {
-        "evidence": "A/c No.:\n••••••••••4471",
-        "page": 1,
-        "confidence": 0.98,
-        "value": "••••••••••4471"
-      },
-      "beneficiary_name": {
-        "page": 1,
-        "value": "Nordic Components Pvt Ltd",
-        "confidence": 0.98,
-        "evidence": "A/c Name:\nNordic Components Pvt Ltd"
-      }
-    },
-    "document_quality": {
-      "issues": [],
-      "pages": 1,
-      "is_scan": false,
-      "legibility": 0.99
-    },
-    "unreadable_regions": [],
-    "invoice_date": {
-      "page": 1,
-      "confidence": 0.98,
-      "evidence": "INVOICE DATE\n02/11/2026",
-      "value": "02/11/2026"
-    },
-    "currency": {
-      "page": 1,
-      "value": "INR",
-      "confidence": 0.98,
-      "evidence": "Grand Total (INR)"
-    },
-    "document_type": "tax_invoice",
     "buyer": {
       "tax_id": {
         "evidence": "GSTIN: 29AAECH0007L1Z2",
-        "confidence": 0.98,
+        "page": 1,
         "value": "29AAECH0007L1Z2",
-        "page": 1
+        "confidence": 0.99
       },
       "name": {
-        "evidence": "BILL TO\nHalden Precision Engineering Pvt Ltd",
-        "confidence": 0.98,
-        "page": 1,
-        "value": "Halden Precision Engineering Pvt Ltd"
+        "value": "Halden Precision Engineering Pvt Ltd",
+        "confidence": 0.99,
+        "evidence": "Halden Precision Engineering Pvt Ltd",
+        "page": 1
       }
     },
-    "po_references": [
-      {
-        "evidence": "PO REFERENCE\nPO-2041",
-        "explicit": true,
-        "value": "PO-2041",
-        "confidence": 0.98
-      }
-    ],
     "line_items": [
       {
-        "sku": {
+        "line_total": {
+          "confidence": 0.99,
+          "evidence": "45,000.00",
           "page": 1,
-          "confidence": 0.98,
-          "value": "BRG-12",
-          "evidence": "BRG-12"
+          "value": "45,000.00"
+        },
+        "tax_rate_pct": {
+          "evidence": "18%",
+          "confidence": 0.99,
+          "page": 1,
+          "value": "18%"
+        },
+        "qty": {
+          "value": "60",
+          "confidence": 0.99,
+          "page": 1,
+          "evidence": "60"
         },
         "unit_price": {
           "value": "750.00",
-          "page": 1,
-          "confidence": 0.98,
-          "evidence": "750.00"
-        },
-        "line_no": 1,
-        "tax_rate_pct": {
-          "value": "18%",
-          "confidence": 0.98,
-          "evidence": "18%",
-          "page": 1
-        },
-        "qty": {
-          "evidence": "60",
-          "value": "60",
-          "confidence": 0.98,
+          "evidence": "750.00",
+          "confidence": 0.99,
           "page": 1
         },
         "description": {
-          "evidence": "Deep groove ball bearing 6204-2RS",
-          "confidence": 0.98,
           "page": 1,
+          "confidence": 0.99,
+          "evidence": "Deep groove ball bearing 6204-2RS",
           "value": "Deep groove ball bearing 6204-2RS"
         },
-        "line_total": {
-          "value": "45,000.00",
-          "evidence": "45,000.00",
+        "sku": {
           "page": 1,
-          "confidence": 0.98
+          "confidence": 0.99,
+          "evidence": "BRG-12",
+          "value": "BRG-12"
         },
+        "line_no": 1,
         "uom": {
-          "evidence": "NOS",
           "value": "NOS",
+          "confidence": 0.99,
           "page": 1,
-          "confidence": 0.98
+          "evidence": "NOS"
         }
       },
       {
         "sku": {
           "evidence": "SHF-20",
           "value": "SHF-20",
-          "page": 1,
-          "confidence": 0.98
-        },
-        "unit_price": {
-          "evidence": "1,500.00",
-          "confidence": 0.98,
-          "value": "1,500.00",
+          "confidence": 0.99,
           "page": 1
         },
+        "uom": {
+          "value": "NOS",
+          "page": 1,
+          "evidence": "NOS",
+          "confidence": 0.99
+        },
         "tax_rate_pct": {
-          "value": "18%",
-          "page": 1,
           "evidence": "18%",
-          "confidence": 0.98
+          "value": "18%",
+          "confidence": 0.99,
+          "page": 1
         },
-        "qty": {
-          "evidence": "20",
-          "value": "20",
-          "page": 1,
-          "confidence": 0.98
-        },
+        "line_no": 2,
         "line_total": {
           "evidence": "30,000.00",
           "page": 1,
-          "confidence": 0.98,
-          "value": "30,000.00"
+          "value": "30,000.00",
+          "confidence": 0.99
         },
         "description": {
+          "page": 1,
+          "confidence": 0.99,
           "evidence": "Precision ground shaft 20mm x 300mm",
-          "page": 1,
-          "value": "Precision ground shaft 20mm x 300mm",
-          "confidence": 0.98
+          "value": "Precision ground shaft 20mm x 300mm"
         },
-        "line_no": 2,
-        "uom": {
-          "confidence": 0.98,
-          "value": "NOS",
+        "qty": {
+          "confidence": 0.99,
           "page": 1,
-          "evidence": "NOS"
+          "evidence": "20",
+          "value": "20"
+        },
+        "unit_price": {
+          "page": 1,
+          "evidence": "1,500.00",
+          "confidence": 0.99,
+          "value": "1,500.00"
         }
       },
       {
-        "uom": {
-          "value": "NOS",
-          "evidence": "NOS",
-          "page": 1,
-          "confidence": 0.98
-        },
-        "unit_price": {
-          "evidence": "50.00",
-          "value": "50.00",
-          "page": 1,
-          "confidence": 0.98
-        },
         "qty": {
+          "confidence": 0.99,
           "page": 1,
-          "evidence": "100",
           "value": "100",
-          "confidence": 0.98
+          "evidence": "100"
         },
-        "description": {
-          "confidence": 0.98,
-          "evidence": "Nitrile oil seal 35x52x8",
-          "page": 1,
-          "value": "Nitrile oil seal 35x52x8"
-        },
-        "tax_rate_pct": {
-          "evidence": "18%",
-          "page": 1,
-          "confidence": 0.98,
-          "value": "18%"
-        },
+        "line_no": 3,
         "line_total": {
-          "confidence": 0.98,
+          "confidence": 0.99,
           "evidence": "5,000.00",
           "value": "5,000.00",
           "page": 1
         },
+        "tax_rate_pct": {
+          "evidence": "18%",
+          "value": "18%",
+          "page": 1,
+          "confidence": 0.99
+        },
+        "uom": {
+          "page": 1,
+          "evidence": "NOS",
+          "confidence": 0.99,
+          "value": "NOS"
+        },
+        "description": {
+          "page": 1,
+          "evidence": "Nitrile oil seal 35x52x8",
+          "value": "Nitrile oil seal 35x52x8",
+          "confidence": 0.99
+        },
         "sku": {
-          "confidence": 0.98,
           "value": "SEAL-8",
           "evidence": "SEAL-8",
+          "confidence": 0.99,
           "page": 1
         },
-        "line_no": 3
+        "unit_price": {
+          "value": "50.00",
+          "confidence": 0.99,
+          "page": 1,
+          "evidence": "50.00"
+        }
       }
     ],
-    "due_date": {
-      "value": "02/12/2026",
-      "confidence": 0.98,
-      "page": 1,
-      "evidence": "DUE DATE\n02/12/2026"
-    },
-    "notes": "",
-    "supplier": {
-      "tax_id": {
-        "evidence": "GSTIN: 29AABCN4471K1Z3",
-        "page": 1,
-        "value": "29AABCN4471K1Z3",
-        "confidence": 0.98
-      },
-      "name": {
-        "confidence": 0.98,
-        "evidence": "Nordic Components Pvt Ltd",
-        "value": "Nordic Components Pvt Ltd",
-        "page": 1
-      },
-      "email": {
-        "evidence": "accounts@nordiccomponents.in",
-        "confidence": 0.98,
-        "page": 1,
-        "value": "accounts@nordiccomponents.in"
-      },
-      "address": {
-        "page": 1,
-        "value": "No. 42, 2nd Main Road, Peenya Industrial Area Phase II\nBengaluru 560058, Karnataka, India",
-        "evidence": "No. 42, 2nd Main Road, Peenya Industrial Area Phase II\nBengaluru 560058, Karnataka, India",
-        "confidence": 0.98
+    "unreadable_regions": [],
+    "po_references": [
+      {
+        "explicit": true,
+        "value": "PO-2041",
+        "evidence": "PO REFERENCE\nPO-2041",
+        "confidence": 0.99
       }
-    },
-    "invoice_number": {
-      "page": 1,
-      "value": "INV-NC-5531",
-      "confidence": 0.98,
-      "evidence": "INVOICE NO.\nINV-NC-5531"
-    },
+    ],
     "totals": {
-      "tax_total": {
-        "page": null,
-        "confidence": 0,
-        "value": null,
-        "evidence": null
-      },
       "discount": {
         "evidence": null,
         "value": null,
         "page": null,
         "confidence": 0
       },
+      "subtotal": {
+        "value": "80,000.00",
+        "evidence": "Taxable Value\n80,000.00",
+        "confidence": 0.99,
+        "page": 1
+      },
       "tax_breakdown": [
         {
           "amount": {
-            "value": "7,200.00",
-            "evidence": "CGST @ 9%\n7,200.00",
             "page": 1,
-            "confidence": 0.98
+            "evidence": "CGST @ 9%\n7,200.00",
+            "confidence": 0.99,
+            "value": "7,200.00"
           },
           "label": "CGST @ 9%"
         },
         {
-          "label": "SGST @ 9%",
           "amount": {
-            "evidence": "SGST @ 9%\n7,200.00",
-            "confidence": 0.98,
+            "page": 1,
+            "confidence": 0.99,
             "value": "7,200.00",
-            "page": 1
-          }
+            "evidence": "SGST @ 9%\n7,200.00"
+          },
+          "label": "SGST @ 9%"
         }
       ],
-      "shipping": {
-        "page": 1,
-        "evidence": "Freight & Forwarding\n850.00",
-        "value": "850.00",
-        "confidence": 0.98
+      "tax_total": {
+        "evidence": null,
+        "confidence": 0,
+        "value": null,
+        "page": null
       },
       "amount_in_words": {
+        "value": "Rupees Ninety-Five Thousand Two Hundred Fifty Only",
         "page": 1,
-        "confidence": 0.98,
-        "evidence": "Rupees Ninety-Five Thousand Two Hundred Fifty Only",
-        "value": "Rupees Ninety-Five Thousand Two Hundred Fifty Only"
-      },
-      "subtotal": {
-        "page": 1,
-        "value": "80,000.00",
-        "evidence": "Taxable Value\n80,000.00",
-        "confidence": 0.98
+        "confidence": 0.99,
+        "evidence": "AMOUNT IN WORDS\nRupees Ninety-Five Thousand Two Hundred Fifty Only"
       },
       "grand_total": {
-        "confidence": 0.98,
+        "confidence": 0.99,
+        "page": 1,
         "evidence": "Grand Total (INR)\n95,250.00",
-        "value": "95,250.00",
+        "value": "95,250.00"
+      },
+      "shipping": {
+        "confidence": 0.99,
+        "value": "850.00",
+        "evidence": "Freight & Forwarding\n850.00",
         "page": 1
+      }
+    },
+    "supplier": {
+      "address": {
+        "confidence": 0.99,
+        "page": 1,
+        "evidence": "No. 42, 2nd Main Road, Peenya Industrial Area Phase II\nBengaluru 560058, Karnataka, India",
+        "value": "No. 42, 2nd Main Road, Peenya Industrial Area Phase II\nBengaluru 560058, Karnataka, India"
+      },
+      "tax_id": {
+        "value": "29AABCN4471K1Z3",
+        "evidence": "GSTIN: 29AABCN4471K1Z3",
+        "confidence": 0.99,
+        "page": 1
+      },
+      "name": {
+        "value": "Nordic Components Pvt Ltd",
+        "confidence": 0.99,
+        "evidence": "Nordic Components Pvt Ltd",
+        "page": 1
+      },
+      "email": {
+        "confidence": 0.99,
+        "page": 1,
+        "evidence": "accounts@nordiccomponents.in",
+        "value": "accounts@nordiccomponents.in"
+      }
+    },
+    "document_quality": {
+      "issues": [],
+      "pages": 1,
+      "is_scan": false,
+      "legibility": 1
+    },
+    "notes": "",
+    "invoice_number": {
+      "evidence": "INVOICE NO.\nINV-NC-5531",
+      "value": "INV-NC-5531",
+      "confidence": 0.99,
+      "page": 1
+    },
+    "document_type": "tax_invoice",
+    "currency": {
+      "page": 1,
+      "evidence": "Grand Total (INR)",
+      "value": "INR",
+      "confidence": 0.99
+    },
+    "due_date": {
+      "evidence": "DUE DATE\n02/12/2026",
+      "value": "02/12/2026",
+      "confidence": 0.99,
+      "page": 1
+    },
+    "invoice_date": {
+      "evidence": "INVOICE DATE\n02/11/2026",
+      "page": 1,
+      "value": "02/11/2026",
+      "confidence": 0.99
+    },
+    "payment": {
+      "beneficiary_name": {
+        "confidence": 0.99,
+        "page": 1,
+        "evidence": "A/c Name:\nNordic Components Pvt Ltd",
+        "value": "Nordic Components Pvt Ltd"
+      },
+      "ifsc_or_swift": {
+        "page": 1,
+        "evidence": "IFSC:\nHDFC0000523",
+        "confidence": 0.99,
+        "value": "HDFC0000523"
+      },
+      "terms": {
+        "value": "Payment: Net 30 days from invoice date",
+        "confidence": 0.99,
+        "evidence": "Payment: Net 30 days from invoice date",
+        "page": 1
+      },
+      "bank_name": {
+        "value": "HDFC Bank Ltd, Peenya Branch",
+        "page": 1,
+        "evidence": "Bank:\nHDFC Bank Ltd, Peenya Branch",
+        "confidence": 0.99
+      },
+      "account_number": {
+        "confidence": 0.99,
+        "page": 1,
+        "evidence": "A/c No.:\n••••••••••4471",
+        "value": "••••••••••4471"
       }
     }
   },
@@ -325,12 +325,12 @@
           "content-type": "application/json; charset=UTF-8",
           "vary": "Origin, X-Origin, Referer",
           "content-encoding": "gzip",
-          "date": "Mon, 16 Nov 2026 01:51:50 GMT",
+          "date": "Mon, 16 Nov 2026 03:33:43 GMT",
           "server": "scaffolding on HTTPServer2",
           "x-xss-protection": "0",
           "x-frame-options": "SAMEORIGIN",
           "x-content-type-options": "nosniff",
-          "server-timing": "gfet4t7; dur=9911",
+          "server-timing": "gfet4t7; dur=7682",
           "alt-svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
           "transfer-encoding": "chunked"
         }
@@ -341,320 +341,320 @@
             "parts": [
               {
                 "function_call": {
-                  "id": "call_15616012434112011386",
+                  "id": "call_14898605232074190763",
                   "args": {
-                    "payment": {
-                      "terms": {
-                        "confidence": 0.98,
-                        "value": "Net 30 days from invoice date",
-                        "evidence": "Payment: Net 30 days from invoice date",
-                        "page": 1
-                      },
-                      "ifsc_or_swift": {
-                        "evidence": "IFSC:\nHDFC0000523",
-                        "page": 1,
-                        "value": "HDFC0000523",
-                        "confidence": 0.98
-                      },
-                      "bank_name": {
-                        "evidence": "Bank:\nHDFC Bank Ltd, Peenya Branch",
-                        "confidence": 0.98,
-                        "page": 1,
-                        "value": "HDFC Bank Ltd, Peenya Branch"
-                      },
-                      "account_number": {
-                        "evidence": "A/c No.:\n••••••••••4471",
-                        "page": 1,
-                        "confidence": 0.98,
-                        "value": "••••••••••4471"
-                      },
-                      "beneficiary_name": {
-                        "page": 1,
-                        "value": "Nordic Components Pvt Ltd",
-                        "confidence": 0.98,
-                        "evidence": "A/c Name:\nNordic Components Pvt Ltd"
-                      }
-                    },
-                    "document_quality": {
-                      "issues": [],
-                      "pages": 1,
-                      "is_scan": false,
-                      "legibility": 0.99
-                    },
-                    "unreadable_regions": [],
-                    "invoice_date": {
-                      "page": 1,
-                      "confidence": 0.98,
-                      "evidence": "INVOICE DATE\n02/11/2026",
-                      "value": "02/11/2026"
-                    },
-                    "currency": {
-                      "page": 1,
-                      "value": "INR",
-                      "confidence": 0.98,
-                      "evidence": "Grand Total (INR)"
-                    },
-                    "document_type": "tax_invoice",
                     "buyer": {
                       "tax_id": {
                         "evidence": "GSTIN: 29AAECH0007L1Z2",
-                        "confidence": 0.98,
+                        "page": 1,
                         "value": "29AAECH0007L1Z2",
-                        "page": 1
+                        "confidence": 0.99
                       },
                       "name": {
-                        "evidence": "BILL TO\nHalden Precision Engineering Pvt Ltd",
-                        "confidence": 0.98,
-                        "page": 1,
-                        "value": "Halden Precision Engineering Pvt Ltd"
+                        "value": "Halden Precision Engineering Pvt Ltd",
+                        "confidence": 0.99,
+                        "evidence": "Halden Precision Engineering Pvt Ltd",
+                        "page": 1
                       }
                     },
-                    "po_references": [
-                      {
-                        "evidence": "PO REFERENCE\nPO-2041",
-                        "explicit": true,
-                        "value": "PO-2041",
-                        "confidence": 0.98
-                      }
-                    ],
                     "line_items": [
                       {
-                        "sku": {
+                        "line_total": {
+                          "confidence": 0.99,
+                          "evidence": "45,000.00",
                           "page": 1,
-                          "confidence": 0.98,
-                          "value": "BRG-12",
-                          "evidence": "BRG-12"
+                          "value": "45,000.00"
+                        },
+                        "tax_rate_pct": {
+                          "evidence": "18%",
+                          "confidence": 0.99,
+                          "page": 1,
+                          "value": "18%"
+                        },
+                        "qty": {
+                          "value": "60",
+                          "confidence": 0.99,
+                          "page": 1,
+                          "evidence": "60"
                         },
                         "unit_price": {
                           "value": "750.00",
-                          "page": 1,
-                          "confidence": 0.98,
-                          "evidence": "750.00"
-                        },
-                        "line_no": 1,
-                        "tax_rate_pct": {
-                          "value": "18%",
-                          "confidence": 0.98,
-                          "evidence": "18%",
-                          "page": 1
-                        },
-                        "qty": {
-                          "evidence": "60",
-                          "value": "60",
-                          "confidence": 0.98,
+                          "evidence": "750.00",
+                          "confidence": 0.99,
                           "page": 1
                         },
                         "description": {
-                          "evidence": "Deep groove ball bearing 6204-2RS",
-                          "confidence": 0.98,
                           "page": 1,
+                          "confidence": 0.99,
+                          "evidence": "Deep groove ball bearing 6204-2RS",
                           "value": "Deep groove ball bearing 6204-2RS"
                         },
-                        "line_total": {
-                          "value": "45,000.00",
-                          "evidence": "45,000.00",
+                        "sku": {
                           "page": 1,
-                          "confidence": 0.98
+                          "confidence": 0.99,
+                          "evidence": "BRG-12",
+                          "value": "BRG-12"
                         },
+                        "line_no": 1,
                         "uom": {
-                          "evidence": "NOS",
                           "value": "NOS",
+                          "confidence": 0.99,
                           "page": 1,
-                          "confidence": 0.98
+                          "evidence": "NOS"
                         }
                       },
                       {
                         "sku": {
                           "evidence": "SHF-20",
                           "value": "SHF-20",
-                          "page": 1,
-                          "confidence": 0.98
-                        },
-                        "unit_price": {
-                          "evidence": "1,500.00",
-                          "confidence": 0.98,
-                          "value": "1,500.00",
+                          "confidence": 0.99,
                           "page": 1
                         },
+                        "uom": {
+                          "value": "NOS",
+                          "page": 1,
+                          "evidence": "NOS",
+                          "confidence": 0.99
+                        },
                         "tax_rate_pct": {
-                          "value": "18%",
-                          "page": 1,
                           "evidence": "18%",
-                          "confidence": 0.98
+                          "value": "18%",
+                          "confidence": 0.99,
+                          "page": 1
                         },
-                        "qty": {
-                          "evidence": "20",
-                          "value": "20",
-                          "page": 1,
-                          "confidence": 0.98
-                        },
+                        "line_no": 2,
                         "line_total": {
                           "evidence": "30,000.00",
                           "page": 1,
-                          "confidence": 0.98,
-                          "value": "30,000.00"
+                          "value": "30,000.00",
+                          "confidence": 0.99
                         },
                         "description": {
+                          "page": 1,
+                          "confidence": 0.99,
                           "evidence": "Precision ground shaft 20mm x 300mm",
-                          "page": 1,
-                          "value": "Precision ground shaft 20mm x 300mm",
-                          "confidence": 0.98
+                          "value": "Precision ground shaft 20mm x 300mm"
                         },
-                        "line_no": 2,
-                        "uom": {
-                          "confidence": 0.98,
-                          "value": "NOS",
+                        "qty": {
+                          "confidence": 0.99,
                           "page": 1,
-                          "evidence": "NOS"
+                          "evidence": "20",
+                          "value": "20"
+                        },
+                        "unit_price": {
+                          "page": 1,
+                          "evidence": "1,500.00",
+                          "confidence": 0.99,
+                          "value": "1,500.00"
                         }
                       },
                       {
-                        "uom": {
-                          "value": "NOS",
-                          "evidence": "NOS",
-                          "page": 1,
-                          "confidence": 0.98
-                        },
-                        "unit_price": {
-                          "evidence": "50.00",
-                          "value": "50.00",
-                          "page": 1,
-                          "confidence": 0.98
-                        },
                         "qty": {
+                          "confidence": 0.99,
                           "page": 1,
-                          "evidence": "100",
                           "value": "100",
-                          "confidence": 0.98
+                          "evidence": "100"
                         },
-                        "description": {
-                          "confidence": 0.98,
-                          "evidence": "Nitrile oil seal 35x52x8",
-                          "page": 1,
-                          "value": "Nitrile oil seal 35x52x8"
-                        },
-                        "tax_rate_pct": {
-                          "evidence": "18%",
-                          "page": 1,
-                          "confidence": 0.98,
-                          "value": "18%"
-                        },
+                        "line_no": 3,
                         "line_total": {
-                          "confidence": 0.98,
+                          "confidence": 0.99,
                           "evidence": "5,000.00",
                           "value": "5,000.00",
                           "page": 1
                         },
+                        "tax_rate_pct": {
+                          "evidence": "18%",
+                          "value": "18%",
+                          "page": 1,
+                          "confidence": 0.99
+                        },
+                        "uom": {
+                          "page": 1,
+                          "evidence": "NOS",
+                          "confidence": 0.99,
+                          "value": "NOS"
+                        },
+                        "description": {
+                          "page": 1,
+                          "evidence": "Nitrile oil seal 35x52x8",
+                          "value": "Nitrile oil seal 35x52x8",
+                          "confidence": 0.99
+                        },
                         "sku": {
-                          "confidence": 0.98,
                           "value": "SEAL-8",
                           "evidence": "SEAL-8",
+                          "confidence": 0.99,
                           "page": 1
                         },
-                        "line_no": 3
+                        "unit_price": {
+                          "value": "50.00",
+                          "confidence": 0.99,
+                          "page": 1,
+                          "evidence": "50.00"
+                        }
                       }
                     ],
-                    "due_date": {
-                      "value": "02/12/2026",
-                      "confidence": 0.98,
-                      "page": 1,
-                      "evidence": "DUE DATE\n02/12/2026"
-                    },
-                    "notes": "",
-                    "supplier": {
-                      "tax_id": {
-                        "evidence": "GSTIN: 29AABCN4471K1Z3",
-                        "page": 1,
-                        "value": "29AABCN4471K1Z3",
-                        "confidence": 0.98
-                      },
-                      "name": {
-                        "confidence": 0.98,
-                        "evidence": "Nordic Components Pvt Ltd",
-                        "value": "Nordic Components Pvt Ltd",
-                        "page": 1
-                      },
-                      "email": {
-                        "evidence": "accounts@nordiccomponents.in",
-                        "confidence": 0.98,
-                        "page": 1,
-                        "value": "accounts@nordiccomponents.in"
-                      },
-                      "address": {
-                        "page": 1,
-                        "value": "No. 42, 2nd Main Road, Peenya Industrial Area Phase II\nBengaluru 560058, Karnataka, India",
-                        "evidence": "No. 42, 2nd Main Road, Peenya Industrial Area Phase II\nBengaluru 560058, Karnataka, India",
-                        "confidence": 0.98
+                    "unreadable_regions": [],
+                    "po_references": [
+                      {
+                        "explicit": true,
+                        "value": "PO-2041",
+                        "evidence": "PO REFERENCE\nPO-2041",
+                        "confidence": 0.99
                       }
-                    },
-                    "invoice_number": {
-                      "page": 1,
-                      "value": "INV-NC-5531",
-                      "confidence": 0.98,
-                      "evidence": "INVOICE NO.\nINV-NC-5531"
-                    },
+                    ],
                     "totals": {
-                      "tax_total": {
-                        "page": null,
-                        "confidence": 0,
-                        "value": null,
-                        "evidence": null
-                      },
                       "discount": {
                         "evidence": null,
                         "value": null,
                         "page": null,
                         "confidence": 0
                       },
+                      "subtotal": {
+                        "value": "80,000.00",
+                        "evidence": "Taxable Value\n80,000.00",
+                        "confidence": 0.99,
+                        "page": 1
+                      },
                       "tax_breakdown": [
                         {
                           "amount": {
-                            "value": "7,200.00",
-                            "evidence": "CGST @ 9%\n7,200.00",
                             "page": 1,
-                            "confidence": 0.98
+                            "evidence": "CGST @ 9%\n7,200.00",
+                            "confidence": 0.99,
+                            "value": "7,200.00"
                           },
                           "label": "CGST @ 9%"
                         },
                         {
-                          "label": "SGST @ 9%",
                           "amount": {
-                            "evidence": "SGST @ 9%\n7,200.00",
-                            "confidence": 0.98,
+                            "page": 1,
+                            "confidence": 0.99,
                             "value": "7,200.00",
-                            "page": 1
-                          }
+                            "evidence": "SGST @ 9%\n7,200.00"
+                          },
+                          "label": "SGST @ 9%"
                         }
                       ],
-                      "shipping": {
-                        "page": 1,
-                        "evidence": "Freight & Forwarding\n850.00",
-                        "value": "850.00",
-                        "confidence": 0.98
+                      "tax_total": {
+                        "evidence": null,
+                        "confidence": 0,
+                        "value": null,
+                        "page": null
                       },
                       "amount_in_words": {
+                        "value": "Rupees Ninety-Five Thousand Two Hundred Fifty Only",
                         "page": 1,
-                        "confidence": 0.98,
-                        "evidence": "Rupees Ninety-Five Thousand Two Hundred Fifty Only",
-                        "value": "Rupees Ninety-Five Thousand Two Hundred Fifty Only"
-                      },
-                      "subtotal": {
-                        "page": 1,
-                        "value": "80,000.00",
-                        "evidence": "Taxable Value\n80,000.00",
-                        "confidence": 0.98
+                        "confidence": 0.99,
+                        "evidence": "AMOUNT IN WORDS\nRupees Ninety-Five Thousand Two Hundred Fifty Only"
                       },
                       "grand_total": {
-                        "confidence": 0.98,
+                        "confidence": 0.99,
+                        "page": 1,
                         "evidence": "Grand Total (INR)\n95,250.00",
-                        "value": "95,250.00",
+                        "value": "95,250.00"
+                      },
+                      "shipping": {
+                        "confidence": 0.99,
+                        "value": "850.00",
+                        "evidence": "Freight & Forwarding\n850.00",
                         "page": 1
+                      }
+                    },
+                    "supplier": {
+                      "address": {
+                        "confidence": 0.99,
+                        "page": 1,
+                        "evidence": "No. 42, 2nd Main Road, Peenya Industrial Area Phase II\nBengaluru 560058, Karnataka, India",
+                        "value": "No. 42, 2nd Main Road, Peenya Industrial Area Phase II\nBengaluru 560058, Karnataka, India"
+                      },
+                      "tax_id": {
+                        "value": "29AABCN4471K1Z3",
+                        "evidence": "GSTIN: 29AABCN4471K1Z3",
+                        "confidence": 0.99,
+                        "page": 1
+                      },
+                      "name": {
+                        "value": "Nordic Components Pvt Ltd",
+                        "confidence": 0.99,
+                        "evidence": "Nordic Components Pvt Ltd",
+                        "page": 1
+                      },
+                      "email": {
+                        "confidence": 0.99,
+                        "page": 1,
+                        "evidence": "accounts@nordiccomponents.in",
+                        "value": "accounts@nordiccomponents.in"
+                      }
+                    },
+                    "document_quality": {
+                      "issues": [],
+                      "pages": 1,
+                      "is_scan": false,
+                      "legibility": 1
+                    },
+                    "notes": "",
+                    "invoice_number": {
+                      "evidence": "INVOICE NO.\nINV-NC-5531",
+                      "value": "INV-NC-5531",
+                      "confidence": 0.99,
+                      "page": 1
+                    },
+                    "document_type": "tax_invoice",
+                    "currency": {
+                      "page": 1,
+                      "evidence": "Grand Total (INR)",
+                      "value": "INR",
+                      "confidence": 0.99
+                    },
+                    "due_date": {
+                      "evidence": "DUE DATE\n02/12/2026",
+                      "value": "02/12/2026",
+                      "confidence": 0.99,
+                      "page": 1
+                    },
+                    "invoice_date": {
+                      "evidence": "INVOICE DATE\n02/11/2026",
+                      "page": 1,
+                      "value": "02/11/2026",
+                      "confidence": 0.99
+                    },
+                    "payment": {
+                      "beneficiary_name": {
+                        "confidence": 0.99,
+                        "page": 1,
+                        "evidence": "A/c Name:\nNordic Components Pvt Ltd",
+                        "value": "Nordic Components Pvt Ltd"
+                      },
+                      "ifsc_or_swift": {
+                        "page": 1,
+                        "evidence": "IFSC:\nHDFC0000523",
+                        "confidence": 0.99,
+                        "value": "HDFC0000523"
+                      },
+                      "terms": {
+                        "value": "Payment: Net 30 days from invoice date",
+                        "confidence": 0.99,
+                        "evidence": "Payment: Net 30 days from invoice date",
+                        "page": 1
+                      },
+                      "bank_name": {
+                        "value": "HDFC Bank Ltd, Peenya Branch",
+                        "page": 1,
+                        "evidence": "Bank:\nHDFC Bank Ltd, Peenya Branch",
+                        "confidence": 0.99
+                      },
+                      "account_number": {
+                        "confidence": 0.99,
+                        "page": 1,
+                        "evidence": "A/c No.:\n••••••••••4471",
+                        "value": "••••••••••4471"
                       }
                     }
                   },
                   "name": "record_invoice_extraction"
                 },
-                "thought_signature": "EmkKZwFpFH0Tsh05tcmRx0yf-Z6Macq4Vs2-oaYskDSiNJSmT0uDJFCcLg0EYgFqeTJuRhVcdz1NeO6PSQmcTf0DfvjpCWsUvQ5znbKpc0mPCnpyRx8yyJU7MYSy7U1Fv_augts2MFXtxfA="
+                "thought_signature": "EmkKZwFpFH0TEtTuoQ1YBKsmM-JWBzD9_DAncVZDZebRDbCujAG9FCv6nG3rnO9mNiYD96EYlDhj3YHXIHTY4uA_aPAcA1ZLRtAJsdGm4RRj2sO7Py8u44BMmvthpUyh9x4yfxH2Yj6Xd-g="
               }
             ],
             "role": "model"
@@ -664,21 +664,21 @@
         }
       ],
       "model_version": "gemini-3.6-flash",
-      "response_id": "rWH6auvlHJuL694Po6jLoAo",
+      "response_id": "kXn6ar6_Af2y694P2vLXgA4",
       "usage_metadata": {
         "candidates_token_count": 1927,
-        "prompt_token_count": 7835,
+        "prompt_token_count": 7929,
         "prompt_tokens_details": [
-          {
-            "modality": "TEXT",
-            "token_count": 6743
-          },
           {
             "modality": "IMAGE",
             "token_count": 1092
+          },
+          {
+            "modality": "TEXT",
+            "token_count": 6837
           }
         ],
-        "total_token_count": 9762
+        "total_token_count": 9856
       }
     }
   ]

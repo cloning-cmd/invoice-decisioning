@@ -435,18 +435,29 @@ def r12_bank(ctx: RunContext) -> RuleResult:
     v, inv = _vendor(ctx), ctx.invoice
     if v is None:
         return not_applicable("No vendor master record to compare against (see R03)")
+    domain = inv.supplier_email.rsplit("@", 1)[-1].lower() if inv.supplier_email and "@" in inv.supplier_email \
+        else None
+    domain_note = (f"; the invoice comes from {domain}, not {v.email_domain} on the vendor master"
+                   if domain and v.email_domain and domain != v.email_domain.lower() else "")
+    dom_ev = {"invoice_email_domain": domain, "master_email_domain": v.email_domain,
+              "email_domain_mismatch": bool(domain_note)}
     if not inv.bank_account_last4 and not inv.bank_ifsc:
-        return passed("No bank details printed; payment would go to the account on the vendor master")
+        if domain_note:
+            return warned("No bank details printed" + domain_note, **dom_ev)
+        return passed("No bank details printed; payment would go to the account on the vendor master", **dom_ev)
     diffs = []
     if inv.bank_account_last4 and v.bank_account_last4 and inv.bank_account_last4 != v.bank_account_last4:
         diffs.append(f"account ending {inv.bank_account_last4} vs master …{v.bank_account_last4}")
     if inv.bank_ifsc and v.bank_ifsc and inv.bank_ifsc != v.bank_ifsc.upper():
         diffs.append(f"IFSC/SWIFT {inv.bank_ifsc} vs master {v.bank_ifsc}")
     ev = {"invoice_last4": inv.bank_account_last4, "master_last4": v.bank_account_last4,
-          "invoice_ifsc": inv.bank_ifsc, "master_ifsc": v.bank_ifsc}
+          "invoice_ifsc": inv.bank_ifsc, "master_ifsc": v.bank_ifsc, **dom_ev}
     if diffs:
-        return failed("Bank details differ from the vendor master: " + "; ".join(diffs)
+        return failed("Bank details differ from the vendor master: " + "; ".join(diffs) + domain_note
                       + " — possible invoice-redirection fraud", ["BANK_DETAILS_CHANGED"], **ev)
+    if domain_note:
+        # Same bank, odd sender: worth a look, not a block. Bank details decide.
+        return warned(f"Bank details match the vendor master{domain_note}", **ev)
     return passed(f"Account …{inv.bank_account_last4 or v.bank_account_last4} / {inv.bank_ifsc or v.bank_ifsc} "
                   "matches the vendor master", **ev)
 

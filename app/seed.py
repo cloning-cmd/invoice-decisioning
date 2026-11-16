@@ -26,17 +26,17 @@ def _seed_vendors(conn: sqlite3.Connection, vendors: list[dict[str, Any]]) -> No
     for v in vendors:
         conn.execute(
             """INSERT INTO vendors (id, legal_name, aliases_json, status, tax_id, bank_account_last4,
-                                    bank_ifsc, payment_terms_days, default_currency, created_at)
-               VALUES (?,?,?,?,?,?,?,?,?,?)
+                                    bank_ifsc, payment_terms_days, default_currency, created_at, email_domain)
+               VALUES (?,?,?,?,?,?,?,?,?,?,?)
                ON CONFLICT(id) DO UPDATE SET
                  legal_name=excluded.legal_name, aliases_json=excluded.aliases_json,
                  status=excluded.status, tax_id=excluded.tax_id,
                  bank_account_last4=excluded.bank_account_last4, bank_ifsc=excluded.bank_ifsc,
                  payment_terms_days=excluded.payment_terms_days,
-                 default_currency=excluded.default_currency""",
+                 default_currency=excluded.default_currency, email_domain=excluded.email_domain""",
             (v["id"], v["legal_name"], json.dumps(v.get("aliases", [])), v["status"], v.get("tax_id"),
              v.get("bank_account_last4"), v.get("bank_ifsc"), v["payment_terms_days"],
-             v["default_currency"], v["created_at"]),
+             v["default_currency"], v["created_at"], v.get("email_domain")),
         )
 
 

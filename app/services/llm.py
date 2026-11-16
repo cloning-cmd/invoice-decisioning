@@ -44,7 +44,7 @@ TOOL_NAME = "record_invoice_extraction"
 
 # Bump when the schema or prompt changes, so stale cache entries are not replayed
 # against a different contract.
-PROMPT_VERSION = "2026-11-16.1"
+PROMPT_VERSION = "2026-11-16.2"
 
 
 # ---------------------------------------------------------------- the contract
@@ -140,6 +140,9 @@ EXTRACTION_SCHEMA: dict[str, Any] = _obj({
     "unreadable_regions": {"type": "array", "items": _obj({
         "page": {"type": "integer", "minimum": 1},
         "description": {"type": "string", "description": "What is unreadable and which field it would hold"},
+        "box_2d": {"type": ["array", "null"], "items": {"type": "integer", "minimum": 0, "maximum": 1000},
+                   "minItems": 4, "maxItems": 4,
+                   "description": "Approximate region as [ymin, xmin, ymax, xmax], normalised 0-1000 to the page"},
     })},
 }, "Structured reading of one vendor document")
 
@@ -158,7 +161,7 @@ Report by calling the record_invoice_extraction function. Rules:
 6. If the document is not an invoice, set document_type accordingly and return whatever fields exist. Do not refuse.
 7. If a value appears twice with different readings (header vs footer), return the one in the more authoritative position and mention the conflict in notes.
 8. List every PO reference you can see, including ones mentioned only in notes or line descriptions (explicit=false for those).
-9. Report any region you cannot read in unreadable_regions, naming the field it would hold.
+9. Report any region you cannot read in unreadable_regions, naming the field it would hold and giving its approximate box_2d on the page.
 
 The images are the source of truth. The machine-read text is a convenience that may contain OCR errors; where it disagrees with the image, trust the image and keep your evidence verbatim to the image."""
 

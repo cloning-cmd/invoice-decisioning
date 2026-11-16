@@ -242,6 +242,48 @@ flagged for review.
   the build machine. Without it S03 still preprocesses (so the before/after
   view works), warns, and extraction runs vision-only.
 
+## Dashboard, actions and the edge-case screens
+
+- **There is no login.** The header switch "Acting as AP Clerk / AP Manager"
+  stands in for authentication, and the server enforces `OVERRIDE_ROLES` on
+  every action (a clerk's attempt to release a BLOCK is a 403, not a hidden
+  button). The choice is remembered per browser.
+- **Overrides never rewrite the system decision.** `runs.decision` keeps what
+  the controls said; the human resolution lives in `audit_log` and is shown
+  next to it ("Rejected by Meera Krishnan, AP Manager"). Every action needs
+  a note.
+- **Supplying a field is the one action that re-decides.** The clerk's value
+  replaces the model's reading at confidence 1.0, S05 onward re-runs on the
+  stored extraction (the model is not called), and the run gets a new
+  `decision_made` entry. Only required fields that were missing or read
+  below the confidence floor can be supplied: this is exception handling,
+  not a data-entry screen. Earlier supplied values are replayed too.
+- **Schema v2 adds `vendors.email_domain`.** Edge 4 asks for the sender's
+  domain mismatch to be flagged, which needs a known domain to compare with.
+  The mismatch is reported in R12's message and evidence; on its own (same
+  bank, odd domain) R12 only warns. Bank details decide.
+- **The unreadable-region crop uses a box the model reports.** The schema's
+  `unreadable_regions` gained `box_2d` (Gemini's native 0-1000
+  [ymin, xmin, ymax, xmax]); prompt version 2026-11-16.2, all samples
+  re-recorded. The model reports where it could not read, and the code
+  draws the crop. Locating is reading, not deciding.
+- **Edge 1's number is destroyed on the photo, not just blurred.** The crop
+  shows the clerk where the field was; the demo narrative is that the clerk
+  reads it from the paper copy in the inward register.
+- **Edge 3's side-by-side compares header fields.** `invoice_history` keeps
+  number, date, total, PO and status, not lines or GSTIN, so the diff shows
+  what the archive holds and says so, rather than inventing an old GSTIN.
+- **"Today" on the dashboard is the IST day** (`REPORTING_UTC_OFFSET_MINUTES`);
+  each tile shows today with a 14-day sparkline. The exception queue is every
+  run whose verdict needs a person (sign-off, hold, reject, block) and that
+  has no human resolution since its latest decision, largest amount first.
+- **Free-text search covers file name, invoice number, PO and run ID**, with
+  SQL `LIKE` (wildcards in the input are escaped). Sorting is by a
+  whitelisted column only.
+- **`static/js/decision.js`** (not in the brief's file list) holds the
+  decision card, its actions and the four edge-case panels, shared by the
+  live run view and the run-detail screen.
+
 ## Operations
 
 - **`python -m app.cli run --replay <id>` is a dry run.** It re-decides with

@@ -31,6 +31,7 @@ class Vendor:
     bank_ifsc: str | None
     payment_terms_days: int
     default_currency: str
+    email_domain: str | None = None      # the domain the vendor's invoices normally come from
 
 
 @dataclass(frozen=True)

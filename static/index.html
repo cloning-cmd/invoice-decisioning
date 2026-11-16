@@ -12,7 +12,7 @@
   <header class="border-b border-zinc-200 bg-white">
     <div class="mx-auto flex max-w-[1360px] items-center justify-between gap-6 px-8 py-3">
       <div class="flex items-center gap-8">
-        <a href="#/run" class="focus-ring flex items-center gap-2.5 rounded-md">
+        <a href="#/run" class="focus-ring flex shrink-0 items-center gap-2.5 whitespace-nowrap rounded-md">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
                stroke-linecap="round" stroke-linejoin="round" class="text-indigo-600" aria-hidden="true">
             <path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/><path d="M10 13h6M10 17h4"/>
@@ -24,7 +24,10 @@
           <a href="#/dashboard" data-nav="dashboard" class="nav-link focus-ring rounded-md px-3 py-1.5">Dashboard</a>
         </nav>
       </div>
-      <div class="flex items-center gap-2" id="badges"></div>
+      <div class="flex items-center gap-4">
+        <div id="role" class="flex items-center gap-2 whitespace-nowrap text-xs text-zinc-500"></div>
+        <div class="flex items-center gap-2" id="badges"></div>
+      </div>
     </div>
   </header>
 
@@ -35,7 +38,7 @@
 
   <script type="module">
     import { api } from "/static/js/api.js";
-    import { h, icon, showError, clear } from "/static/js/ui.js";
+    import { h, icon, showError, clear, getRole, setRole } from "/static/js/ui.js";
     import { mountRun } from "/static/js/run.js";
 
     const view = document.getElementById("view");
@@ -75,7 +78,7 @@
         zinc: "border-zinc-200 text-zinc-600", blue: "border-blue-200 bg-blue-50 text-blue-700",
         amber: "border-amber-300 bg-amber-50 text-amber-800", emerald: "border-emerald-200 bg-emerald-50 text-emerald-700",
       };
-      return h("span", { class: `mono inline-flex items-center gap-1.5 rounded-md border px-2 py-1 text-xs ${tones[tone]}`, title }, text);
+      return h("span", { class: `mono inline-flex items-center gap-1.5 whitespace-nowrap rounded-md border px-2 py-1 text-xs ${tones[tone]}`, title }, text);
     }
 
     async function loadBadges() {
@@ -84,19 +87,35 @@
         const s = await api.health();
         const llmTone = s.llm === "live" ? "blue" : s.llm === "offline" ? "amber" : "zinc";
         const noKey = !s.llm_key_configured && s.llm !== "offline";
-        host.append(
-          badge(`LLM ${s.llm} · ${s.llm_model}`, noKey ? "amber" : llmTone,
-                noKey ? "No API key is configured: only cached extractions will work" :
-                {live: "Every file calls the model", cached: "Recorded extractions replay; new files call the model",
-                 offline: "Recorded extractions only; no network calls"}[s.llm]),
-          badge(s.tesseract ? `OCR tesseract ${s.tesseract_version}` : "OCR unavailable", s.tesseract ? "emerald" : "amber",
-                s.tesseract ? "Scans are OCR'd before extraction" : "Tesseract is not installed: scans run vision-only"));
+        const llmBadge = badge(`LLM ${s.llm}`, noKey ? "amber" : llmTone,
+          `${s.llm_model}. ` + (noKey ? "No API key is configured: only cached extractions will work" :
+            {live: "Every file calls the model", cached: "Recorded extractions replay; new files call the model",
+             offline: "Recorded extractions only; no network calls"}[s.llm]));
+        llmBadge.append(h("span", { class: "hidden opacity-70 xl:inline" }, `· ${s.llm_model}`));
+        const ocrBadge = badge(s.tesseract ? "OCR ready" : "OCR unavailable", s.tesseract ? "emerald" : "amber",
+          s.tesseract ? `tesseract ${s.tesseract_version}: scans are OCR'd before extraction`
+                      : "Tesseract is not installed: scans run vision-only");
+        if (s.tesseract) ocrBadge.append(h("span", { class: "hidden xl:inline" }, `· ${s.tesseract_version.split(".").slice(0, 2).join(".")}`));
+        host.append(llmBadge, ocrBadge);
       } catch (err) {
         showError(`Could not reach the API: ${err.message}`);
       }
     }
 
+    function roleSwitch() {
+      const host = clear(document.getElementById("role"));
+      const roles = [["ap_clerk", "AP Clerk"], ["ap_manager", "AP Manager"]];
+      const group = h("div", { class: "inline-flex rounded-lg border border-zinc-200 p-0.5", role: "group", "aria-label": "Acting as" },
+        roles.map(([key, label]) => h("button", {
+          type: "button", "aria-pressed": String(getRole() === key),
+          class: `focus-ring rounded-md px-2.5 py-1 text-xs transition-colors ${getRole() === key ? "bg-zinc-900 text-white" : "text-zinc-600 hover:bg-zinc-100"}`,
+          onclick: () => { setRole(key); roleSwitch(); },
+        }, label)));
+      host.append("Acting as", group);
+    }
+
     window.addEventListener("hashchange", route);
+    roleSwitch();
     loadBadges();
     route();
   </script>

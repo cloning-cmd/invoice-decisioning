@@ -28,6 +28,7 @@ def run(ctx: RunContext) -> StageResult:
     if not ctx.page_images:
         ctx.page_images = ocr.rasterise(ctx.file_bytes, ctx.mime, dpi=config.LLM_RASTER_DPI)
     images = [ocr.to_llm_jpeg(p) for p in ctx.page_images]
+    ctx.page_images = []    # 300 DPI rasters are ~26 MB a page; nothing downstream needs them
 
     try:
         result = llm.extract_document(ctx.sha256, images, _machine_text(ctx))

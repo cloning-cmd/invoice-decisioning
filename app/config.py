@@ -321,6 +321,12 @@ SSE_HEARTBEAT_SECONDS = 15          # proxies drop idle connections at ~30-60s; 
 RUNS_PAGE_SIZE_DEFAULT = 50
 RUNS_PAGE_SIZE_MAX = 200
 STATS_SERIES_DAYS = 14              # dashboard sparkline window
+# Timestamps are stored in UTC; "today" on the dashboard is the AP team's day
+# (IST, UTC+05:30), so a run at 03:00 IST is not counted as yesterday.
+REPORTING_UTC_OFFSET_MINUTES = 330
+# Actions a person can take on a decided run, and who may take them. Every
+# action needs a note: the audit trail must say why, not only what.
+ACTION_ACTORS = ("ap_clerk", "ap_manager")
 # The document viewer: 150 DPI renders A4 at 1240 px, sharp in a 40%-width
 # column and readable when zoomed, without shipping 300 DPI OCR rasters.
 VIEWER_RASTER_DPI = 150

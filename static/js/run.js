@@ -3,9 +3,8 @@
 // exported so the run-detail screen renders exactly the same thing.
 
 import { api } from "./api.js";
-import {
-  STAGE_STATUS, VERDICT, clear, codeChip, confidenceBar, h, icon, money, ms, ruleChip, showError,
-} from "./ui.js";
+import { mountInsights, renderDecisionCard } from "./decision.js";
+import { STAGE_STATUS, clear, confidenceBar, h, icon, money, ms, ruleChip, showError } from "./ui.js";
 import { createViewer } from "./viewer.js";
 
 const ACCEPT = ".pdf,.png,.jpg,.jpeg,.tif,.tiff";
@@ -71,8 +70,11 @@ function buildIntake({ compact }) {
   for (const ev of ["dragleave", "drop"]) zone.addEventListener(ev, () => zone.classList.remove("dropzone-over"));
   zone.addEventListener("drop", (e) => { e.preventDefault(); send(e.dataTransfer.files[0]); });
 
-  const chips = h("div", { class: "mt-4 flex flex-wrap items-center gap-2" },
-    h("span", { class: "mr-1 text-xs font-medium uppercase tracking-wide text-zinc-500" }, "Samples"));
+  const rowFor = (label) => h("div", { class: "flex flex-wrap items-center gap-2" },
+    h("span", { class: "w-20 shrink-0 text-xs font-medium uppercase tracking-wide text-zinc-500" }, label));
+  const scenarioRow = rowFor("Scenarios");
+  const formatRow = rowFor("Formats");
+  const chips = h("div", { class: "mt-4 space-y-2" }, scenarioRow, formatRow);
   api.samples().then((list) => {
     for (const s of list) {
       const chip = h("button", {
@@ -91,7 +93,7 @@ function buildIntake({ compact }) {
           }
         },
       }, icon(s.filename.endsWith(".pdf") ? "file" : "image", "text-zinc-400"), s.label);
-      chips.appendChild(chip);
+      (s.group === "format" ? formatRow : scenarioRow).appendChild(chip);
     }
   }).catch((err) => showError(`Could not load the sample list: ${err.message}`));
 
@@ -109,6 +111,7 @@ export function createWorkspace(runId, { onRecord } = {}) {
 
   const viewer = createViewer({ onSelect: revealField });
   const cardSlot = h("div", { class: "space-y-6" });
+  const insights = h("div", { class: "space-y-6" });
   const conn = h("span", { class: "text-xs text-zinc-400" });
   const list = h("ol", { class: "divide-y divide-zinc-100" });
   const timeline = h("section", { class: "rounded-xl border border-zinc-200 bg-white" },
@@ -119,7 +122,7 @@ export function createWorkspace(runId, { onRecord } = {}) {
 
   const el = h("div", { class: "mt-8 grid grid-cols-5 gap-6" },
     h("div", { class: "col-span-2" }, h("div", { class: "sticky top-6" }, viewer.el)),
-    h("div", { class: "col-span-3 space-y-6" }, cardSlot, timeline, extras));
+    h("div", { class: "col-span-3 space-y-6" }, cardSlot, insights, timeline, extras));
 
   // ---------------------------------------------------------- stage rows
 
@@ -230,7 +233,7 @@ export function createWorkspace(runId, { onRecord } = {}) {
     if (es) { es.close(); es = null; }
     clearInterval(ticker);
     conn.textContent = "";
-    clear(cardSlot).appendChild(renderDecisionCard(payload.card, payload, { runId, onChanged: refresh }));
+    clear(cardSlot).appendChild(renderDecisionCard(payload.card, payload));
     const verdict = payload.card ? payload.card.verdict : "No decision";
     document.title = `${verdict} · ${filename} — Invoice Decisioning`;
     await refresh();
@@ -244,12 +247,16 @@ export function createWorkspace(runId, { onRecord } = {}) {
       return;
     }
     viewer.setFields(record.fields);
-    if (record.card) {
-      clear(cardSlot).appendChild(renderDecisionCard(record.card, { status: record.run.status, error: record.run.error },
-                                                      { runId, onChanged: refresh }));
+    const ctx = { runId, record, onChanged: refresh };
+    if (["completed", "failed"].includes(record.run.status)) {
+      clear(cardSlot).appendChild(renderDecisionCard(record.card, { error: record.run.error }, ctx));
+      mountInsights(insights, record, ctx);
+      const v = record.card ? record.card.verdict : "No decision";
+      document.title = `${v} · ${record.run.source_filename || runId} — Invoice Decisioning`;
     }
-    for (const row of rows.values()) row.rendered = false;
-    onRecord && onRecord(record, extras);
+    // Stage rows may have been re-run (a supplied field re-decides from Normalise).
+    for (const s of record.stages) update(s);
+    onRecord && onRecord(record, extras, ctx);
   }
 
   async function start() {
@@ -280,51 +287,16 @@ export function createWorkspace(runId, { onRecord } = {}) {
     };
   }
 
+  const onRole = () => { if (record && ["completed", "failed"].includes(record.run.status)) refresh(); };
+  window.addEventListener("rolechange", onRole);
+
   function destroy() {
     if (es) { es.close(); es = null; }
     clearInterval(ticker);
+    window.removeEventListener("rolechange", onRole);
   }
 
   return { el, start, destroy, viewer };
-}
-
-// ================================================================ decision card
-
-export function renderDecisionCard(card, payload, { runId, onChanged, actions } = {}) {
-  if (!card) {
-    return h("section", { class: "slide-in rounded-xl border border-rose-200 bg-white p-6" },
-      h("div", { class: "flex items-center gap-2 text-lg font-semibold text-rose-700" }, icon("alert"), "No decision"),
-      h("p", { class: "mt-2 text-sm text-zinc-700" }, payload && payload.error ? payload.error : "The run did not reach a decision."));
-  }
-  const v = VERDICT[card.verdict];
-  const reasons = card.reason_codes.length
-    ? h("div", { class: "mt-4 flex flex-wrap gap-2" },
-        card.reason_codes.map((c) => codeChip(c, ["BLOCK", "REJECT"].includes(card.verdict) ? "rose" : "amber")))
-    : null;
-  const figures = h("dl", { class: "mt-6 grid grid-cols-5 gap-px overflow-hidden rounded-lg border border-zinc-200 bg-zinc-200" },
-    card.figures.map((f) => h("div", { class: "bg-white px-3 py-3" },
-      h("dt", { class: "text-xs text-zinc-500" }, f.label),
-      h("dd", { class: `mono mt-1 truncate text-sm ${f.tone === "fail" ? "text-rose-700" : "text-zinc-900"}`, title: f.value }, f.value))));
-
-  return h("section", { class: `slide-in rounded-xl border bg-white p-6 shadow-sm ${v.ring}`, "aria-live": "polite" },
-    h("div", { class: "flex items-start justify-between gap-4" },
-      h("div", {},
-        h("div", { class: `inline-flex items-center gap-2 rounded-lg px-3 py-1.5 text-2xl font-semibold tracking-tight ${v.badge}` },
-          icon(v.glyph, "scale-125"), card.verdict_words),
-        h("p", { class: "mono mt-2 text-xs text-zinc-500" }, `${card.verdict} · branch ${card.branch}`)),
-      card.payment_date
-        ? h("div", { class: "text-right" }, h("p", { class: "text-xs text-zinc-500" }, "Pay on"),
-            h("p", { class: "mono text-lg text-zinc-900" }, card.payment_date))
-        : null),
-    reasons,
-    h("p", { class: "mt-4 text-[15px] leading-relaxed text-zinc-700" }, card.explanation),
-    h("div", { class: "mt-4 flex items-start gap-3 rounded-lg bg-zinc-50 px-4 py-3" },
-      icon("arrowRight", "mt-0.5 text-zinc-400"),
-      h("div", { class: "text-sm" },
-        h("p", { class: "font-medium text-zinc-900" }, card.next_action),
-        h("p", { class: "mt-0.5 text-zinc-500" }, `Owner: ${card.owner}`))),
-    figures,
-    actions || null);
 }
 
 // ================================================================ stage panels

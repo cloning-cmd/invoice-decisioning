@@ -168,6 +168,67 @@ export function showError(message) {
   host.appendChild(banner);
 }
 
+// ---------------------------------------------------------------- acting role
+// There is no login in this prototype: the header lets you act as the AP clerk
+// or the AP manager, and the server enforces what each may do. The choice is a
+// per-viewer convenience, so it lives in localStorage (and survives without it).
+
+const ROLE_KEY = "invoice-decisioning.role";
+let roleFallback = "ap_clerk";
+
+export function getRole() {
+  try {
+    return localStorage.getItem(ROLE_KEY) || roleFallback;
+  } catch (_) {
+    return roleFallback;        // storage blocked (private window): keep the in-memory choice
+  }
+}
+
+export function setRole(role) {
+  roleFallback = role;
+  try { localStorage.setItem(ROLE_KEY, role); } catch (_) { /* storage blocked: the in-memory value still applies */ }
+  window.dispatchEvent(new CustomEvent("rolechange", { detail: role }));
+}
+
+// ---------------------------------------------------------------- modal
+// A native <dialog>: focus is trapped and Esc closes it. onConfirm may throw;
+// its message is shown inside the dialog and the dialog stays open.
+
+export function modal({ title, body, confirmLabel = "Confirm", tone = "indigo", onConfirm }) {
+  const tones = {
+    indigo: "bg-indigo-600 hover:bg-indigo-700", emerald: "bg-emerald-600 hover:bg-emerald-700",
+    rose: "bg-rose-600 hover:bg-rose-700", zinc: "bg-zinc-900 hover:bg-zinc-800",
+  };
+  const err = h("p", { class: "hidden rounded-lg bg-rose-50 px-3 py-2 text-sm text-rose-800", role: "alert" });
+  const confirm = h("button", { type: "submit", class: `focus-ring rounded-lg px-4 py-2 text-sm font-medium text-white ${tones[tone]}` }, confirmLabel);
+  const cancel = h("button", { type: "button", class: "focus-ring rounded-lg border border-zinc-300 px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-50",
+                               onclick: () => dlg.close() }, "Cancel");
+  const form = h("form", { method: "dialog", class: "space-y-5 p-6" },
+    h("h2", { class: "text-lg font-semibold text-zinc-900" }, title), body, err,
+    h("div", { class: "flex justify-end gap-2" }, cancel, confirm));
+  const dlg = h("dialog", { class: "w-[32rem] max-w-[calc(100vw-2rem)] rounded-xl border border-zinc-200 p-0 shadow-xl" }, form);
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    confirm.disabled = true;
+    err.classList.add("hidden");
+    try {
+      await onConfirm();
+      dlg.close();
+    } catch (ex) {
+      err.textContent = ex.message;
+      err.classList.remove("hidden");
+    } finally {
+      confirm.disabled = false;
+    }
+  });
+  dlg.addEventListener("close", () => dlg.remove());
+  document.body.appendChild(dlg);
+  dlg.showModal();
+  const first = form.querySelector("input, select, textarea");
+  if (first) first.focus();
+  return dlg;
+}
+
 export function card(...children) {
   return h("section", { class: "rounded-xl border border-zinc-200 bg-white p-6" }, children);
 }

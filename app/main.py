@@ -11,13 +11,13 @@ from contextlib import asynccontextmanager
 from typing import Any, AsyncIterator
 
 from fastapi import BackgroundTasks, FastAPI, HTTPException, Request, UploadFile
-from fastapi.responses import FileResponse, StreamingResponse
+from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from app import config, db, samples
 from app.pipeline import runner
-from app.services import runview
+from app.services import actions, reports, runview
 from app.services.events import TERMINAL_EVENTS, hub
 from app.services.ocr import INSTALL_HINT, tesseract_version
 
@@ -162,6 +162,43 @@ async def run_events(run_id: str, request: Request) -> StreamingResponse:
                              headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"})
 
 
+@app.get("/api/runs")
+def list_runs(verdict: str | None = None, vendor: str | None = None, date_from: str | None = None,
+              date_to: str | None = None, q: str | None = None, sort: str = "created_at", order: str = "desc",
+              page: int = 1, page_size: int = config.RUNS_PAGE_SIZE_DEFAULT, queue: bool = False) -> dict[str, Any]:
+    with db.session() as conn:
+        if queue:
+            rows = reports.exception_queue(conn)
+            return {"total": len(rows), "page": 1, "page_size": len(rows), "rows": rows}
+        try:
+            return reports.list_runs(conn, verdict=verdict or None, vendor=vendor or None, date_from=date_from or None,
+                                     date_to=date_to or None, q=q, sort=sort, order=order, page=page,
+                                     page_size=page_size)
+        except ValueError as exc:
+            raise HTTPException(400, str(exc)) from exc
+
+
+@app.get("/api/stats")
+def get_stats() -> dict[str, Any]:
+    with db.session() as conn:
+        return reports.stats(conn)
+
+
+@app.get("/api/reference/vendors")
+def get_vendors() -> list[dict[str, Any]]:
+    with db.session() as conn:
+        return reports.vendors(conn)
+
+
+@app.get("/api/reference/pos/{po_number}")
+def get_po(po_number: str) -> dict[str, Any]:
+    with db.session() as conn:
+        po = reports.purchase_order(conn, po_number)
+    if po is None:
+        raise HTTPException(404, f"no purchase order {po_number}")
+    return po
+
+
 @app.get("/api/runs/{run_id}")
 def get_run(run_id: str) -> dict[str, Any]:
     with db.session() as conn:
@@ -169,6 +206,34 @@ def get_run(run_id: str) -> dict[str, Any]:
             return runview.record(conn, run_id)
         except runview.NotFound as exc:
             raise HTTPException(404, str(exc)) from exc
+
+
+@app.get("/api/runs/{run_id}/export")
+def export_run(run_id: str) -> JSONResponse:
+    """The complete decision record, including the verbatim model output."""
+    with db.session() as conn:
+        try:
+            rec = runview.record(conn, run_id, include_raw=True)
+        except runview.NotFound as exc:
+            raise HTTPException(404, str(exc)) from exc
+    return JSONResponse(rec, headers={"Content-Disposition": f'attachment; filename="decision-{run_id}.json"'})
+
+
+class ActionRequest(BaseModel):
+    action: str
+    actor: str
+    note: str
+    payload: dict[str, Any] | None = None
+
+
+@app.post("/api/runs/{run_id}/actions")
+def run_action(run_id: str, body: ActionRequest) -> dict[str, Any]:
+    if hub.is_live(run_id):
+        raise HTTPException(409, "this run is still in progress")
+    try:
+        return actions.perform(run_id, body.action, body.actor, body.note, body.payload)
+    except actions.ActionError as exc:
+        raise HTTPException(exc.status, str(exc)) from exc
 
 
 @app.get("/api/runs/{run_id}/page/{page}")

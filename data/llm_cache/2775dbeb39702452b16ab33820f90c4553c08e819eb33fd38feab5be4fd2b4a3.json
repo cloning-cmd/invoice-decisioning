@@ -1,221 +1,221 @@
 {
   "sha256": "2775dbeb39702452b16ab33820f90c4553c08e819eb33fd38feab5be4fd2b4a3",
   "model": "gemini-3.5-flash",
-  "prompt_version": "2026-11-16.1",
-  "created_at": "2026-11-16T03:27:42+00:00",
+  "prompt_version": "2026-11-16.2",
+  "created_at": "2026-11-16T03:35:03+00:00",
   "usage": {
-    "input_tokens": 7626,
-    "output_tokens": 1346
+    "input_tokens": 7720,
+    "output_tokens": 1337
   },
   "payload": {
+    "invoice_number": {
+      "confidence": 0.99,
+      "value": "INV-SH-7802",
+      "evidence": "Invoice No. INV-SH-7802",
+      "page": 1
+    },
     "payment": {
-      "ifsc_or_swift": {
-        "value": "ICIC0001846",
-        "evidence": "IFSC: ICIC0001846",
-        "confidence": 0.99,
-        "page": 1
-      },
-      "terms": {
-        "evidence": "Payment: 45 days from invoice date",
-        "value": "Payment: 45 days from invoice date",
+      "account_number": {
         "page": 1,
-        "confidence": 0.99
+        "value": "••••••••8820",
+        "confidence": 0.99,
+        "evidence": "A/c No.: ••••••••8820"
       },
       "bank_name": {
-        "value": "ICICI Bank Ltd, Naroda GIDC Branch",
         "page": 1,
         "evidence": "Bank: ICICI Bank Ltd, Naroda GIDC Branch",
+        "value": "ICICI Bank Ltd, Naroda GIDC Branch",
         "confidence": 0.99
       },
-      "account_number": {
-        "evidence": "A/c No.: ••••••••8820",
+      "terms": {
         "page": 1,
         "confidence": 0.99,
-        "value": "••••••••8820"
+        "value": "Payment: 45 days from invoice date",
+        "evidence": "Payment: 45 days from invoice date"
       },
       "beneficiary_name": {
-        "evidence": "A/c Name: Shreeji Industrial Supplies",
         "value": "Shreeji Industrial Supplies",
+        "evidence": "A/c Name: Shreeji Industrial Supplies",
+        "page": 1,
+        "confidence": 0.99
+      },
+      "ifsc_or_swift": {
+        "evidence": "IFSC: ICIC0001846",
+        "value": "ICIC0001846",
         "confidence": 0.99,
         "page": 1
       }
     },
     "line_items": [
       {
-        "line_total": {
-          "evidence": "6,000.00",
-          "page": 1,
-          "value": "6,000.00",
-          "confidence": 0.99
-        },
-        "tax_rate_pct": {
+        "description": {
+          "evidence": "Grinding disc 100x6x16mm",
           "confidence": 0.99,
-          "value": "18%",
-          "evidence": "18%",
+          "value": "Grinding disc 100x6x16mm",
           "page": 1
         },
         "qty": {
-          "value": "50",
-          "page": 1,
           "confidence": 0.99,
+          "page": 1,
+          "value": "50",
           "evidence": "50"
         },
-        "description": {
+        "line_total": {
+          "value": "6,000.00",
           "page": 1,
-          "value": "Grinding disc 100x6x16mm",
-          "evidence": "Grinding disc 100x6x16mm",
-          "confidence": 0.99
-        },
-        "line_no": 1,
-        "sku": {
-          "value": "GRD-DSC",
-          "evidence": "GRD-DSC",
-          "page": 1,
+          "evidence": "6,000.00",
           "confidence": 0.99
         },
         "uom": {
           "confidence": 0.99,
-          "value": "NOS",
-          "evidence": "NOS",
-          "page": 1
-        },
-        "unit_price": {
-          "confidence": 0.99,
           "page": 1,
+          "evidence": "NOS",
+          "value": "NOS"
+        },
+        "tax_rate_pct": {
+          "value": "18%",
+          "page": 1,
+          "confidence": 0.99,
+          "evidence": "18%"
+        },
+        "line_no": 1,
+        "unit_price": {
+          "page": 1,
+          "confidence": 0.99,
           "value": "120.00",
           "evidence": "120.00"
+        },
+        "sku": {
+          "page": 1,
+          "evidence": "GRD-DSC",
+          "confidence": 0.99,
+          "value": "GRD-DSC"
         }
       }
     ],
+    "buyer": {
+      "tax_id": {
+        "page": 1,
+        "confidence": 0.99,
+        "value": "29AAECH0007L1Z2",
+        "evidence": "GSTIN: 29AAECH0007L1Z2"
+      },
+      "name": {
+        "evidence": "Halden Precision Engineering Pvt Ltd",
+        "page": 1,
+        "confidence": 0.99,
+        "value": "Halden Precision Engineering Pvt Ltd"
+      }
+    },
+    "document_quality": {
+      "issues": [],
+      "pages": 1,
+      "legibility": 0.99,
+      "is_scan": false
+    },
+    "currency": {
+      "confidence": 0.99,
+      "evidence": "Grand Total (INR)",
+      "page": 1,
+      "value": "INR"
+    },
+    "document_type": "tax_invoice",
     "po_references": [
       {
         "confidence": 0.99,
-        "value": "PO-2052",
         "evidence": "Buyer's PO No. PO-2052",
+        "value": "PO-2052",
         "explicit": true
       }
     ],
-    "supplier": {
-      "name": {
-        "evidence": "Shreeji Industrial Supplies",
-        "page": 1,
-        "confidence": 0.99,
-        "value": "Shreeji Industrial Supplies"
-      },
-      "tax_id": {
-        "confidence": 0.99,
-        "value": "24AAKFS8820M1Z9",
-        "evidence": "GSTIN: 24AAKFS8820M1Z9",
-        "page": 1
-      },
-      "email": {
-        "confidence": 0.99,
-        "page": 1,
-        "value": "billing@shreejiindustrial.in",
-        "evidence": "billing@shreejiindustrial.in"
-      },
-      "address": {
-        "evidence": "Plot 118, Phase II, GIDC Naroda\\nAhmedabad 382330, Gujarat, India",
-        "page": 1,
-        "value": "Plot 118, Phase II, GIDC Naroda\\nAhmedabad 382330, Gujarat, India",
-        "confidence": 0.99
-      }
+    "unreadable_regions": [],
+    "invoice_date": {
+      "confidence": 0.99,
+      "value": "12/11/2026",
+      "evidence": "Invoice Date 12/11/2026",
+      "page": 1
     },
-    "notes": "",
+    "due_date": {
+      "value": "27/12/2026",
+      "page": 1,
+      "confidence": 0.99,
+      "evidence": "Due Date 27/12/2026"
+    },
+    "notes": "Extracted successfully.",
     "totals": {
-      "shipping": {
-        "evidence": null,
-        "page": null,
-        "value": null,
-        "confidence": 0
-      },
-      "grand_total": {
-        "evidence": "Grand Total (INR) 7,080.00",
-        "page": 1,
-        "value": "7,080.00",
-        "confidence": 0.99
-      },
-      "discount": {
-        "evidence": null,
-        "value": null,
-        "confidence": 0,
-        "page": null
-      },
       "tax_total": {
+        "evidence": "1,080.00",
+        "confidence": 0.99,
         "page": 1,
-        "evidence": "IGST @ 18% 1,080.00",
-        "value": "1,080.00",
-        "confidence": 0.99
+        "value": "1,080.00"
       },
       "subtotal": {
         "confidence": 0.99,
-        "evidence": "Taxable Value 6,000.00",
         "value": "6,000.00",
+        "evidence": "Taxable Value 6,000.00",
         "page": 1
       },
-      "amount_in_words": {
-        "value": "Rupees Seven Thousand Eighty Only",
-        "page": 1,
+      "grand_total": {
         "confidence": 0.99,
-        "evidence": "AMOUNT IN WORDS\\nRupees Seven Thousand Eighty Only"
+        "page": 1,
+        "evidence": "Grand Total (INR) 7,080.00",
+        "value": "7,080.00"
       },
       "tax_breakdown": [
         {
           "label": "IGST @ 18%",
           "amount": {
+            "value": "1,080.00",
             "evidence": "IGST @ 18% 1,080.00",
             "confidence": 0.99,
-            "page": 1,
-            "value": "1,080.00"
+            "page": 1
           }
         }
-      ]
+      ],
+      "shipping": {
+        "evidence": null,
+        "value": null,
+        "confidence": 0,
+        "page": null
+      },
+      "discount": {
+        "confidence": 0,
+        "evidence": null,
+        "page": null,
+        "value": null
+      },
+      "amount_in_words": {
+        "value": "Rupees Seven Thousand Eighty Only",
+        "page": 1,
+        "evidence": "Rupees Seven Thousand Eighty Only",
+        "confidence": 0.99
+      }
     },
-    "due_date": {
-      "confidence": 0.99,
-      "page": 1,
-      "value": "27/12/2026",
-      "evidence": "Due Date 27/12/2026"
-    },
-    "invoice_date": {
-      "evidence": "Invoice Date 12/11/2026",
-      "confidence": 0.99,
-      "value": "12/11/2026",
-      "page": 1
-    },
-    "currency": {
-      "value": "INR",
-      "page": 1,
-      "confidence": 0.99,
-      "evidence": "Grand Total (INR)"
-    },
-    "document_type": "tax_invoice",
-    "buyer": {
+    "supplier": {
       "name": {
-        "evidence": "Halden Precision Engineering Pvt Ltd",
-        "value": "Halden Precision Engineering Pvt Ltd",
+        "value": "Shreeji Industrial Supplies",
+        "evidence": "Shreeji Industrial Supplies",
+        "confidence": 0.99,
+        "page": 1
+      },
+      "address": {
+        "evidence": "Plot 118, Phase II, GIDC Naroda\\nAhmedabad 382330, Gujarat, India",
+        "value": "Plot 118, Phase II, GIDC Naroda\\nAhmedabad 382330, Gujarat, India",
         "page": 1,
         "confidence": 0.99
       },
       "tax_id": {
         "confidence": 0.99,
-        "evidence": "GSTIN: 29AAECH0007L1Z2",
-        "value": "29AAECH0007L1Z2",
-        "page": 1
+        "evidence": "GSTIN: 24AAKFS8820M1Z9",
+        "page": 1,
+        "value": "24AAKFS8820M1Z9"
+      },
+      "email": {
+        "evidence": "billing@shreejiindustrial.in",
+        "value": "billing@shreejiindustrial.in",
+        "page": 1,
+        "confidence": 0.99
       }
-    },
-    "unreadable_regions": [],
-    "invoice_number": {
-      "value": "INV-SH-7802",
-      "page": 1,
-      "evidence": "Invoice No. INV-SH-7802",
-      "confidence": 0.99
-    },
-    "document_quality": {
-      "legibility": 0.95,
-      "is_scan": true,
-      "issues": [],
-      "pages": 1
     }
   },
   "responses": [
@@ -226,12 +226,12 @@
           "content-type": "application/json; charset=UTF-8",
           "vary": "Origin, X-Origin, Referer",
           "content-encoding": "gzip",
-          "date": "Mon, 16 Nov 2026 03:27:43 GMT",
+          "date": "Mon, 16 Nov 2026 03:35:03 GMT",
           "server": "scaffolding on HTTPServer2",
           "x-xss-protection": "0",
           "x-frame-options": "SAMEORIGIN",
           "x-content-type-options": "nosniff",
-          "server-timing": "gfet4t7; dur=6142",
+          "server-timing": "gfet4t7; dur=5870",
           "alt-svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
           "transfer-encoding": "chunked"
         }
@@ -242,221 +242,221 @@
             "parts": [
               {
                 "function_call": {
-                  "id": "call_3693474625735669072",
+                  "id": "call_10420394016726372327",
                   "args": {
+                    "invoice_number": {
+                      "confidence": 0.99,
+                      "value": "INV-SH-7802",
+                      "evidence": "Invoice No. INV-SH-7802",
+                      "page": 1
+                    },
                     "payment": {
-                      "ifsc_or_swift": {
-                        "value": "ICIC0001846",
-                        "evidence": "IFSC: ICIC0001846",
-                        "confidence": 0.99,
-                        "page": 1
-                      },
-                      "terms": {
-                        "evidence": "Payment: 45 days from invoice date",
-                        "value": "Payment: 45 days from invoice date",
+                      "account_number": {
                         "page": 1,
-                        "confidence": 0.99
+                        "value": "••••••••8820",
+                        "confidence": 0.99,
+                        "evidence": "A/c No.: ••••••••8820"
                       },
                       "bank_name": {
-                        "value": "ICICI Bank Ltd, Naroda GIDC Branch",
                         "page": 1,
                         "evidence": "Bank: ICICI Bank Ltd, Naroda GIDC Branch",
+                        "value": "ICICI Bank Ltd, Naroda GIDC Branch",
                         "confidence": 0.99
                       },
-                      "account_number": {
-                        "evidence": "A/c No.: ••••••••8820",
+                      "terms": {
                         "page": 1,
                         "confidence": 0.99,
-                        "value": "••••••••8820"
+                        "value": "Payment: 45 days from invoice date",
+                        "evidence": "Payment: 45 days from invoice date"
                       },
                       "beneficiary_name": {
-                        "evidence": "A/c Name: Shreeji Industrial Supplies",
                         "value": "Shreeji Industrial Supplies",
+                        "evidence": "A/c Name: Shreeji Industrial Supplies",
+                        "page": 1,
+                        "confidence": 0.99
+                      },
+                      "ifsc_or_swift": {
+                        "evidence": "IFSC: ICIC0001846",
+                        "value": "ICIC0001846",
                         "confidence": 0.99,
                         "page": 1
                       }
                     },
                     "line_items": [
                       {
-                        "line_total": {
-                          "evidence": "6,000.00",
-                          "page": 1,
-                          "value": "6,000.00",
-                          "confidence": 0.99
-                        },
-                        "tax_rate_pct": {
+                        "description": {
+                          "evidence": "Grinding disc 100x6x16mm",
                           "confidence": 0.99,
-                          "value": "18%",
-                          "evidence": "18%",
+                          "value": "Grinding disc 100x6x16mm",
                           "page": 1
                         },
                         "qty": {
-                          "value": "50",
-                          "page": 1,
                           "confidence": 0.99,
+                          "page": 1,
+                          "value": "50",
                           "evidence": "50"
                         },
-                        "description": {
+                        "line_total": {
+                          "value": "6,000.00",
                           "page": 1,
-                          "value": "Grinding disc 100x6x16mm",
-                          "evidence": "Grinding disc 100x6x16mm",
-                          "confidence": 0.99
-                        },
-                        "line_no": 1,
-                        "sku": {
-                          "value": "GRD-DSC",
-                          "evidence": "GRD-DSC",
-                          "page": 1,
+                          "evidence": "6,000.00",
                           "confidence": 0.99
                         },
                         "uom": {
                           "confidence": 0.99,
-                          "value": "NOS",
-                          "evidence": "NOS",
-                          "page": 1
-                        },
-                        "unit_price": {
-                          "confidence": 0.99,
                           "page": 1,
+                          "evidence": "NOS",
+                          "value": "NOS"
+                        },
+                        "tax_rate_pct": {
+                          "value": "18%",
+                          "page": 1,
+                          "confidence": 0.99,
+                          "evidence": "18%"
+                        },
+                        "line_no": 1,
+                        "unit_price": {
+                          "page": 1,
+                          "confidence": 0.99,
                           "value": "120.00",
                           "evidence": "120.00"
+                        },
+                        "sku": {
+                          "page": 1,
+                          "evidence": "GRD-DSC",
+                          "confidence": 0.99,
+                          "value": "GRD-DSC"
                         }
                       }
                     ],
+                    "buyer": {
+                      "tax_id": {
+                        "page": 1,
+                        "confidence": 0.99,
+                        "value": "29AAECH0007L1Z2",
+                        "evidence": "GSTIN: 29AAECH0007L1Z2"
+                      },
+                      "name": {
+                        "evidence": "Halden Precision Engineering Pvt Ltd",
+                        "page": 1,
+                        "confidence": 0.99,
+                        "value": "Halden Precision Engineering Pvt Ltd"
+                      }
+                    },
+                    "document_quality": {
+                      "issues": [],
+                      "pages": 1,
+                      "legibility": 0.99,
+                      "is_scan": false
+                    },
+                    "currency": {
+                      "confidence": 0.99,
+                      "evidence": "Grand Total (INR)",
+                      "page": 1,
+                      "value": "INR"
+                    },
+                    "document_type": "tax_invoice",
                     "po_references": [
                       {
                         "confidence": 0.99,
-                        "value": "PO-2052",
                         "evidence": "Buyer's PO No. PO-2052",
+                        "value": "PO-2052",
                         "explicit": true
                       }
                     ],
-                    "supplier": {
-                      "name": {
-                        "evidence": "Shreeji Industrial Supplies",
-                        "page": 1,
-                        "confidence": 0.99,
-                        "value": "Shreeji Industrial Supplies"
-                      },
-                      "tax_id": {
-                        "confidence": 0.99,
-                        "value": "24AAKFS8820M1Z9",
-                        "evidence": "GSTIN: 24AAKFS8820M1Z9",
-                        "page": 1
-                      },
-                      "email": {
-                        "confidence": 0.99,
-                        "page": 1,
-                        "value": "billing@shreejiindustrial.in",
-                        "evidence": "billing@shreejiindustrial.in"
-                      },
-                      "address": {
-                        "evidence": "Plot 118, Phase II, GIDC Naroda\\nAhmedabad 382330, Gujarat, India",
-                        "page": 1,
-                        "value": "Plot 118, Phase II, GIDC Naroda\\nAhmedabad 382330, Gujarat, India",
-                        "confidence": 0.99
-                      }
+                    "unreadable_regions": [],
+                    "invoice_date": {
+                      "confidence": 0.99,
+                      "value": "12/11/2026",
+                      "evidence": "Invoice Date 12/11/2026",
+                      "page": 1
                     },
-                    "notes": "",
+                    "due_date": {
+                      "value": "27/12/2026",
+                      "page": 1,
+                      "confidence": 0.99,
+                      "evidence": "Due Date 27/12/2026"
+                    },
+                    "notes": "Extracted successfully.",
                     "totals": {
-                      "shipping": {
-                        "evidence": null,
-                        "page": null,
-                        "value": null,
-                        "confidence": 0
-                      },
-                      "grand_total": {
-                        "evidence": "Grand Total (INR) 7,080.00",
-                        "page": 1,
-                        "value": "7,080.00",
-                        "confidence": 0.99
-                      },
-                      "discount": {
-                        "evidence": null,
-                        "value": null,
-                        "confidence": 0,
-                        "page": null
-                      },
                       "tax_total": {
+                        "evidence": "1,080.00",
+                        "confidence": 0.99,
                         "page": 1,
-                        "evidence": "IGST @ 18% 1,080.00",
-                        "value": "1,080.00",
-                        "confidence": 0.99
+                        "value": "1,080.00"
                       },
                       "subtotal": {
                         "confidence": 0.99,
-                        "evidence": "Taxable Value 6,000.00",
                         "value": "6,000.00",
+                        "evidence": "Taxable Value 6,000.00",
                         "page": 1
                       },
-                      "amount_in_words": {
-                        "value": "Rupees Seven Thousand Eighty Only",
-                        "page": 1,
+                      "grand_total": {
                         "confidence": 0.99,
-                        "evidence": "AMOUNT IN WORDS\\nRupees Seven Thousand Eighty Only"
+                        "page": 1,
+                        "evidence": "Grand Total (INR) 7,080.00",
+                        "value": "7,080.00"
                       },
                       "tax_breakdown": [
                         {
                           "label": "IGST @ 18%",
                           "amount": {
+                            "value": "1,080.00",
                             "evidence": "IGST @ 18% 1,080.00",
                             "confidence": 0.99,
-                            "page": 1,
-                            "value": "1,080.00"
+                            "page": 1
                           }
                         }
-                      ]
+                      ],
+                      "shipping": {
+                        "evidence": null,
+                        "value": null,
+                        "confidence": 0,
+                        "page": null
+                      },
+                      "discount": {
+                        "confidence": 0,
+                        "evidence": null,
+                        "page": null,
+                        "value": null
+                      },
+                      "amount_in_words": {
+                        "value": "Rupees Seven Thousand Eighty Only",
+                        "page": 1,
+                        "evidence": "Rupees Seven Thousand Eighty Only",
+                        "confidence": 0.99
+                      }
                     },
-                    "due_date": {
-                      "confidence": 0.99,
-                      "page": 1,
-                      "value": "27/12/2026",
-                      "evidence": "Due Date 27/12/2026"
-                    },
-                    "invoice_date": {
-                      "evidence": "Invoice Date 12/11/2026",
-                      "confidence": 0.99,
-                      "value": "12/11/2026",
-                      "page": 1
-                    },
-                    "currency": {
-                      "value": "INR",
-                      "page": 1,
-                      "confidence": 0.99,
-                      "evidence": "Grand Total (INR)"
-                    },
-                    "document_type": "tax_invoice",
-                    "buyer": {
+                    "supplier": {
                       "name": {
-                        "evidence": "Halden Precision Engineering Pvt Ltd",
-                        "value": "Halden Precision Engineering Pvt Ltd",
+                        "value": "Shreeji Industrial Supplies",
+                        "evidence": "Shreeji Industrial Supplies",
+                        "confidence": 0.99,
+                        "page": 1
+                      },
+                      "address": {
+                        "evidence": "Plot 118, Phase II, GIDC Naroda\\nAhmedabad 382330, Gujarat, India",
+                        "value": "Plot 118, Phase II, GIDC Naroda\\nAhmedabad 382330, Gujarat, India",
                         "page": 1,
                         "confidence": 0.99
                       },
                       "tax_id": {
                         "confidence": 0.99,
-                        "evidence": "GSTIN: 29AAECH0007L1Z2",
-                        "value": "29AAECH0007L1Z2",
-                        "page": 1
+                        "evidence": "GSTIN: 24AAKFS8820M1Z9",
+                        "page": 1,
+                        "value": "24AAKFS8820M1Z9"
+                      },
+                      "email": {
+                        "evidence": "billing@shreejiindustrial.in",
+                        "value": "billing@shreejiindustrial.in",
+                        "page": 1,
+                        "confidence": 0.99
                       }
-                    },
-                    "unreadable_regions": [],
-                    "invoice_number": {
-                      "value": "INV-SH-7802",
-                      "page": 1,
-                      "evidence": "Invoice No. INV-SH-7802",
-                      "confidence": 0.99
-                    },
-                    "document_quality": {
-                      "legibility": 0.95,
-                      "is_scan": true,
-                      "issues": [],
-                      "pages": 1
                     }
                   },
                   "name": "record_invoice_extraction"
                 },
-                "thought_signature": "EmkKZwFpFH0TskMc8GKwjg7wvSyPmGV4IAvYhEwhowTVbpf0sOeOChA9NOrAxBCa8RCRLqZX00HZtxveNaBz-jdb1iYCre-Ld9jVYp8-g0BMQVEuRJ9LzOpGtIepfc1cgKow-Ri98BZV_Ow="
+                "thought_signature": "EmkKZwFpFH0TqGva1CsZ7lRgeZWmz5AygpoSBUuiZzM-Nq0L51lcrzFazwYocXjm7G6P0j2501uUjUK_6TGvz5Rxg_unmcInzWpHqRlVuLaUhstQfnYbzxBHwSMF0xXjB_U-x8890Xf8ORI="
               }
             ],
             "role": "model"
@@ -466,21 +466,21 @@
         }
       ],
       "model_version": "gemini-3.6-flash",
-      "response_id": "KXj6avW9MsGD694PwqTS2Ac",
+      "response_id": "4nn6arHFKKWz694PsYzs0Ao",
       "usage_metadata": {
-        "candidates_token_count": 1346,
-        "prompt_token_count": 7626,
+        "candidates_token_count": 1337,
+        "prompt_token_count": 7720,
         "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 6628
+          },
           {
             "modality": "IMAGE",
             "token_count": 1092
-          },
-          {
-            "modality": "TEXT",
-            "token_count": 6534
           }
         ],
-        "total_token_count": 8972
+        "total_token_count": 9057
       }
     }
   ]

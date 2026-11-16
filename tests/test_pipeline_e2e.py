@@ -43,9 +43,14 @@ def samples(tmp_path_factory):
 
 def _require_recording(data: bytes, name: str) -> None:
     sha = hashlib.sha256(data).hexdigest()
-    if not llm.cache_path(sha).exists():
+    path = llm.cache_path(sha)
+    if not path.exists():
         pytest.skip(f"no recorded extraction for {name} (sha {sha[:12]}); record it once with "
                     f"GEMINI_API_KEY set: python -m app.cli run data/samples/{name}")
+    recorded = json.loads(path.read_text(encoding="utf-8")).get("prompt_version")
+    if recorded != llm.PROMPT_VERSION:
+        pytest.skip(f"the recording for {name} was made under prompt {recorded}, not {llm.PROMPT_VERSION}; "
+                    f"re-record it: python -m app.cli run data/samples/{name}")
 
 
 def _run(samples, name, db_path, monkeypatch):
