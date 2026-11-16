@@ -44,6 +44,21 @@ python -m app.cli run --replay <run_id>      # re-decide a stored run with the c
 python -m pytest                             # 160+ tests: every rule both ways, matching, money, every sample end to end
 ```
 
+### Docker and the hosted prototype
+
+The `Dockerfile` bundles tesseract and serves on port 7860:
+
+```bash
+docker build -t invoice-decisioning .
+docker run -p 7860:7860 -e GEMINI_API_KEY=... invoice-decisioning
+```
+
+The hosted copy runs on a Hugging Face Docker Space. To redeploy the
+committed tree, put `HF_TOKEN` (a write token) in `.env` and run
+`python -m pip install huggingface_hub && python -m tools.deploy_space`.
+The Gemini key goes to the Space as a secret, never as a file. The Space's
+disk is not persistent: a restart reseeds the database and clears run history.
+
 ## Architecture
 
 ```

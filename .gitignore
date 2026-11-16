@@ -6,7 +6,5 @@ __pycache__/
 
 data/app.db
 data/app.db-*
-data/samples/*
-!data/samples/.gitkeep
 data/uploads/*
 !data/uploads/.gitkeep
