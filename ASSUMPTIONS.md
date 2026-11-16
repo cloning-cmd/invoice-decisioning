@@ -161,6 +161,44 @@ flagged for review.
   item 4). The explanation joins those rules' messages, ordered by
   `REASON_WEIGHTS`.
 
+## API and live view
+
+- **One server process, one worker.** Live runs fan out through an in-memory
+  hub (`app/services/events.py`) with an `asyncio.Queue` per SSE connection.
+  It is not shared across processes, so `run.sh` starts `--workers 1`. A
+  prototype limitation, stated rather than hidden: scaling out would put the
+  events on Redis or Postgres LISTEN/NOTIFY.
+- **The pipeline runs as a Starlette `BackgroundTask` over a sync function,**
+  which Starlette executes in its worker thread. The stages are blocking
+  (SQLite, PyMuPDF, the Gemini SDK); running them on the event loop would
+  freeze every open SSE stream. Events cross back to the loop with
+  `call_soon_threadsafe`.
+- **A refresh never shows an empty timeline.** A subscriber joining mid-run
+  gets the run's full event history first; after the terminal event the hub
+  forgets the run and the stream is rebuilt from SQLite, which is complete
+  by then because the runner emits only after persisting.
+- **Runs left `queued`/`running` by a stopped server are marked `failed`
+  ("interrupted") at startup** rather than spinning forever in the UI.
+- **Ingest registers the stored file on the run row immediately** (not at
+  S10), so the document preview appears while extraction is still running.
+- **`GET /api/samples`** (not in the brief's endpoint list) feeds the sample
+  chips from the same registry `POST /api/runs/from-sample` uses
+  (`app/samples.py`), so labels and filenames live in one place. A sample is
+  uploaded exactly as a user's file would be: same bytes, same filename.
+- **`static/js/ui.js`** (not in the brief's file list) holds the shared
+  helpers: the element builder, integer-safe money formatting, icons, status
+  vocabulary. Values are inserted as text nodes, never as HTML.
+- **T1 matches also show a scored candidate ranking.** The explicit reference
+  decides; the scores are corroboration for the match panel and change
+  nothing in the decision.
+- **"Variance" on the decision card is invoice total minus the PO's remaining
+  amount** ("over" / "under"), in the PO currency only; across currencies it
+  reads "currency differs" because no FX rates are held.
+- **Page images for the viewer are rendered server-side at 150 DPI** (PNG
+  for PDF pages, JPEG for photos), with EXIF orientation applied exactly as
+  the pipeline read them, and cached next to the upload. Browsers cannot
+  display TIFF, and the boxes must line up with what was read.
+
 ## Operations
 
 - **`python -m app.cli run --replay <id>` is a dry run.** It re-decides with

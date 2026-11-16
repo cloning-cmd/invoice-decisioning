@@ -6,62 +6,99 @@
   <title>Invoice Decisioning</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="/static/css/app.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234f46e5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 3h7l5 5v13H7z'/%3E%3Cpath d='M14 3v5h5'/%3E%3Cpath d='M10 13h6M10 17h4'/%3E%3C/svg%3E">
 </head>
-<body class="bg-zinc-50 text-zinc-900 antialiased">
+<body class="min-h-screen bg-zinc-50 text-zinc-900 antialiased">
   <header class="border-b border-zinc-200 bg-white">
-    <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-      <div class="flex items-center gap-3">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-indigo-600" aria-hidden="true">
-          <path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/><path d="M10 13h6M10 17h4"/>
-        </svg>
-        <span class="font-semibold tracking-tight">Invoice Decisioning</span>
+    <div class="mx-auto flex max-w-[1360px] items-center justify-between gap-6 px-8 py-3">
+      <div class="flex items-center gap-8">
+        <a href="#/run" class="focus-ring flex items-center gap-2.5 rounded-md">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+               stroke-linecap="round" stroke-linejoin="round" class="text-indigo-600" aria-hidden="true">
+            <path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/><path d="M10 13h6M10 17h4"/>
+          </svg>
+          <span class="font-semibold tracking-tight">Invoice Decisioning</span>
+        </a>
+        <nav class="flex items-center gap-1 text-sm" aria-label="Main">
+          <a href="#/run" data-nav="run" class="nav-link focus-ring rounded-md px-3 py-1.5">Run</a>
+          <a href="#/dashboard" data-nav="dashboard" class="nav-link focus-ring rounded-md px-3 py-1.5">Dashboard</a>
+        </nav>
       </div>
-      <span id="llm-badge" class="mono rounded-md border border-zinc-200 px-2 py-1 text-xs text-zinc-500">LLM: …</span>
+      <div class="flex items-center gap-2" id="badges"></div>
     </div>
   </header>
 
-  <main class="mx-auto max-w-6xl px-6 py-10">
-    <div id="error" class="hidden mb-6 rounded-xl border border-rose-200 bg-rose-50 px-6 py-4 text-sm text-rose-700" role="alert"></div>
-
-    <section class="rounded-xl border border-zinc-200 bg-white p-6">
-      <h1 class="text-lg font-semibold">System status</h1>
-      <p id="summary" class="mt-2 text-zinc-600">Reading the database…</p>
-      <dl id="counts" class="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-5"></dl>
-    </section>
+  <main class="mx-auto max-w-[1360px] px-8 py-8">
+    <div id="banners" class="mb-6 space-y-3 empty:mb-0"></div>
+    <div id="view"></div>
   </main>
 
   <script type="module">
     import { api } from "/static/js/api.js";
+    import { h, icon, showError, clear } from "/static/js/ui.js";
+    import { mountRun } from "/static/js/run.js";
 
-    const LABELS = {
-      vendors: "Vendors", purchase_orders: "Purchase orders", goods_receipts: "Goods receipts",
-      invoice_history: "Invoice history", runs: "Runs",
-    };
+    const view = document.getElementById("view");
+    let cleanup = null;
 
-    function tile(label, value) {
-      const el = document.createElement("div");
-      el.className = "rounded-lg border border-zinc-200 px-4 py-3";
-      el.innerHTML = `<dt class="text-xs text-zinc-500"></dt><dd class="mono mt-1 text-xl tabular-nums"></dd>`;
-      el.querySelector("dt").textContent = label;
-      el.querySelector("dd").textContent = value;
-      return el;
+    const routes = [
+      [/^#\/run\/([^/?]+)$/, async (m) => (await import("/static/js/detail.js")).mountDetail(view, decodeURIComponent(m[1]))],
+      [/^#\/dashboard$/, async () => (await import("/static/js/dashboard.js")).mountDashboard(view)],
+      [/^#\/run(?:\?id=([^&]+))?$/, async (m) => mountRun(view, { runId: m[1] ? decodeURIComponent(m[1]) : null })],
+    ];
+
+    async function route() {
+      if (cleanup) { cleanup(); cleanup = null; }
+      const hash = location.hash || "#/run";
+      for (const a of document.querySelectorAll(".nav-link")) {
+        const on = hash.startsWith(`#/${a.dataset.nav}`) && !(a.dataset.nav === "run" && /^#\/run\//.test(hash));
+        a.className = `nav-link focus-ring rounded-md px-3 py-1.5 transition-colors ${on ? "bg-indigo-600 text-white" : "text-zinc-600 hover:bg-zinc-100"}`;
+        if (on) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+      }
+      for (const [re, mount] of routes) {
+        const m = hash.match(re);
+        if (m) {
+          try {
+            cleanup = (await mount(m)) || null;
+          } catch (err) {
+            showError(`Could not open this screen: ${err.message}`);
+          }
+          window.scrollTo(0, 0);
+          return;
+        }
+      }
+      location.hash = "#/run";
     }
 
-    try {
-      const h = await api.health();
-      const c = h.counts;
-      document.getElementById("summary").textContent =
-        `The database has ${c.vendors} vendors and ${c.purchase_orders} purchase orders. ` +
-        `Tesseract is ${h.tesseract ? `installed (v${h.tesseract_version})` : "not installed — scans will run vision-only"}.`;
-      const dl = document.getElementById("counts");
-      for (const [key, label] of Object.entries(LABELS)) dl.appendChild(tile(label, c[key]));
-      document.getElementById("llm-badge").textContent = `LLM: ${h.llm}`;
-    } catch (err) {
-      const box = document.getElementById("error");
-      box.textContent = `Could not reach the API: ${err.message}`;
-      box.classList.remove("hidden");
-      document.getElementById("summary").textContent = "Status unavailable.";
+    function badge(text, tone, title) {
+      const tones = {
+        zinc: "border-zinc-200 text-zinc-600", blue: "border-blue-200 bg-blue-50 text-blue-700",
+        amber: "border-amber-300 bg-amber-50 text-amber-800", emerald: "border-emerald-200 bg-emerald-50 text-emerald-700",
+      };
+      return h("span", { class: `mono inline-flex items-center gap-1.5 rounded-md border px-2 py-1 text-xs ${tones[tone]}`, title }, text);
     }
+
+    async function loadBadges() {
+      const host = clear(document.getElementById("badges"));
+      try {
+        const s = await api.health();
+        const llmTone = s.llm === "live" ? "blue" : s.llm === "offline" ? "amber" : "zinc";
+        const noKey = !s.llm_key_configured && s.llm !== "offline";
+        host.append(
+          badge(`LLM ${s.llm} · ${s.llm_model}`, noKey ? "amber" : llmTone,
+                noKey ? "No API key is configured: only cached extractions will work" :
+                {live: "Every file calls the model", cached: "Recorded extractions replay; new files call the model",
+                 offline: "Recorded extractions only; no network calls"}[s.llm]),
+          badge(s.tesseract ? `OCR tesseract ${s.tesseract_version}` : "OCR unavailable", s.tesseract ? "emerald" : "amber",
+                s.tesseract ? "Scans are OCR'd before extraction" : "Tesseract is not installed: scans run vision-only"));
+      } catch (err) {
+        showError(`Could not reach the API: ${err.message}`);
+      }
+    }
+
+    window.addEventListener("hashchange", route);
+    loadBadges();
+    route();
   </script>
 </body>
 </html>

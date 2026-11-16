@@ -135,10 +135,21 @@ def match_po(refs: list[PoRef], vendor_id: str | None, pos: dict[str, PurchaseOr
     quoted = [r.value for r in refs]
     unknown = [q for q in quoted if q not in pos]
 
+    def scored(include: str | None = None) -> list[dict[str, Any]]:
+        cands = [score_po_candidate(po, remaining_by_po.get(po.po_number, po.po_total_minor),
+                                    invoice_total, invoice_date, lines)
+                 for po in pos.values()
+                 if po.vendor_id == vendor_id and (po.status in ("open", "partially_invoiced")
+                                                   or po.po_number == include)]
+        return sorted(cands, key=lambda c: c["score"], reverse=True)
+
     for q in quoted:
         po = pos.get(q)
         if po and vendor_id and po.vendor_id == vendor_id:
-            return POMatch("T1", q, q, [], f"{q} is quoted on the invoice and belongs to {vendor_id}")
+            # The explicit reference decides; the scores are shown only as
+            # corroboration (does the quoted PO also look like the best fit?).
+            return POMatch("T1", q, q, scored(include=q)[: config.PO_CANDIDATES_SHOWN],
+                           f"{q} is quoted on the invoice and belongs to {vendor_id}")
     for q in quoted:
         po = pos.get(q)
         if po:
@@ -151,11 +162,7 @@ def match_po(refs: list[PoRef], vendor_id: str | None, pos: dict[str, PurchaseOr
         return POMatch(None, None, quoted[0] if quoted else None, [],
                        "vendor not resolved, so no PO candidates can be searched")
 
-    open_pos = [po for po in pos.values()
-                if po.vendor_id == vendor_id and po.status in ("open", "partially_invoiced")]
-    cands = [score_po_candidate(po, remaining_by_po.get(po.po_number, po.po_total_minor),
-                                invoice_total, invoice_date, lines) for po in open_pos]
-    cands.sort(key=lambda c: c["score"], reverse=True)
+    cands = scored()
     prefix = f"quoted {', '.join(unknown)} not found; " if unknown else ""
     if not cands:
         return POMatch(None, None, unknown[0] if unknown else None, [],

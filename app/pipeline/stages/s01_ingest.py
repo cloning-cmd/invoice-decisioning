@@ -7,7 +7,7 @@ import io
 import pymupdf
 from PIL import Image
 
-from app import config
+from app import config, db
 from app.models import RunContext, StageResult
 
 _EXT = {"application/pdf": "pdf", "image/png": "png", "image/jpeg": "jpg",
@@ -91,6 +91,12 @@ def run(ctx: RunContext) -> StageResult:
 
     ctx.sha256, ctx.mime, ctx.stored_path, ctx.page_count = sha, mime, stored, page_count
     ctx.file_meta = meta
+    if ctx.persist:
+        # Register the file on the run now, not at S10, so the viewer can show
+        # the page while the later stages are still running.
+        with db.session(ctx.db_path) as conn:
+            conn.execute("UPDATE runs SET stored_path = ?, mime = ?, file_sha256 = ?, page_count = ? WHERE id = ?",
+                         (str(stored), mime, sha, page_count, ctx.run_id))
     kind = "PDF" if mime == "application/pdf" else mime.split("/")[1].upper()
     note = f" ({meta['extension_mismatch']})" if "extension_mismatch" in meta else ""
     status = "warn" if note else "ok"

@@ -146,9 +146,23 @@ def decide(ctx: RunContext) -> Decision:
                     payment_date=pay_on)
 
 
+def matrix() -> list[dict[str, str]]:
+    """The matrix in words, with the live config values, for the UI's decide panel."""
+    ceiling = format_money(config.AUTO_APPROVE_CEILING_MINOR)
+    blockers = " or ".join(config.BLOCK_RULE_CODES)
+    return [
+        {"branch": "1", "when": "any hard rule fails", "then": f"BLOCK if it is {blockers}, otherwise REJECT"},
+        {"branch": "2", "when": "any soft rule fails", "then": "HOLD_FOR_REVIEW"},
+        {"branch": "3", "when": f"clean, but above {ceiling} or not in INR", "then": "APPROVE_PENDING_SIGNOFF"},
+        {"branch": "4", "when": f"clean, confidence at least {config.CONFIDENCE_MIN:.2f}, within {ceiling}",
+         "then": "AUTO_APPROVE"},
+    ]
+
+
 def run(ctx: RunContext) -> StageResult:
     d = decide(ctx)
     ctx.decision = d
-    detail = {**to_jsonable(d), "verdict_words": VERDICT_WORDS[d.verdict], "confidence": run_confidence(ctx)}
+    detail = {**to_jsonable(d), "verdict_words": VERDICT_WORDS[d.verdict], "confidence": run_confidence(ctx),
+              "matrix": matrix()}
     reasons = f" [{', '.join(d.reason_codes)}]" if d.reason_codes else ""
     return StageResult("ok", f"{d.verdict}{reasons} — matrix branch {d.branch.split(' ·')[0]}", detail)

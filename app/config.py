@@ -321,3 +321,7 @@ SSE_HEARTBEAT_SECONDS = 15          # proxies drop idle connections at ~30-60s; 
 RUNS_PAGE_SIZE_DEFAULT = 50
 RUNS_PAGE_SIZE_MAX = 200
 STATS_SERIES_DAYS = 14              # dashboard sparkline window
+# The document viewer: 150 DPI renders A4 at 1240 px, sharp in a 40%-width
+# column and readable when zoomed, without shipping 300 DPI OCR rasters.
+VIEWER_RASTER_DPI = 150
+VIEWER_JPEG_QUALITY = 85            # photos only; PDF pages are served as PNG (flat colour, crisp text)

@@ -112,6 +112,25 @@ def _update_stage(ctx: RunContext, key: str, **cols: Any) -> None:
                      (*cols.values(), ctx.run_id, key))
 
 
+def mark_interrupted(db_path: Path | None = None) -> int:
+    """At startup: runs left queued/running by a stopped server can never finish.
+
+    Say so on the record instead of leaving a timeline that spins forever.
+    Returns how many runs were marked.
+    """
+    msg = "interrupted: the server stopped before this run finished; upload the file again"
+    with db.session(db_path) as conn:
+        ids = [r["id"] for r in db.query(conn, "SELECT id FROM runs WHERE status IN ('queued', 'running')")]
+        for run_id in ids:
+            conn.execute("UPDATE runs SET status = 'failed', finished_at = ?, error = ? WHERE id = ?",
+                         (now_iso(), msg, run_id))
+            conn.execute("UPDATE run_stages SET status = 'failed', summary = ?, error = ? "
+                         "WHERE run_id = ? AND status = 'running'", (msg, msg, run_id))
+            conn.execute("UPDATE run_stages SET status = 'skipped', summary = 'not run: the run was interrupted' "
+                         "WHERE run_id = ? AND status = 'pending'", (run_id,))
+    return len(ids)
+
+
 # ---------------------------------------------------------------- execution
 
 def _call_stage(module: Any, ctx: RunContext) -> StageResult:

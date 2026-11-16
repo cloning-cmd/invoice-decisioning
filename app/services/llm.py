@@ -234,22 +234,29 @@ def validation_errors(payload: Any) -> list[str]:
             for e in sorted(_VALIDATOR.iter_errors(payload), key=lambda e: list(e.absolute_path))]
 
 
-def iter_fields(node: Any, path: str = "") -> list[tuple[str, dict[str, Any]]]:
-    """Flatten the payload to (field_path, field_object) pairs.
+def iter_fields(node: Any, path: str = "", schema: dict[str, Any] | None = None) -> list[tuple[str, dict[str, Any]]]:
+    """Flatten the payload to (field_path, field_object) pairs, in schema order
+    (which follows the page: header, parties, lines, totals, payment), not in
+    whatever key order the model happened to emit.
 
     Paths look like 'invoice_number', 'totals.grand_total', 'line_items[2].unit_price'.
     A field object is any dict carrying value + confidence.
     """
+    if schema is None and path == "":
+        schema = EXTRACTION_SCHEMA
     out: list[tuple[str, dict[str, Any]]] = []
     if isinstance(node, dict):
         if "value" in node and "confidence" in node:
             out.append((path, node))
             return out
-        for key, child in node.items():
-            out.extend(iter_fields(child, f"{path}.{key}" if path else key))
+        props = (schema or {}).get("properties", {})
+        keys = [k for k in props if k in node] + [k for k in node if k not in props]
+        for key in keys:
+            out.extend(iter_fields(node[key], f"{path}.{key}" if path else key, props.get(key)))
     elif isinstance(node, list):
+        items = (schema or {}).get("items")
         for i, child in enumerate(node):
-            out.extend(iter_fields(child, f"{path}[{i}]"))
+            out.extend(iter_fields(child, f"{path}[{i}]", items))
     return out
 
 
