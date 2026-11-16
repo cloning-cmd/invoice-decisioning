@@ -32,7 +32,8 @@ def _load_dotenv(path: Path) -> None:
 
 _load_dotenv(ROOT_DIR / ".env")
 
-ANTHROPIC_API_KEY: str | None = os.environ.get("ANTHROPIC_API_KEY") or None
+# GOOGLE_API_KEY is accepted too, since that is what Google's own tooling exports.
+GEMINI_API_KEY: str | None = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY") or None
 LLM_CACHE_MODES = ("live", "cached", "offline")
 # Default "cached": demo fixtures are instant and free after their first run,
 # while an unseen invoice still goes to the live model.
@@ -144,7 +145,8 @@ OCR_LEGIBILITY_MIN = 0.55           # page legibility (0-1) below which the page
 # S04 Extraction (LLM)
 # --------------------------------------------------------------------------
 
-LLM_MODEL = "claude-sonnet-4-5"
+# Overridable from .env so a model change needs no code edit (cache entries record the model used).
+LLM_MODEL = os.environ.get("LLM_MODEL", "gemini-2.5-flash")
 LLM_TEMPERATURE = 0.0               # extraction should be reproducible, not creative
 LLM_MAX_TOKENS = 8000               # a 40-line invoice with evidence strings fits comfortably
 LLM_IMAGE_MAX_SIDE_PX = 1568        # the model's native resolution; larger only costs tokens

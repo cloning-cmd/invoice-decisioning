@@ -17,12 +17,12 @@ fi
 if ! "$PYTHON" -c 'import sys; sys.exit(0 if sys.version_info >= (3, 11) else 1)'; then
   echo "error: Python 3.11+ required, found $("$PYTHON" --version 2>&1) at $PYTHON" >&2; exit 1
 fi
-if ! "$PYTHON" -c 'import fastapi, pymupdf, cv2, anthropic, rapidfuzz, reportlab' 2>/dev/null; then
+if ! "$PYTHON" -c 'import fastapi, pymupdf, cv2, google.genai, rapidfuzz, reportlab' 2>/dev/null; then
   echo "error: dependencies missing. Run: $PYTHON -m pip install -r requirements.txt" >&2; exit 1
 fi
 
 if [[ ! -f .env ]]; then
-  echo "note: no .env found; copy .env.example to .env and set ANTHROPIC_API_KEY."
+  echo "note: no .env found; copy .env.example to .env and set GEMINI_API_KEY."
 fi
 
 "$PYTHON" -m app.seed

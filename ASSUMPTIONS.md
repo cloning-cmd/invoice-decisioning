@@ -78,17 +78,26 @@ flagged for review.
 
 ## Extraction (S04)
 
-- **claude-sonnet-4-5 at temperature 0, as specified.** The API retires this
-  model on 2026-11-30; after that, live extraction fails with a clear stage
-  error while cached fixtures keep replaying. `LLM_MODEL` in config is the
-  one line to change.
-- **anthropic SDK pinned to 1.17.0.** The 2.x SDK sends API version
-  2026-10-21, which rejects `temperature` on every model. The 1.x SDK sends
-  2023-06-01, where Sonnet 4.5 still honours it. 1.x dropped `temperature` as
-  a keyword argument, so it is passed via `extra_body`.
-- **Forced `tool_choice` + jsonschema validation + one retry** carrying the
-  validator's own error messages, as specified. Any API error becomes a
-  failed stage with a readable message, not a stack trace.
+- **Extraction runs on Google Gemini, not Claude (a deliberate deviation from
+  the brief's stack table).** The key available for the build was a Gemini
+  key. The switch is confined to `app/services/llm.py`: the extraction schema,
+  the system prompt (including the required wording), the cache modes,
+  account-number masking and validation are provider-neutral and unchanged.
+  The architectural property the brief cares about holds exactly as before:
+  the model reads, code decides, and the model is never shown the vendor
+  master, the POs or the rules. Moving back is a rewrite of `_call_live`
+  alone.
+- **Guaranteed structure on Gemini:** function calling with mode `ANY` and a
+  single allowed function whose `parameters_json_schema` is the extraction
+  contract, the equivalent of a forced `tool_choice`. The result is then
+  validated with jsonschema; on failure, one retry feeds the validator's own
+  error messages back as the function response, and a second failure fails
+  the stage. Temperature 0 and max 8,000 output tokens, as specified.
+- **`LLM_MODEL` defaults to `gemini-2.5-flash` and can be overridden in
+  `.env`.** Each cache entry records the model that produced it.
+- **API errors become readable stage failures:** bad key (401/403), model
+  unavailable (404), quota (429), server (5xx) and network errors each get a
+  message a clerk can act on, never a stack trace.
 - **The bank account number is masked before anything is stored.**
   `raw_llm_json` and the cache keep the model's output verbatim *except*
   `payment.account_number`, reduced to its last four (`••••••••••4471`). This

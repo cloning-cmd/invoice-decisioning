@@ -9,7 +9,7 @@ explained decision out. The model extracts; plain Python decides.
 
 ```bash
 python -m pip install -r requirements.txt   # Python 3.11+
-cp .env.example .env                         # set ANTHROPIC_API_KEY
+cp .env.example .env                         # set GEMINI_API_KEY
 ./run.sh                                     # http://127.0.0.1:8000
 ```
 

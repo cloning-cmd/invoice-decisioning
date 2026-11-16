@@ -7,7 +7,8 @@ pytesseract==0.3.13          # needs the tesseract binary installed separately
 Pillow==13.0.0
 opencv-python-headless==5.0.0.93
 numpy==2.5.4
-anthropic==1.17.0            # 1.x sends API version 2023-06-01, which still accepts temperature (see ASSUMPTIONS.md)
+google-genai==3.3.0          # Gemini extraction (the brief specified Anthropic; see ASSUMPTIONS.md)
+httpx2==2.16.0               # google-genai's transport; imported directly to catch network errors
 jsonschema==4.26.0           # validates the model's tool output before we accept it
 rapidfuzz==3.14.6
 reportlab==5.1.0             # synthetic test invoices

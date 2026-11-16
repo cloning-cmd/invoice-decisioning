@@ -1,17 +1,16 @@
-"""Anthropic client, the extraction tool schema, and the response cache.
+"""Gemini client, the extraction tool schema, and the response cache.
 
-The model's only job is to read. It is forced to answer through one tool whose
-input_schema IS the extraction contract, so the output is structured JSON by
+The model's only job is to read. It is forced (function-calling mode ANY,
+one allowed function) to answer through a single function whose parameter
+schema IS the extraction contract, so the output is structured JSON by
 construction — we never parse prose and never regex model text. The payload is
 then validated with jsonschema before anything downstream sees it.
 
-SDK note: anthropic 1.x sends API version 2023-06-01, which still accepts
-`temperature` for claude-sonnet-4-5; the 1.x signature no longer takes it as a
-keyword, so it goes through `extra_body` (see ASSUMPTIONS.md).
+The brief specified Claude via the Anthropic SDK; extraction runs on Gemini
+instead (see ASSUMPTIONS.md). Only this file knows which provider is used.
 """
 from __future__ import annotations
 
-import base64
 import json
 import re
 from dataclasses import dataclass
@@ -19,8 +18,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-import anthropic
+import httpx2
 import jsonschema
+from google import genai
+from google.genai import errors as genai_errors
+from google.genai import types
 
 from app import config
 
@@ -132,7 +134,7 @@ _VALIDATOR = jsonschema.Draft202012Validator(EXTRACTION_SCHEMA)
 SYSTEM_PROMPT = """\
 You are a document extraction engine. You report what the document says. You never judge whether the invoice should be paid, never infer values that are not present, and never repair arithmetic. If a field is absent or illegible, return null with confidence 0 and say why in notes.
 
-Report through the record_invoice_extraction tool. Rules:
+Report by calling the record_invoice_extraction function. Rules:
 
 1. Return null, not a guess. A plausible invoice number is worse than no invoice number: downstream, a null routes to a human and a wrong value routes to payment.
 2. confidence is your reading confidence for THAT field, not your overall impression of the document. A crisp header on a blurry page is still 0.98.
@@ -146,11 +148,7 @@ Report through the record_invoice_extraction tool. Rules:
 
 The images are the source of truth. The machine-read text is a convenience that may contain OCR errors; where it disagrees with the image, trust the image and keep your evidence verbatim to the image."""
 
-TOOL = {
-    "name": TOOL_NAME,
-    "description": "Record the structured reading of the document. Call exactly once.",
-    "input_schema": EXTRACTION_SCHEMA,
-}
+TOOL_DESCRIPTION = "Record the structured reading of the document. Call exactly once."
 
 
 class ExtractionError(Exception):
@@ -205,11 +203,16 @@ def mask_account_number(payload: dict[str, Any]) -> dict[str, Any]:
     return payload
 
 
-def _mask_responses(responses: list[dict[str, Any]]) -> None:
-    for r in responses:
-        for block in r.get("content", []):
-            if block.get("type") == "tool_use" and isinstance(block.get("input"), dict):
-                mask_account_number(block["input"])
+def _mask_everywhere(node: Any) -> None:
+    """Mask every extraction payload nested anywhere in a raw provider response."""
+    if isinstance(node, dict):
+        if isinstance(node.get("payment"), dict):
+            mask_account_number(node)
+        for child in node.values():
+            _mask_everywhere(child)
+    elif isinstance(node, list):
+        for child in node:
+            _mask_everywhere(child)
 
 
 def validation_errors(payload: Any) -> list[str]:
@@ -260,70 +263,82 @@ def _write_cache(sha256: str, entry: dict[str, Any], cache_dir: Path | None) -> 
 
 # ---------------------------------------------------------------- the call
 
-def _user_content(images_jpeg: list[bytes], machine_text: str) -> list[dict[str, Any]]:
-    content: list[dict[str, Any]] = []
+def _user_parts(images_jpeg: list[bytes], machine_text: str) -> list[types.Part]:
+    parts: list[types.Part] = []
     for i, img in enumerate(images_jpeg, start=1):
-        content.append({"type": "text", "text": f"Page {i} of {len(images_jpeg)}:"})
-        content.append({"type": "image", "source": {"type": "base64", "media_type": "image/jpeg",
-                                                     "data": base64.standard_b64encode(img).decode("ascii")}})
-    content.append({"type": "text", "text":
-                    "MACHINE-READ TEXT (PDF text layer or OCR — possibly imperfect):\n"
-                    + (machine_text.strip() or "(none available — read from the images)")})
-    content.append({"type": "text", "text": "Extract this document with the record_invoice_extraction tool."})
-    return content
+        parts.append(types.Part.from_text(text=f"Page {i} of {len(images_jpeg)}:"))
+        parts.append(types.Part.from_bytes(data=img, mime_type="image/jpeg"))
+    parts.append(types.Part.from_text(text="MACHINE-READ TEXT (PDF text layer or OCR — possibly imperfect):\n"
+                                           + (machine_text.strip() or "(none available — read from the images)")))
+    parts.append(types.Part.from_text(text=f"Extract this document by calling {TOOL_NAME}."))
+    return parts
+
+
+def _generation_config() -> types.GenerateContentConfig:
+    return types.GenerateContentConfig(
+        system_instruction=SYSTEM_PROMPT,
+        temperature=config.LLM_TEMPERATURE,
+        max_output_tokens=config.LLM_MAX_TOKENS,
+        tools=[types.Tool(function_declarations=[types.FunctionDeclaration(
+            name=TOOL_NAME, description=TOOL_DESCRIPTION, parameters_json_schema=EXTRACTION_SCHEMA)])],
+        # Mode ANY restricted to one function = the model must answer by calling
+        # it; there is no path for a free-text reply (let alone a verdict).
+        tool_config=types.ToolConfig(function_calling_config=types.FunctionCallingConfig(
+            mode=types.FunctionCallingConfigMode.ANY, allowed_function_names=[TOOL_NAME])),
+    )
+
+
+def _api_error(exc: genai_errors.APIError) -> ExtractionError:
+    if exc.code in (401, 403):
+        return ExtractionError(f"Gemini API rejected the key ({exc.code}) — check GEMINI_API_KEY in .env")
+    if exc.code == 404:
+        return ExtractionError(f"model {config.LLM_MODEL!r} is not available to this key: {exc.message}")
+    if exc.code == 429:
+        return ExtractionError(f"Gemini API quota or rate limit hit (429): {exc.message}")
+    return ExtractionError(f"Gemini API error {exc.code} {exc.status}: {exc.message}")
 
 
 def _call_live(images_jpeg: list[bytes], machine_text: str) -> tuple[dict[str, Any], list[dict[str, Any]], dict[str, int]]:
-    client = anthropic.Anthropic(api_key=config.ANTHROPIC_API_KEY) if config.ANTHROPIC_API_KEY else anthropic.Anthropic()
-    messages: list[dict[str, Any]] = [{"role": "user", "content": _user_content(images_jpeg, machine_text)}]
+    if not config.GEMINI_API_KEY:
+        raise ExtractionError("GEMINI_API_KEY is not set in .env")
+    client = genai.Client(api_key=config.GEMINI_API_KEY)
+    gen_config = _generation_config()
+    contents: list[types.Content] = [types.Content(role="user", parts=_user_parts(images_jpeg, machine_text))]
     responses: list[dict[str, Any]] = []
     usage = {"input_tokens": 0, "output_tokens": 0}
     last_errors: list[str] = []
 
     for attempt in range(1 + config.LLM_SCHEMA_RETRIES):
         try:
-            resp = client.messages.create(
-                model=config.LLM_MODEL,
-                max_tokens=config.LLM_MAX_TOKENS,
-                system=SYSTEM_PROMPT,
-                tools=[TOOL],
-                tool_choice={"type": "tool", "name": TOOL_NAME},
-                messages=messages,
-                extra_body={"temperature": config.LLM_TEMPERATURE},
-            )
-        except anthropic.AuthenticationError as exc:
-            raise ExtractionError("Anthropic API rejected the credentials — set ANTHROPIC_API_KEY in .env") from exc
-        except anthropic.NotFoundError as exc:
-            raise ExtractionError(f"model {config.LLM_MODEL!r} not available: {exc.message}") from exc
-        except anthropic.RateLimitError as exc:
-            raise ExtractionError("Anthropic API rate limit hit; retry shortly") from exc
-        except anthropic.APIStatusError as exc:
-            raise ExtractionError(f"Anthropic API error {exc.status_code}: {exc.message}") from exc
-        except anthropic.APIConnectionError as exc:
-            raise ExtractionError("cannot reach the Anthropic API (network). "
+            resp = client.models.generate_content(model=config.LLM_MODEL, contents=contents, config=gen_config)
+        except (genai_errors.ClientError, genai_errors.ServerError) as exc:
+            raise _api_error(exc) from exc
+        except httpx2.TransportError as exc:
+            raise ExtractionError("cannot reach the Gemini API (network). "
                                   "Set LLM_CACHE_MODE=offline to use cached extractions only") from exc
 
-        responses.append(resp.to_dict())
-        usage["input_tokens"] += resp.usage.input_tokens
-        usage["output_tokens"] += resp.usage.output_tokens
-        tool_use = next((b for b in resp.content if b.type == "tool_use" and b.name == TOOL_NAME), None)
-        if tool_use is None:
-            last_errors = [f"no {TOOL_NAME} call in response (stop_reason={resp.stop_reason})"]
+        responses.append(resp.model_dump(mode="json", exclude_none=True))
+        um = resp.usage_metadata
+        if um:
+            usage["input_tokens"] += um.prompt_token_count or 0
+            usage["output_tokens"] += (um.candidates_token_count or 0) + (um.thoughts_token_count or 0)
+        finish = resp.candidates[0].finish_reason if resp.candidates else None
+        call = next((c for c in (resp.function_calls or []) if c.name == TOOL_NAME), None)
+        if call is None:
+            last_errors = [f"no {TOOL_NAME} call in response (finish_reason={finish})"]
         else:
-            payload = tool_use.input
+            payload = json.loads(json.dumps(call.args or {}))   # plain JSON types, nothing SDK-specific
             last_errors = validation_errors(payload)
-            if resp.stop_reason == "max_tokens":
-                last_errors.insert(0, "response truncated at max_tokens")
+            if finish == types.FinishReason.MAX_TOKENS:
+                last_errors.insert(0, "response truncated at max_output_tokens")
             if not last_errors:
                 return payload, responses, usage
-        if attempt < config.LLM_SCHEMA_RETRIES and tool_use is not None:
+        if attempt < config.LLM_SCHEMA_RETRIES and call is not None and resp.candidates:
             # Feed the validator's own words back; the model corrects its payload.
-            messages.append({"role": "assistant", "content": [b.to_dict() for b in resp.content]})
-            messages.append({"role": "user", "content": [{
-                "type": "tool_result", "tool_use_id": tool_use.id, "is_error": True,
-                "content": "Schema validation failed:\n" + "\n".join(last_errors[:20])
-                           + "\nCall the tool again with a corrected, complete payload.",
-            }]})
+            contents.append(resp.candidates[0].content)
+            contents.append(types.Content(role="user", parts=[types.Part.from_function_response(
+                name=TOOL_NAME, response={"error": "Schema validation failed:\n" + "\n".join(last_errors[:20])
+                                                   + "\nCall the function again with a corrected, complete payload."})]))
     raise ExtractionError("model output failed schema validation after retry: " + "; ".join(last_errors[:5]))
 
 
@@ -346,7 +361,7 @@ def extract_document(sha256: str, images_jpeg: list[bytes], machine_text: str, *
 
     payload, responses, usage = _call_live(images_jpeg, machine_text)
     mask_account_number(payload)
-    _mask_responses(responses)
+    _mask_everywhere(responses)
     entry = {"sha256": sha256, "model": config.LLM_MODEL, "prompt_version": PROMPT_VERSION,
              "created_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
              "usage": usage, "payload": payload, "responses": responses}

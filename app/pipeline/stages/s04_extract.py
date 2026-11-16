@@ -1,4 +1,4 @@
-"""S04 Extract: one Claude call per document -> schema-valid structured reading.
+"""S04 Extract: one Gemini call per document -> schema-valid structured reading.
 
 Pages go in as images, the text layer / OCR text goes in as a labelled,
 possibly-imperfect machine reading. The output is a forced tool call validated

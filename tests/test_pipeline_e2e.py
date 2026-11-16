@@ -34,7 +34,7 @@ def _require_recording(data: bytes, name: str) -> None:
     sha = hashlib.sha256(data).hexdigest()
     if not llm.cache_path(sha).exists():
         pytest.skip(f"no recorded extraction for {name} (sha {sha[:12]}); record it once with "
-                    f"ANTHROPIC_API_KEY set: python -m app.cli run data/samples/{name}")
+                    f"GEMINI_API_KEY set: python -m app.cli run data/samples/{name}")
 
 
 def _run(samples, name, db_path, monkeypatch):

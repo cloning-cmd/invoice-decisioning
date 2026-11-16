@@ -39,7 +39,7 @@ def health() -> dict[str, Any]:
         "llm": config.LLM_CACHE_MODE,
         "llm_model": config.LLM_MODEL,
         # Whether a key is configured — never the key itself.
-        "llm_key_configured": config.ANTHROPIC_API_KEY is not None,
+        "llm_key_configured": config.GEMINI_API_KEY is not None,
         "db_rows": sum(counts.values()),
         "counts": counts,
     }
