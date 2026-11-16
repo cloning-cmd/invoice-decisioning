@@ -146,13 +146,21 @@ OCR_LEGIBILITY_MIN = 0.55           # page legibility (0-1) below which the page
 # --------------------------------------------------------------------------
 
 # Overridable from .env so a model change needs no code edit (cache entries record the model used).
-LLM_MODEL = os.environ.get("LLM_MODEL", "gemini-2.5-flash")
+# Measured 2026-11-16 on the happy path: gemini-2.5-flash is closed to new keys
+# (404); gemini-3.8-flash took 212 s, then 504'd even on a one-word prompt;
+# gemini-3.5-flash read the same values in 8 s. Change here or via .env.
+LLM_MODEL = os.environ.get("LLM_MODEL", "gemini-3.5-flash")
 LLM_TEMPERATURE = 0.0               # extraction should be reproducible, not creative
 LLM_MAX_TOKENS = 8000               # a 40-line invoice with evidence strings fits comfortably
 LLM_IMAGE_MAX_SIDE_PX = 1568        # the model's native resolution; larger only costs tokens
 LLM_RASTER_DPI = 150                # A4 at 150 DPI is 1754px tall: just above 1568, so no detail is lost
 LLM_IMAGE_JPEG_QUALITY = 85         # keeps small print legible while keeping the payload small
 LLM_SCHEMA_RETRIES = 1              # one retry with the validator error; a second failure is real
+# Extraction is reading, not reasoning. MINIMAL was no faster than LOW and read
+# the same values; LOW keeps a little headroom for messy scans.
+LLM_THINKING_LEVEL = os.environ.get("LLM_THINKING_LEVEL", "LOW")
+# A hung API call must fail the stage (HOLD, readable reason), never hang the run.
+LLM_TIMEOUT_SECONDS = int(os.environ.get("LLM_TIMEOUT_SECONDS", "180"))
 
 
 # --------------------------------------------------------------------------

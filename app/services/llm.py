@@ -12,6 +12,7 @@ instead (see ASSUMPTIONS.md). Only this file knows which provider is used.
 from __future__ import annotations
 
 import json
+import logging
 import re
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -25,6 +26,19 @@ from google.genai import errors as genai_errors
 from google.genai import types
 
 from app import config
+
+
+class _ExplicitKeyFilter(logging.Filter):
+    """Drop the SDK's 'Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using
+    GOOGLE_API_KEY.' line. We always pass `api_key=` explicitly, and an explicit
+    key takes precedence over the environment, so the line is untrue here and
+    would send whoever reads the log after the wrong key."""
+
+    def filter(self, record: logging.LogRecord) -> bool:
+        return "Both GOOGLE_API_KEY and GEMINI_API_KEY are set" not in record.getMessage()
+
+
+logging.getLogger("google_genai._api_client").addFilter(_ExplicitKeyFilter())
 
 TOOL_NAME = "record_invoice_extraction"
 
@@ -285,6 +299,8 @@ def _generation_config() -> types.GenerateContentConfig:
         # it; there is no path for a free-text reply (let alone a verdict).
         tool_config=types.ToolConfig(function_calling_config=types.FunctionCallingConfig(
             mode=types.FunctionCallingConfigMode.ANY, allowed_function_names=[TOOL_NAME])),
+        thinking_config=types.ThinkingConfig(thinking_level=types.ThinkingLevel(config.LLM_THINKING_LEVEL.upper())),
+        http_options=types.HttpOptions(timeout=config.LLM_TIMEOUT_SECONDS * 1000),
     )
 
 
@@ -313,6 +329,9 @@ def _call_live(images_jpeg: list[bytes], machine_text: str) -> tuple[dict[str, A
             resp = client.models.generate_content(model=config.LLM_MODEL, contents=contents, config=gen_config)
         except (genai_errors.ClientError, genai_errors.ServerError) as exc:
             raise _api_error(exc) from exc
+        except httpx2.TimeoutException as exc:
+            raise ExtractionError(f"Gemini API did not answer within {config.LLM_TIMEOUT_SECONDS} s "
+                                  "(LLM_TIMEOUT_SECONDS)") from exc
         except httpx2.TransportError as exc:
             raise ExtractionError("cannot reach the Gemini API (network). "
                                   "Set LLM_CACHE_MODE=offline to use cached extractions only") from exc

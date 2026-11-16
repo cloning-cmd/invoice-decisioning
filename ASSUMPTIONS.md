@@ -93,8 +93,18 @@ flagged for review.
   validated with jsonschema; on failure, one retry feeds the validator's own
   error messages back as the function response, and a second failure fails
   the stage. Temperature 0 and max 8,000 output tokens, as specified.
-- **`LLM_MODEL` defaults to `gemini-2.5-flash` and can be overridden in
-  `.env`.** Each cache entry records the model that produced it.
+- **`LLM_MODEL` defaults to `gemini-3.5-flash`, thinking level LOW, and both
+  can be overridden in `.env`.** Measured on the build key (2026-11-16):
+  `gemini-2.5-flash` answered 404 "no longer available to new users";
+  `gemini-3.8-flash` took 212 s on the happy path and then timed out on a
+  one-word prompt; `gemini-3.5-flash` read the same values in 8 s. Each cache
+  entry records the model that produced it.
+- **Every API call has a deadline (`LLM_TIMEOUT_SECONDS`, 180 s).** A hung
+  call fails the extract stage with a readable reason and the run ends
+  HOLD_FOR_REVIEW, rather than leaving the run open forever.
+- **`GEMINI_API_KEY` in `.env` wins over a `GOOGLE_API_KEY` in the shell.** The
+  key is passed to the client explicitly; the SDK's "using GOOGLE_API_KEY"
+  warning is filtered because it is false in that case.
 - **API errors become readable stage failures:** bad key (401/403), model
   unavailable (404), quota (429), server (5xx) and network errors each get a
   message a clerk can act on, never a stack trace.

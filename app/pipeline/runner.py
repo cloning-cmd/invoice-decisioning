@@ -168,7 +168,7 @@ def execute(ctx: RunContext, emit: Emit = _noop, start_at: str = "ingest") -> Ru
             ctx.failed_stage, ctx.failure_error = key, f"{label} failed: {result.summary}"
             ctx.decision = Decision(
                 "HOLD_FOR_REVIEW", [f"STAGE_FAILED:{key}"],
-                f"The {label} stage failed: {result.summary}. No automated decision was made.",
+                f"The {label} stage failed: {result.summary.rstrip('.')}. No automated decision was made.",
                 "The pipeline could not finish; process this invoice manually",
                 config.OWNERS["ap_clerk"], "stage failure → HOLD_FOR_REVIEW")
         if result.status == "failed" and key == "persist" and ctx.persist:
